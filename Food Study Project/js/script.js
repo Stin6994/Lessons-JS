@@ -1,4 +1,6 @@
-console.log('hello');
+'use strict';
+
+console.log('hello111');
 
 // Урок 64 - Табы
 
@@ -49,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Урок 69 - таймер
 
-    const deadLine = '2024-06-08';
+    const deadLine = '2024-08-31';
 
 
 
@@ -69,9 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
             minutes = Math.floor((t / 1000 / 60) % 60);
             seconds = Math.floor((t / 1000) % 60);
         }
-
-
-
 
         return {
             'total': t, // актуальная разница между заявленным дедлайном и текущей датой. Если дедлайн просрочен - становится отрицательной
@@ -159,7 +158,7 @@ function closeModal() {
         }
     });
 
-    const modalTimerId = setTimeout(openModal, 3000); //Когда сайт загружается - через 3 секунды выходит модальное окно.
+    const modalTimerId = setTimeout(openModal, 7500); //Когда сайт загружается - через 7 секунд выходит модальное окно.
 
 
 function showModalByScroll() {
@@ -171,6 +170,53 @@ function showModalByScroll() {
 
     window.addEventListener('scroll', showModalByScroll);  //При прокрутке страницы до конца - открывается окно
         
+
+
+// Урок 83 - Реализация скрипта отправки данных на сервер (POST)
+    // формы
+
+    const forms = document.querySelectorAll('form');
+      
+    const message = { // сообщения для юзера в разных ситуациях
+        loading : 'Загрузка',
+        success : 'Спасибо! Скоро мы с Вами свяжемся',
+        failure : 'Что-то пошло не так...'
+    }
+
+    forms.forEach (item => { // При заполнении любой формы будет происходить нижеперечисленное
+        postData(item);
+    });
+
+    function postData (form) {
+        form.addEventListener('submit', (e) => { //срабатывает когда мы пытемся оправить какую-то форму
+            e.preventDefault(); // в AJAX запросах ставим вначале, чтобы отменить стандартное поведение браузера (перезагрузку при изменениях и отправке формы)
+
+            const statusMessage = document.createElement('div'); // Добавляем блок с сообщением пользователю о статусе отправки данных
+            statusMessage.classList.add('ststus');
+            statusMessage.textContent = message.loading; //как только отправились данные, пользователь видит сообщение "загрузка"
+            form.append(statusMessage); //добавляем сообщение к форме
+
+
+            const request = new XMLHttpRequest();
+            request.open('POST', 'server.php');
+            /* request.setRequestHeader('Content-type','multipart/form-data'); */ //заголовки
+
+            const formData = new FormData(form); // Это позволяет преобразовать данные от форм ввода в привычную форму объекта
+            
+            request.send(formData); //отправили данные на сервер
+
+            request.addEventListener('load', () => { //отслеживаем загрузку данных на сервер
+                if (request.status === 200) {
+                    console.log(request.response);
+                    statusMessage.textContent = message.success; // если все ок, то сообщение об успехе в форме
+                } else {
+                    statusMessage.textContent = message.failure; // если не ок, то сообщение об ошибке
+                }
+            });
+        
+        });
+
+    }
 
 
 });
