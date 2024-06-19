@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const modalTrigger = document.querySelectorAll('[data-modal]');
     const modal = document.querySelector('.modal');
-    const modalCloseBtn = document.querySelector('[data-close]');
+    /* const modalCloseBtn = document.querySelector('[data-close]'); */
 
     modalTrigger.forEach(btn => {
         btn.addEventListener('click', openModal);
@@ -142,11 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = ''; //возвращаем скролл на страницу сайта после закрытия мод. окна
     }
 
-    modalCloseBtn.addEventListener('click', closeModal);
+/*     modalCloseBtn.addEventListener('click', closeModal); */
 
 
     modal.addEventListener('click', (e) => {    //если кликнуть мимо модального окна, то оно тоже закроется
-        if (e.target === modal) {
+        if (e.target === modal || e.target.getAttribute('data-close') == '') {
             closeModal();
         }
     });
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const modalTimerId = setTimeout(openModal, 7500); //Когда сайт загружается - через 7 секунд выходит модальное окно.
+    const modalTimerId = setTimeout(openModal, 50000); //Когда сайт загружается - через 7 секунд выходит модальное окно.
 
 
     function showModalByScroll() {
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const object = {}; //сюда будем помещать преобразованные данные из FormData в JSON
 
-            formData.forEach (function(value,key) { //наполняем объект данными из FormData
+            formData.forEach(function (value, key) { //наполняем объект данными из FormData
                 object[key] = value;
             });
 
@@ -218,15 +218,13 @@ document.addEventListener('DOMContentLoaded', () => {
             request.addEventListener('load', () => { //отслеживаем загрузку данных на сервер
                 if (request.status === 200) {
                     console.log(request.response);
-                    statusMessage.textContent = message.success; // если все ок, то сообщение об успехе в форме
+                    showThanksModal(message.success); // если все ок, то сообщение об успехе в форме
                     form.reset(); // очистка формы после отправки на сервер
 
-                    setTimeout(() => {  // удаление сообщения через 2 секунды
-                        statusMessage.remove();
-                    }, 2000);
+                     statusMessage.remove();              
 
                 } else {
-                    statusMessage.textContent = message.failure; // если не ок, то сообщение об ошибке
+                    showThanksModal(message.failure); // если не ок, то сообщение об ошибке
                 }
             });
 
@@ -234,9 +232,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-// Урок 84 - Красивое оповещение пользователя
+    // Урок 84 - Красивое оповещение пользователя
 
+    function showThanksModal(message) {  // новое модальное окно с благодарностью
+        const prevModalDialog = document.querySelector('.modal__dialog'); //функционируем с имеющимся модальным окном
+        prevModalDialog.classList.add('hide'); //временно скрываем его, чтобы не удалять и не создавать заново при новой необходимости
+        /* openModal(); */ //создавали ранее, открывает модальное окно
 
+        const thanksModal = document.createElement('div');
+        thanksModal.classList.add('modal__dialog');
+        thanksModal.innerHTML = `
+    <div class="modal__content">
+        <div class="modal__close" data-close>×</div>
+        <div class="modal__title">${message}</div>
+    </div>
+    `;
+
+        document.querySelector('.modal').append(thanksModal);
+
+        setTimeout(() => {
+            thanksModal.remove(); 
+            prevModalDialog.classList.add('show');
+            prevModalDialog.classList.remove('hide');
+            closeModal();
+        }, 4000);
+
+    }
 
 
 
