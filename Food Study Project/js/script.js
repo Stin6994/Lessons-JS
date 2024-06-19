@@ -130,22 +130,22 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', openModal);
     });
 
-function openModal() {
-    modal.classList.toggle('show');  // Если класса show нет, добавляем, если есть - убираем
-    document.body.style.overflow = 'hidden';  //для того, чтобы при открытом модальном окне не прокручивался вниз и вверх сайт
-    clearInterval(modalTimerId); // Если юзер сам открыл окно до его автоматического открытия - далее оно автоматически уже не будет открываться до обновления страницы.
-}
+    function openModal() {
+        modal.classList.toggle('show');  // Если класса show нет, добавляем, если есть - убираем
+        document.body.style.overflow = 'hidden';  //для того, чтобы при открытом модальном окне не прокручивался вниз и вверх сайт
+        clearInterval(modalTimerId); // Если юзер сам открыл окно до его автоматического открытия - далее оно автоматически уже не будет открываться до обновления страницы.
+    }
 
 
-function closeModal() {
-    modal.classList.toggle('show');
-    document.body.style.overflow = ''; //возвращаем скролл на страницу сайта после закрытия мод. окна
-}
+    function closeModal() {
+        modal.classList.toggle('show');
+        document.body.style.overflow = ''; //возвращаем скролл на страницу сайта после закрытия мод. окна
+    }
 
     modalCloseBtn.addEventListener('click', closeModal);
-       
 
-    modal.addEventListener('click', (e) =>{    //если кликнуть мимо модального окна, то оно тоже закроется
+
+    modal.addEventListener('click', (e) => {    //если кликнуть мимо модального окна, то оно тоже закроется
         if (e.target === modal) {
             closeModal();
         }
@@ -161,33 +161,33 @@ function closeModal() {
     const modalTimerId = setTimeout(openModal, 7500); //Когда сайт загружается - через 7 секунд выходит модальное окно.
 
 
-function showModalByScroll() {
-    if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) { // проверяет докрутили ли страницу до конца
-        openModal();
-        window.removeEventListener('scroll', showModalByScroll); // удаляем обработчик события после первого срабытывания, чтобы не спамить окнами при прокрутке до конца страницы
+    function showModalByScroll() {
+        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) { // проверяет докрутили ли страницу до конца
+            openModal();
+            window.removeEventListener('scroll', showModalByScroll); // удаляем обработчик события после первого срабытывания, чтобы не спамить окнами при прокрутке до конца страницы
+        }
     }
-} 
 
     window.addEventListener('scroll', showModalByScroll);  //При прокрутке страницы до конца - открывается окно
-        
 
 
-// Урок 83 - Реализация скрипта отправки данных на сервер (POST)
+
+    // Урок 83 - Реализация скрипта отправки данных на сервер (POST)
     // формы
 
     const forms = document.querySelectorAll('form');
-      
+
     const message = { // сообщения для юзера в разных ситуациях
-        loading : 'Загрузка',
-        success : 'Спасибо! Скоро мы с Вами свяжемся',
-        failure : 'Что-то пошло не так...'
+        loading: 'Загрузка',
+        success: 'Спасибо! Скоро мы с Вами свяжемся',
+        failure: 'Что-то пошло не так...'
     }
 
-    forms.forEach (item => { // При заполнении любой формы будет происходить нижеперечисленное
+    forms.forEach(item => { // При заполнении любой формы будет происходить нижеперечисленное
         postData(item);
     });
 
-    function postData (form) {
+    function postData(form) {
         form.addEventListener('submit', (e) => { //срабатывает когда мы пытемся оправить какую-то форму
             e.preventDefault(); // в AJAX запросах ставим вначале, чтобы отменить стандартное поведение браузера (перезагрузку при изменениях и отправке формы)
 
@@ -199,11 +199,21 @@ function showModalByScroll() {
 
             const request = new XMLHttpRequest();
             request.open('POST', 'server.php');
-            /* request.setRequestHeader('Content-type','multipart/form-data'); */ //заголовки
+            request.setRequestHeader('Content-type', 'application/json');  //заголовки
 
             const formData = new FormData(form); // Это позволяет преобразовать данные от форм ввода в привычную форму объекта
-            
-            request.send(formData); //отправили данные на сервер
+
+            const object = {}; //сюда будем помещать преобразованные данные из FormData в JSON
+
+            formData.forEach (function(value,key) { //наполняем объект данными из FormData
+                object[key] = value;
+            });
+
+            const json = JSON.stringify(object); // превращаем наш заполненный объект в JSON
+
+
+
+            request.send(json); //отправили данные на сервер
 
             request.addEventListener('load', () => { //отслеживаем загрузку данных на сервер
                 if (request.status === 200) {
@@ -219,7 +229,7 @@ function showModalByScroll() {
                     statusMessage.textContent = message.failure; // если не ок, то сообщение об ошибке
                 }
             });
-        
+
         });
 
     }
