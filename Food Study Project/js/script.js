@@ -209,6 +209,12 @@ function showModalByScroll() {
                 if (request.status === 200) {
                     console.log(request.response);
                     statusMessage.textContent = message.success; // если все ок, то сообщение об успехе в форме
+                    form.reset(); // очистка формы после отправки на сервер
+
+                    setTimeout(() => {  // удаление сообщения через 2 секунды
+                        statusMessage.remove();
+                    }, 2000);
+
                 } else {
                     statusMessage.textContent = message.failure; // если не ок, то сообщение об ошибке
                 }
