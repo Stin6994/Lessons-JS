@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault(); // в AJAX запросах ставим вначале, чтобы отменить стандартное поведение браузера (перезагрузку при изменениях и отправке формы)
 
             const statusMessage = document.createElement('div'); // Добавляем блок с сообщением пользователю о статусе отправки данных
-            statusMessage.classList.add('ststus');
+            statusMessage.classList.add('status');
             statusMessage.textContent = message.loading; //как только отправились данные, пользователь видит сообщение "загрузка"
             form.append(statusMessage); //добавляем сообщение к форме
 
@@ -219,9 +219,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (request.status === 200) {
                     console.log(request.response);
                     showThanksModal(message.success); // если все ок, то сообщение об успехе в форме
+                    statusMessage.remove(); 
                     form.reset(); // очистка формы после отправки на сервер
 
-                     statusMessage.remove();              
+                    
 
                 } else {
                     showThanksModal(message.failure); // если не ок, то сообщение об ошибке
@@ -235,9 +236,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Урок 84 - Красивое оповещение пользователя
 
     function showThanksModal(message) {  // новое модальное окно с благодарностью
+        
         const prevModalDialog = document.querySelector('.modal__dialog'); //функционируем с имеющимся модальным окном
         prevModalDialog.classList.add('hide'); //временно скрываем его, чтобы не удалять и не создавать заново при новой необходимости
-        /* openModal(); */ //создавали ранее, открывает модальное окно
+        openModal(); //создавали ранее, открывает модальное окно
 
         const thanksModal = document.createElement('div');
         thanksModal.classList.add('modal__dialog');
@@ -248,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     `;
 
-        document.querySelector('.modal').append(thanksModal);
+        document.querySelector('.modal').prepend(thanksModal);
 
         setTimeout(() => {
             thanksModal.remove(); 
@@ -258,6 +260,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
 
     }
+
+        
 
 
 
