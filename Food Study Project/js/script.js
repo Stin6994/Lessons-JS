@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = ''; //возвращаем скролл на страницу сайта после закрытия мод. окна
     }
 
-/*     modalCloseBtn.addEventListener('click', closeModal); */
+    /*     modalCloseBtn.addEventListener('click', closeModal); */
 
 
     modal.addEventListener('click', (e) => {    //если кликнуть мимо модального окна, то оно тоже закроется
@@ -172,6 +172,177 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('scroll', showModalByScroll);  //При прокрутке страницы до конца - открывается окно
+
+
+    // Урок 78 Классы в реальной работе (шаблонизируем карточки) ЗАКОММЕНТИРОВАНО, ТК ДАЛЕЕ ДОПОЛНЕНО
+
+/*     class MenuCard {
+        constructor(src, alt, tittle, descr, price, parrentSelector) {
+            this.src = src;
+            this.alt = alt;
+            this.tittle = tittle;
+            this.descr = descr;
+            this.price = price;
+            this.parrent = document.querySelector(parrentSelector);
+            this.transfer = 91; //курс доллар/рубль
+            this.changeToRub();
+        }
+
+        changeToRub() { // метод для конвертации валюты в рубль
+            this.price *= this.transfer;
+        }
+
+        render() { //для добавления новой карточки на страницу в структуру html
+            const element = document.createElement('div');
+            element.innerHTML = `
+          <div class="menu__item">
+                      <img src= ${this.src} alt=${this.alt}>
+                      <h3 class="menu__item-subtitle">${this.tittle}</h3>
+                      <div class="menu__item-descr">${this.descr}</div>
+                      <div class="menu__item-divider"></div>
+                      <div class="menu__item-price">
+                          <div class="menu__item-cost">Цена:</div>
+                          <div class="menu__item-total"><span>${this.price}</span> руб/день</div> 
+                      </div>
+                  </div>
+                  `;
+            this.parrent.append(element); //добавляем новосозданный элемент div с карточкой в родительский блок всех карточек
+        }
+    }
+
+
+    new MenuCard(
+        "img/tabs/vegy.jpg",
+        "vegy",
+        'Меню "Фитнес"',
+        'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+        5, //прайс - 5$ 
+        '.menu .container'
+    ).render();
+
+    new MenuCard(
+        "img/tabs/elite.jpg",
+        "elite",
+        'Меню “Премиум”',
+        'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
+        9,
+        '.menu .container'
+    ).render();
+
+    new MenuCard(
+        "img/tabs/post.jpg",
+        "post",
+        'Меню "Постное"',
+        'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
+        7,
+        '.menu .container'
+    ).render(); */
+
+
+
+
+    // Урок 79 - Rest оператор и параметры по умолчанию (ES6)
+
+    /*     const log = function (a, b, ...rest) {  // ...(любое название, например rest) - rest оператор, говорит, что будет неизвестное количество элементов дополнительно. Эти элементы соберутся в массив
+            console.log(a, b, rest);
+        }
+    
+        log('a', 'b', 'rest1', 'rest2', 'rest3');
+    
+    
+        //параметр по умолчанию
+    
+        function calcOrDouble(number, basis) {
+            console.log(number * basis);
+        }
+    
+        calcOrDouble(3, 5); // будет 15, оба параметра известны, но что если один из них не будет задан, можно ли задать один из параметров по умолчанию? 
+    
+        function calcOrDoubleTwo(number, basis = 7) { //в ES6 можно просто через = задать параметр по умолчанию, на случай если этот аргумент не будет задан при объявлении функции
+            console.log(number * basis);
+        }
+    
+        calcOrDoubleTwo(3); */ // Будет 21
+
+    // Теперь дополняем предыдущий урок с классами ()
+
+
+    class MenuCard {
+        constructor(src, alt, tittle, descr, price, parrentSelector, ...classes) { //Допустим хотим будущей карточке присвоить неизвестное количество дополнительных классов в будущем, используем rest оператор
+            this.src = src;
+            this.alt = alt;
+            this.tittle = tittle;
+            this.descr = descr;
+            this.price = price;
+            this.classes = classes; //не забываем добавить свойство - это будет массив, тк rest оператор отдает массив
+            this.parrent = document.querySelector(parrentSelector);
+            this.transfer = 91; //курс доллар/рубль
+            this.changeToRub();
+        }
+
+        changeToRub() { // метод для конвертации валюты в рубль
+            this.price *= this.transfer;
+        }
+
+        render() { //для добавления новой карточки на страницу в структуру html
+            const element = document.createElement('div');
+
+            if (this.classes.length === 0) { //если в rest не были вообще переданы аргументы, то добавляем класс, по умолчанию, без которого вообще никак, поедет верстка
+                this.classes = 'menu__item';
+                element.classList.add(this.classes);
+            } else {
+                this.classes.forEach(className => element.classList.add(className)); // перебрали все элементы массива с классами (rest), каждый класс добавили к нашей карточке
+            }
+
+
+            element.innerHTML = `
+                <img src= ${this.src} alt=${this.alt}>
+                <h3 class="menu__item-subtitle">${this.tittle}</h3>
+                <div class="menu__item-descr">${this.descr}</div>
+                <div class="menu__item-divider"></div>
+                <div class="menu__item-price">
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${this.price}</span> руб/день</div> 
+                </div>
+            `; // убрали <div class="menu__item">, этот и другие классы будем передавать при объявлении карточек в виде аргуметов в конце (rest)
+            this.parrent.append(element); //добавляем новосозданный элемент div с карточкой в родительский блок всех карточек
+        }
+    }
+
+    const deleteCard = document.querySelectorAll('.menu__item'); //удаляем старые карточки
+    deleteCard.forEach(item => {
+        item.remove();
+    })
+
+    new MenuCard( //Добавляем новые
+        "img/tabs/vegy.jpg",
+        "vegy",
+        'Меню "Фитнес"',
+        'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+        5, //прайс - 5$ 
+        '.menu .container'
+        // 'menu__item',// rest добавляем классы
+        //'big' 
+    ).render();
+
+    new MenuCard(
+        "img/tabs/elite.jpg",
+        "elite",
+        'Меню “Премиум”',
+        'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
+        9,
+        '.menu .container'
+    ).render();
+
+    new MenuCard(
+        "img/tabs/post.jpg",
+        "post",
+        'Меню "Постное"',
+        'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
+        7,
+        '.menu .container'
+    ).render();
+
 
 
 
@@ -222,10 +393,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (request.status === 200) {
                     console.log(request.response);
                     showThanksModal(message.success); // если все ок, то сообщение об успехе в форме
-                    statusMessage.remove(); 
+                    statusMessage.remove();
                     form.reset(); // очистка формы после отправки на сервер
 
-                    
+
 
                 } else {
                     showThanksModal(message.failure); // если не ок, то сообщение об ошибке
@@ -239,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Урок 84 - Красивое оповещение пользователя
 
     function showThanksModal(message) {  // новое модальное окно с благодарностью
-        
+
         const prevModalDialog = document.querySelector('.modal__dialog'); //функционируем с имеющимся модальным окном
         prevModalDialog.classList.add('hide'); //временно скрываем его, чтобы не удалять и не создавать заново при новой необходимости
         openModal(); //создавали ранее, открывает модальное окно
@@ -256,16 +427,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.modal').append(thanksModal);
 
         setTimeout(() => {
-            thanksModal.remove(); 
+            thanksModal.remove();
             prevModalDialog.classList.add('show');
             prevModalDialog.classList.remove('hide');
             closeModal();
         }, 4000);
 
     }
-
-        
-
 
 
 
