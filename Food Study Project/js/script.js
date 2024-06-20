@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const forms = document.querySelectorAll('form');
 
     const message = { // сообщения для юзера в разных ситуациях
-        loading: 'Загрузка',
+        loading: 'img/form/spinner.svg',
         success: 'Спасибо! Скоро мы с Вами свяжемся',
         failure: 'Что-то пошло не так...'
     }
@@ -365,11 +365,15 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', (e) => { //срабатывает когда мы пытемся оправить какую-то форму
             e.preventDefault(); // в AJAX запросах ставим вначале, чтобы отменить стандартное поведение браузера (перезагрузку при изменениях и отправке формы)
 
-            const statusMessage = document.createElement('div'); // Добавляем блок с сообщением пользователю о статусе отправки данных
-            statusMessage.classList.add('status');
-            statusMessage.textContent = message.loading; //как только отправились данные, пользователь видит сообщение "загрузка"
-            form.append(statusMessage); //добавляем сообщение к форме
+            const statusMessage = document.createElement('img'); // Добавляем блок с сообщением пользователю о статусе отправки данных
+            statusMessage.src = message.loading;
+            statusMessage.style.cssText = `
+            display: block;
+            margin: 0 auto;
+            `;
 
+            /* form.append(statusMessage); */ //добавляем сообщение к форме
+            form.insertAdjacentElement('afterend', statusMessage); // Для добавления после формы (снизу) в верстке, а не за ним горизонтально
 
             const request = new XMLHttpRequest();
             request.open('POST', 'server.php');
