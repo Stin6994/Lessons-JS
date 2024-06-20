@@ -1,4 +1,4 @@
-'use strict';
+/* 'use strict'; */
 
 console.log('hello111');
 
@@ -131,14 +131,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function openModal() {
-        modal.classList.toggle('show');  // Если класса show нет, добавляем, если есть - убираем
+        /* modal.classList.toggle('show'); */  // Если класса show нет, добавляем, если есть - убираем
+        modal.classList.add('show');
+        modal.classList.remove('hide');
         document.body.style.overflow = 'hidden';  //для того, чтобы при открытом модальном окне не прокручивался вниз и вверх сайт
         clearInterval(modalTimerId); // Если юзер сам открыл окно до его автоматического открытия - далее оно автоматически уже не будет открываться до обновления страницы.
     }
 
 
     function closeModal() {
-        modal.classList.toggle('show');
+        modal.classList.add('hide');
+        modal.classList.remove('show');
         document.body.style.overflow = ''; //возвращаем скролл на страницу сайта после закрытия мод. окна
     }
 
@@ -250,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     `;
 
-        document.querySelector('.modal').prepend(thanksModal);
+        document.querySelector('.modal').append(thanksModal);
 
         setTimeout(() => {
             thanksModal.remove(); 
