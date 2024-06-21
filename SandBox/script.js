@@ -126,15 +126,55 @@ btn.addEventListener('click', function() { // контекст this - будет
 
     obj.sayNumber(); */
 
-    // стрелочная функция не имеет своего контекста, поэтому берет его у родителя
+// стрелочная функция не имеет своего контекста, поэтому берет его у родителя
 
 /* 
     const double = (a) => {
         return a * 2;
     };  // обычное представление стрелочной функции   */
-    
-    /* const double = (a) => a * 2; //сокращенное */
 
-    const double = a => a * 2; // если только 1 аргумент, можно опустить скобки
+/* const double = (a) => a * 2; //сокращенное */
+
+/*     const double = a => a * 2; // если только 1 аргумент, можно опустить скобки
     console.log(double(3.5));
-    console.log(double(4));
+    console.log(double(4)); */
+
+
+//Урок 85 - Promise (дословно ожидание - для асинхронного кода)
+
+console.log('Запрос данных...');
+
+
+
+const req = new Promise(function(resolve,reject){  //resolve - обещание выполнилось, reject - не выполнилось
+    setTimeout(() => {
+        console.log('Подготовка данных...');
+
+        const product = {
+            name: 'TV',
+            price: 2000
+        }
+
+        resolve(product);
+
+    }, 2000);
+});
+
+req.then((product) => {   // then - если все в порядке, то выполняется следующий фрагмент кода
+    return new Promise((resolve,reject) => {
+        setTimeout(() => {
+            product.status = 'order';
+            resolve(product);
+        }, 2000);
+    });
+}).then(data => {
+    data.modify = true;
+    return data;
+}).then(data => {
+    console.log(data);
+}).catch(() => {  // catch - если что-то пошло не так, на каком-то из then, то все последующие then пропускаются и код переходит к catch
+    console.error('Произошла ошибка');
+}).finally(() => { // finally - конечное действие, независимо от того выполнились все then, или был задействован catch. Например для очистки формы после удачного или неудачной (без разницы) отправки данных на сервер 
+    console.log('Финал');
+});
+
