@@ -176,67 +176,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Урок 78 Классы в реальной работе (шаблонизируем карточки) ЗАКОММЕНТИРОВАНО, ТК ДАЛЕЕ ДОПОЛНЕНО
 
-/*     class MenuCard {
-        constructor(src, alt, tittle, descr, price, parrentSelector) {
-            this.src = src;
-            this.alt = alt;
-            this.tittle = tittle;
-            this.descr = descr;
-            this.price = price;
-            this.parrent = document.querySelector(parrentSelector);
-            this.transfer = 91; //курс доллар/рубль
-            this.changeToRub();
-        }
-
-        changeToRub() { // метод для конвертации валюты в рубль
-            this.price *= this.transfer;
-        }
-
-        render() { //для добавления новой карточки на страницу в структуру html
-            const element = document.createElement('div');
-            element.innerHTML = `
-          <div class="menu__item">
-                      <img src= ${this.src} alt=${this.alt}>
-                      <h3 class="menu__item-subtitle">${this.tittle}</h3>
-                      <div class="menu__item-descr">${this.descr}</div>
-                      <div class="menu__item-divider"></div>
-                      <div class="menu__item-price">
-                          <div class="menu__item-cost">Цена:</div>
-                          <div class="menu__item-total"><span>${this.price}</span> руб/день</div> 
+    /*     class MenuCard {
+            constructor(src, alt, tittle, descr, price, parrentSelector) {
+                this.src = src;
+                this.alt = alt;
+                this.tittle = tittle;
+                this.descr = descr;
+                this.price = price;
+                this.parrent = document.querySelector(parrentSelector);
+                this.transfer = 91; //курс доллар/рубль
+                this.changeToRub();
+            }
+    
+            changeToRub() { // метод для конвертации валюты в рубль
+                this.price *= this.transfer;
+            }
+    
+            render() { //для добавления новой карточки на страницу в структуру html
+                const element = document.createElement('div');
+                element.innerHTML = `
+              <div class="menu__item">
+                          <img src= ${this.src} alt=${this.alt}>
+                          <h3 class="menu__item-subtitle">${this.tittle}</h3>
+                          <div class="menu__item-descr">${this.descr}</div>
+                          <div class="menu__item-divider"></div>
+                          <div class="menu__item-price">
+                              <div class="menu__item-cost">Цена:</div>
+                              <div class="menu__item-total"><span>${this.price}</span> руб/день</div> 
+                          </div>
                       </div>
-                  </div>
-                  `;
-            this.parrent.append(element); //добавляем новосозданный элемент div с карточкой в родительский блок всех карточек
+                      `;
+                this.parrent.append(element); //добавляем новосозданный элемент div с карточкой в родительский блок всех карточек
+            }
         }
-    }
-
-
-    new MenuCard(
-        "img/tabs/vegy.jpg",
-        "vegy",
-        'Меню "Фитнес"',
-        'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
-        5, //прайс - 5$ 
-        '.menu .container'
-    ).render();
-
-    new MenuCard(
-        "img/tabs/elite.jpg",
-        "elite",
-        'Меню “Премиум”',
-        'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
-        9,
-        '.menu .container'
-    ).render();
-
-    new MenuCard(
-        "img/tabs/post.jpg",
-        "post",
-        'Меню "Постное"',
-        'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
-        7,
-        '.menu .container'
-    ).render(); */
+    
+    
+        new MenuCard(
+            "img/tabs/vegy.jpg",
+            "vegy",
+            'Меню "Фитнес"',
+            'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+            5, //прайс - 5$ 
+            '.menu .container'
+        ).render();
+    
+        new MenuCard(
+            "img/tabs/elite.jpg",
+            "elite",
+            'Меню “Премиум”',
+            'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
+            9,
+            '.menu .container'
+        ).render();
+    
+        new MenuCard(
+            "img/tabs/post.jpg",
+            "post",
+            'Меню "Постное"',
+            'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
+            7,
+            '.menu .container'
+        ).render(); */
 
 
 
@@ -372,93 +372,66 @@ document.addEventListener('DOMContentLoaded', () => {
             margin: 0 auto;
             `;
 
-            /* form.append(statusMessage); */ //добавляем сообщение к форме
             form.insertAdjacentElement('afterend', statusMessage); // Для добавления после формы (снизу) в верстке, а не за ним горизонтально
-
-            const request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
-            request.setRequestHeader('Content-type', 'application/json');  //заголовки
-
             const formData = new FormData(form); // Это позволяет преобразовать данные от форм ввода в привычную форму объекта
-
             const object = {}; //сюда будем помещать преобразованные данные из FormData в JSON
-
             formData.forEach(function (value, key) { //наполняем объект данными из FormData
                 object[key] = value;
             });
 
-            const json = JSON.stringify(object); // превращаем наш заполненный объект в JSON
 
 
 
-            request.send(json); //отправили данные на сервер
-
-            request.addEventListener('load', () => { //отслеживаем загрузку данных на сервер
-                if (request.status === 200) {
-                    console.log(request.response);
+            fetch('server.php', { // упрощаем события и передачу данных на сервер при помощи промисов и фетча
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(object)
+            }).then(data => data.text()) //чтобы видеть в читаемом формате текста
+                .then(data => {
+                    console.log(data);
                     showThanksModal(message.success); // если все ок, то сообщение об успехе в форме
                     statusMessage.remove();
-                    form.reset(); // очистка формы после отправки на сервер
+                }).catch(() => {
+                    showThanksModal(message.failure); // если не ок
+                }).finally(() => {
+                    form.reset(); // в любом случае в конце чистим форму
+                });
 
-
-
-                } else {
-                    showThanksModal(message.failure); // если не ок, то сообщение об ошибке
-                }
-            });
 
         });
 
-    }
+        // Урок 84 - Красивое оповещение пользователя
 
-    // Урок 84 - Красивое оповещение пользователя
+        function showThanksModal(message) {  // новое модальное окно с благодарностью
 
-    function showThanksModal(message) {  // новое модальное окно с благодарностью
+            const prevModalDialog = document.querySelector('.modal__dialog'); //функционируем с имеющимся модальным окном
+            prevModalDialog.classList.add('hide'); //временно скрываем его, чтобы не удалять и не создавать заново при новой необходимости
+            openModal(); //создавали ранее, открывает модальное окно
 
-        const prevModalDialog = document.querySelector('.modal__dialog'); //функционируем с имеющимся модальным окном
-        prevModalDialog.classList.add('hide'); //временно скрываем его, чтобы не удалять и не создавать заново при новой необходимости
-        openModal(); //создавали ранее, открывает модальное окно
-
-        const thanksModal = document.createElement('div');
-        thanksModal.classList.add('modal__dialog');
-        thanksModal.innerHTML = `
+            const thanksModal = document.createElement('div');
+            thanksModal.classList.add('modal__dialog');
+            thanksModal.innerHTML = `
     <div class="modal__content">
         <div class="modal__close" data-close>×</div>
         <div class="modal__title">${message}</div>
     </div>
     `;
 
-        document.querySelector('.modal').append(thanksModal);
+            document.querySelector('.modal').append(thanksModal);
 
-        setTimeout(() => {
-            thanksModal.remove();
-            prevModalDialog.classList.add('show');
-            prevModalDialog.classList.remove('hide');
-            closeModal();
-        }, 4000);
+            setTimeout(() => {
+                thanksModal.remove();
+                prevModalDialog.classList.add('show');
+                prevModalDialog.classList.remove('hide');
+                closeModal();
+            }, 4000);
 
-    }
-
-//Урок 86 - Fetch API
-
-
-/* fetch('https://jsonplaceholder.typicode.com/todos/1') //Классический GET запрос, котороый получит данные из заданного url
-      .then(response => response.json())// используются промисы. 
-      .then(json => console.log(json)); */
-
-/* 
-      fetch('https://jsonplaceholder.typicode.com/posts', { //добавляем в posts еще одну запись, было 100, стало 101
-        method : 'POST',
-        body : JSON.stringify({name : 'Alex'}),
-        headers : {
-            'content-type' : 'application/json'
         }
-    }) //Классический GET запрос, котороый получит данные из заданного url
-          .then(response => response.json())// используются промисы. 
-          .then(json => console.log(json)); */
-      
-      
+
+        //Урок 86 - Fetch API - примеры в предыдущих версиях
 
 
-
+    };
 });
