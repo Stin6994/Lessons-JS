@@ -439,7 +439,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-});
-
-
 //Урок 86 - Fetch API
+
+
+/* fetch('https://jsonplaceholder.typicode.com/todos/1') //Классический GET запрос, котороый получит данные из заданного url
+      .then(response => response.json())// используются промисы. 
+      .then(json => console.log(json)); */
+
+/* 
+      fetch('https://jsonplaceholder.typicode.com/posts', { //добавляем в posts еще одну запись, было 100, стало 101
+        method : 'POST',
+        body : JSON.stringify({name : 'Alex'}),
+        headers : {
+            'content-type' : 'application/json'
+        }
+    }) //Классический GET запрос, котороый получит данные из заданного url
+          .then(response => response.json())// используются промисы. 
+          .then(json => console.log(json)); */
+      
+      
+
+
+
+});
