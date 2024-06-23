@@ -439,6 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-
-
 });
+
+
+//Урок 86 - Fetch API
