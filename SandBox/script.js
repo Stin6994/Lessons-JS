@@ -226,7 +226,7 @@ console.log(everyArr.every(item => typeof(item) === 'number')); // вернет 
 
     // метод reduce
 
-const arr = [4, 5, 1, 3, 2, 6]; // сложение чисел в массиве
+/* const arr = [4, 5, 1, 3, 2, 6]; // сложение чисел в массиве
 const result = arr.reduce((sum, current) => sum + current);  //sum, current - эти аргументы в reduce автоматически
 //изначально sum = 0, а current = первому числу (4). выполняется сложение, получается 4
 //теперь sum = 4, а current = 5. И так далее, пока не сложится весь массив
@@ -234,4 +234,22 @@ console.log(result);
 
 const arrString = ['apple', 'orange', 'milk']; // может складывать и строки тоже
 const resultString = arrString.reduce((sum, current) => `${sum}, ${current}`); 
-console.log(resultString);
+console.log(resultString); */
+
+    // пример применения на практике
+
+const obj = { // задача- вытащить людей (имена). Данные пришли с сервера и мы не знаем количество позиций, их порядок и тд. Надо сделать системно для любого возможного объекта
+    ivan: 'persone',
+    ann: 'persone',
+    dog: 'animal',
+    cat: 'animal'
+};
+
+const newArr = Object.entries(obj) //делает из объекта массив с массивами (матрица)
+.filter(item => item[1] === 'persone') // теперь проверяем в каждом массиве второй элемент, и если он равен 'persone' - оставляем
+.map(item => item[0]); // формируем новый массив, в котором останутся только имена
+console.log(newArr);
+
+
+
+
