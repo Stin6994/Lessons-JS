@@ -202,13 +202,16 @@ Promise.race([test(1000), test(2000)]).then(() => { // then выполняетс
 
 // Урок 87 - методы перебора массивов
 
- // метод filter
+    //метод filter
 
-const names = ['Ivan', 'Alena', 'Vlsdimir', 'Konstantin', 'Igor']; // вычленим те имена, которые меньше 5 символов
-
+/* const names = ['Ivan', 'Alena', 'Vlsdimir', 'Konstantin', 'Igor']; // вычленим те имена, которые меньше 5 символов
 const shortNames = names.filter(function(name) { // возвращается новый массив
     return name.length < 5;
 });
+console.log(shortNames); */
 
-console.log(shortNames);
+    // метод map
 
+/* const answers = ['IvAn', 'AnnA', 'Hello']; // приведем в нормальный вид регистр
+const result = answers.map(item => item.toLocaleLowerCase()); // берем каждый элемент массива и переводим в нижний регистр. На выходе новый массив
+console.log(result); */
