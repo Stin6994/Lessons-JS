@@ -218,8 +218,20 @@ console.log(result); */
 
     // методы every/some
 
-const someArr = [4, 'dsgfds', 'dsfsgsdgsdgds']; //проверим, есть ли среди элементов массива хотя бы одно число
+/* const someArr = [4, 'dsgfds', 'dsfsgsdgsdgds']; //проверим, есть ли среди элементов массива хотя бы одно число
 console.log(someArr.some(item => typeof(item) === 'number'));
 
 const everyArr = [4, 'dsgfds', 'dsfsgsdgsdgds']; 
-console.log(everyArr.every(item => typeof(item) === 'number')); // вернет true, если ВСЕ элементы массива - число
+console.log(everyArr.every(item => typeof(item) === 'number')); // вернет true, если ВСЕ элементы массива - число */
+
+    // метод reduce
+
+const arr = [4, 5, 1, 3, 2, 6]; // сложение чисел в массиве
+const result = arr.reduce((sum, current) => sum + current);  //sum, current - эти аргументы в reduce автоматически
+//изначально sum = 0, а current = первому числу (4). выполняется сложение, получается 4
+//теперь sum = 4, а current = 5. И так далее, пока не сложится весь массив
+console.log(result);
+
+const arrString = ['apple', 'orange', 'milk']; // может складывать и строки тоже
+const resultString = arrString.reduce((sum, current) => `${sum}, ${current}`); 
+console.log(resultString);
