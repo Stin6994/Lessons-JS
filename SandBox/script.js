@@ -204,4 +204,11 @@ Promise.race([test(1000), test(2000)]).then(() => { // then выполняетс
 
  // метод filter
 
- 
+const names = ['Ivan', 'Alena', 'Vlsdimir', 'Konstantin', 'Igor']; // вычленим те имена, которые меньше 5 символов
+
+const shortNames = names.filter(function(name) { // возвращается новый массив
+    return name.length < 5;
+});
+
+console.log(shortNames);
+
