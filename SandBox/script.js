@@ -215,3 +215,11 @@ console.log(shortNames); */
 /* const answers = ['IvAn', 'AnnA', 'Hello']; // приведем в нормальный вид регистр
 const result = answers.map(item => item.toLocaleLowerCase()); // берем каждый элемент массива и переводим в нижний регистр. На выходе новый массив
 console.log(result); */
+
+    // методы every/some
+
+const someArr = [4, 'dsgfds', 'dsfsgsdgsdgds']; //проверим, есть ли среди элементов массива хотя бы одно число
+console.log(someArr.some(item => typeof(item) === 'number'));
+
+const everyArr = [4, 'dsgfds', 'dsfsgsdgsdgds']; 
+console.log(everyArr.every(item => typeof(item) === 'number')); // вернет true, если ВСЕ элементы массива - число
