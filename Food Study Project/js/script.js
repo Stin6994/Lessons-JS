@@ -437,10 +437,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //Урок 88 - JSON сервер
 
-    
 
+    fetch('db.json')
+        .then(data => data.json())
+        .then(res => console.log(res));
 
-
+        //получили в консоли инфо из db.json
+        //теперь используем json-server: пишем в консоли json-server db.json
 
 
 });
