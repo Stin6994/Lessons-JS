@@ -438,13 +438,17 @@ document.addEventListener('DOMContentLoaded', () => {
         //Урок 88 - JSON сервер
 
 
-    fetch('db.json')
+    /* fetch('db.json') */ // изначально делали так
+    fetch('http://localhost:3000/menu')
         .then(data => data.json())
         .then(res => console.log(res));
 
         //получили в консоли инфо из db.json
-        //теперь используем json-server: пишем в консоли json-server db.json
-
+        //теперь используем json-server: пишем в консоли     npx json-server db.json
+        // там видим Endpoints:
+                //http://localhost:3000/menu
+                //http://localhost:3000/requests
+        // подставляем путь в fetch
 
 });
 
