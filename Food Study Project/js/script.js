@@ -324,12 +324,23 @@ document.addEventListener('DOMContentLoaded', () => {
         return await res.json();
     }
 
-    getResources('http://localhost:3000/menu')
+/*     getResources('http://localhost:3000/menu')
         .then(data => {
             data.forEach(({ img, altimg, tittle, descr, price }) => {
                 new MenuCard(img, altimg, tittle, descr, price, '.menu .container').render();
             });
+        }); */
+
+        // Урок 90 - Axios
+
+        axios.get('http://localhost:3000/menu')
+        .then (data => {
+            data.data.forEach(({ img, altimg, tittle, descr, price }) => {
+                new MenuCard(img, altimg, tittle, descr, price, '.menu .container').render();
+            });
         });
+
+
 
     // ниже еще один способ динамической верстки на странице
 
