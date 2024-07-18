@@ -358,10 +358,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     forms.forEach(item => { // При заполнении любой формы будет происходить нижеперечисленное
-        postData(item);
+        bindPostData(item);
     });
 
-    function postData(form) {
+    const postData = async (url, data) => {   // async - говорит, что код должен будет обрабатываться не по порядку, а асинхронно, так как надо дождаться реакции сервера (при помощи await), прежде чем выполнять дальше
+                                            // async и await всегда идут в паре
+        const res = await fetch(url, { // await не дает создать переменную res до тех пор, пока не выполнится запрос на сервер
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: data
+        });
+        return await res.json();
+    }
+
+    function bindPostData(form) {
         form.addEventListener('submit', (e) => { //срабатывает когда мы пытемся оправить какую-то форму
             e.preventDefault(); // в AJAX запросах ставим вначале, чтобы отменить стандартное поведение браузера (перезагрузку при изменениях и отправке формы)
 
@@ -453,7 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //Урок 89 - Получение данных с сервера Async/Await (ES8)
 
-        
+
 
 
 
