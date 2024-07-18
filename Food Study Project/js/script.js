@@ -314,35 +314,22 @@ document.addEventListener('DOMContentLoaded', () => {
         item.remove();
     })
 
-    new MenuCard( //Добавляем новые
-        "img/tabs/vegy.jpg",
-        "vegy",
-        'Меню "Фитнес"',
-        'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
-        5, //прайс - 5$ 
-        '.menu .container'
-        // 'menu__item',// rest добавляем классы
-        //'big' 
-    ).render();
+    const getResources = async (url) => {   
+        const res = await fetch(url);
 
-    new MenuCard(
-        "img/tabs/elite.jpg",
-        "elite",
-        'Меню “Премиум”',
-        'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
-        9,
-        '.menu .container'
-    ).render();
+        if (!res.ok) { // Если GET запрос не прошел, выдаем ошибку
+            throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+        }
 
-    new MenuCard(
-        "img/tabs/post.jpg",
-        "post",
-        'Меню "Постное"',
-        'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
-        7,
-        '.menu .container'
-    ).render();
+        return await res.json();
+    }
 
+    getResources('http://localhost:3000/menu')
+    .then(data => {
+        data.forEach(({img, altimg, title, descr, price}) => {
+            new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+        });
+    });
 
 
 
@@ -362,7 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const postData = async (url, data) => {   // async - говорит, что код должен будет обрабатываться не по порядку, а асинхронно, так как надо дождаться реакции сервера (при помощи await), прежде чем выполнять дальше
-                                            // async и await всегда идут в паре
+        // async и await всегда идут в паре
         const res = await fetch(url, { // await не дает создать переменную res до тех пор, пока не выполнится запрос на сервер
             method: 'POST',
             headers: {
@@ -387,16 +374,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             form.insertAdjacentElement('afterend', statusMessage); // Для добавления после формы (снизу) в верстке, а не за ним горизонтально
             const formData = new FormData(form); // Это позволяет преобразовать данные от форм ввода в привычную форму объекта
-           
 
-            const json = JSON.stringify(Object.fromEntries(formData.entries())); 
+
+            const json = JSON.stringify(Object.fromEntries(formData.entries()));
             // Берем данные пользователя из заполненной формы
             // formData.entries() - превращает их в массив массивов [[ключ, значение], [ключ, значение]]
             // Object.fromEntries - превращает массив массивов в объект
             // JSON.stringify - преобразует объект в удобный формат JSON
 
 
-                postData ('http://localhost:3000/requests', json)
+            postData('http://localhost:3000/requests', json)
                 .then(data => {
                     console.log(data);
                     showThanksModal(message.success); // если все ок, то сообщение об успехе в форме
@@ -443,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     };
 
-        //Урок 88 - JSON сервер
+    //Урок 88 - JSON сервер
 
 
     /* fetch('db.json') */ // изначально делали так
@@ -451,15 +438,15 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => data.json())
         .then(res => console.log(res));
 
-        //получили в консоли инфо из db.json
-        //теперь используем json-server: пишем в консоли     npx json-server db.json
-        // там видим Endpoints:
-                //http://localhost:3000/menu
-                //http://localhost:3000/requests
-        // подставляем путь в fetch
+    //получили в консоли инфо из db.json
+    //теперь используем json-server: пишем в консоли     npx json-server db.json
+    // там видим Endpoints:
+    //http://localhost:3000/menu
+    //http://localhost:3000/requests
+    // подставляем путь в fetch
 
 
-        //Урок 89 - Получение данных с сервера Async/Await (ES8)
+    //Урок 89 - Получение данных с сервера Async/Await (ES8)
 
 
 
