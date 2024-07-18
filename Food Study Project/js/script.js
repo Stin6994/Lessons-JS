@@ -373,6 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return await res.json();
     }
 
+
     function bindPostData(form) {
         form.addEventListener('submit', (e) => { //срабатывает когда мы пытемся оправить какую-то форму
             e.preventDefault(); // в AJAX запросах ставим вначале, чтобы отменить стандартное поведение браузера (перезагрузку при изменениях и отправке формы)
@@ -391,16 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 object[key] = value;
             });
 
-
-
-
-            fetch('server.php', { // упрощаем события и передачу данных на сервер при помощи промисов и фетча
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(object)
-            }).then(data => data.text()) //чтобы видеть в читаемом формате текста
+                postData ('http://localhost:3000/requests', JSON.stringify(object))
                 .then(data => {
                     console.log(data);
                     showThanksModal(message.success); // если все ок, то сообщение об успехе в форме
