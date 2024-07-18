@@ -450,5 +450,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 //http://localhost:3000/requests
         // подставляем путь в fetch
 
+
+        //Урок 89 - Получение данных с сервера Async/Await (ES8)
+
+        
+
+
+
 });
 
