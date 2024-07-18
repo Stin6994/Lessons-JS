@@ -387,12 +387,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             form.insertAdjacentElement('afterend', statusMessage); // Для добавления после формы (снизу) в верстке, а не за ним горизонтально
             const formData = new FormData(form); // Это позволяет преобразовать данные от форм ввода в привычную форму объекта
-            const object = {}; //сюда будем помещать преобразованные данные из FormData в JSON
-            formData.forEach(function (value, key) { //наполняем объект данными из FormData
-                object[key] = value;
-            });
+           
 
-                postData ('http://localhost:3000/requests', JSON.stringify(object))
+            const json = JSON.stringify(Object.fromEntries(formData.entries())); 
+            // Берем данные пользователя из заполненной формы
+            // formData.entries() - превращает их в массив массивов [[ключ, значение], [ключ, значение]]
+            // Object.fromEntries - превращает массив массивов в объект
+            // JSON.stringify - преобразует объект в удобный формат JSON
+
+
+                postData ('http://localhost:3000/requests', json)
                 .then(data => {
                     console.log(data);
                     showThanksModal(message.success); // если все ок, то сообщение об успехе в форме
