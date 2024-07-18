@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
         item.remove();
     })
 
-    const getResources = async (url) => {   
+    const getResources = async (url) => {
         const res = await fetch(url);
 
         if (!res.ok) { // Если GET запрос не прошел, выдаем ошибку
@@ -325,11 +325,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     getResources('http://localhost:3000/menu')
-    .then(data => {
-        data.forEach(({img, altimg, title, descr, price}) => {
-            new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+        .then(data => {
+            data.forEach(({ img, altimg, tittle, descr, price }) => {
+                new MenuCard(img, altimg, tittle, descr, price, '.menu .container').render();
+            });
         });
-    });
+
+    // ниже еще один способ динамической верстки на странице
+
+    /*     getResources('http://localhost:3000/menu')
+    .then(data => createCard(data));
+    
+    function createCard(data) {
+        data.forEach(({img, altimg, tittle, descr, price}) => {
+            const element = document.createElement('div');
+            element.classList.add('menu__item');
+            element.innerHTML = `
+              <img src= ${img} alt=${altimg}>
+                    <h3 class="menu__item-subtitle">${tittle}</h3>
+                    <div class="menu__item-descr">${descr}</div>
+                    <div class="menu__item-divider"></div>
+                    <div class="menu__item-price">
+                        <div class="menu__item-cost">Цена:</div>
+                        <div class="menu__item-total"><span>${price*91}</span> руб/день</div> 
+                    </div>
+            `
+    
+            document.querySelector('.menu .container').append(element);
+        });
+    }  */
 
 
 
