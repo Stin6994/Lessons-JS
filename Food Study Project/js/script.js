@@ -602,19 +602,21 @@ document.addEventListener('DOMContentLoaded', () => {
             offset -= +width.slice(0, width.length - 2);
         }
         slidesField.style.transform = `translateX(-${offset}px)`;
+        if (slideIndex == 1) {
+            slideIndex = slides.length;
+        } else {
+            slideIndex--;
+        }
+
+        if (slides.length < 10) {
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
     });
 
-    if (slideIndex == slides.length) {
-        slideIndex = slides.length;
-    } else {
-        slideIndex--;
-    }
 
-    if (slides.length < 10) {
-        current.textContent = `0${slideIndex}`;
-    } else {
-        current.textContent = slideIndex;
-    }
+
 
 });
 
