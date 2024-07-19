@@ -483,7 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Урок 89 - Получение данных с сервера Async/Await (ES8)
 
-
+    //Урок 91 - Слайдер (Вариант 1)
 
 
 
