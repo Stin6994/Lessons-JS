@@ -324,17 +324,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return await res.json();
     }
 
-/*     getResources('http://localhost:3000/menu')
+    /*     getResources('http://localhost:3000/menu')
+            .then(data => {
+                data.forEach(({ img, altimg, tittle, descr, price }) => {
+                    new MenuCard(img, altimg, tittle, descr, price, '.menu .container').render();
+                });
+            }); */
+
+    // Урок 90 - Axios
+
+    axios.get('http://localhost:3000/menu')
         .then(data => {
-            data.forEach(({ img, altimg, tittle, descr, price }) => {
-                new MenuCard(img, altimg, tittle, descr, price, '.menu .container').render();
-            });
-        }); */
-
-        // Урок 90 - Axios
-
-        axios.get('http://localhost:3000/menu')
-        .then (data => {
             data.data.forEach(({ img, altimg, tittle, descr, price }) => {
                 new MenuCard(img, altimg, tittle, descr, price, '.menu .container').render();
             });
@@ -485,6 +485,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Урок 91 - Слайдер (Вариант 1)
 
+    const slides = document.querySelectorAll('.offer__slide'),
+        prev = document.querySelector('.offer__slider-prev'),
+        next = document.querySelector('.offer__slider-next'),
+        total = document.querySelector('#total'),
+        current = document.querySelector('#current');
+
+    let slideIndex = 1;
+
+    showSlides(slideIndex);
+
+    
+        if (slides.length < 10) { //чтобы индекс прописывался с 0 в начале, например 03, 07 и тд
+            total.textContent = `0${slides.length}`;
+        } else {
+            total.textContent = slides.length;
+        }
+   
+
+    function showSlides(n) {
+
+        if (n > slides.length) { // если переключаешь вперед с последнего слайда, то попадаешь на первый
+            slideIndex = 1;
+        }
+
+        if (n < 1) { // если переключаешь назад с первого слайда, то попадаешь на последний
+            slideIndex = slides.length;
+        }
+
+        slides.forEach(item => item.style.display = 'none');  // для начала скрываем все слайды из верстки
+
+        slides[slideIndex - 1].style.display = 'block'; // показываем первый слайд
+
+        if (slides.length < 10) { //чтобы индекс прописывался с 0 в начале, например 03, 07 и тд
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
+    }
+
+    function plusSlides(n) { // функция для изменения индекса слайда
+        showSlides(slideIndex += n)
+    }
+
+    prev.addEventListener('click', () => { //нажали назад - индекс уменьшился на 1 
+        plusSlides(-1)
+    });
+
+    next.addEventListener('click', () => { //нажали вперед - индекс увеличился на 1 
+        plusSlides(1)
+    });
 
 
 });
