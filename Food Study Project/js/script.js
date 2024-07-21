@@ -314,35 +314,57 @@ document.addEventListener('DOMContentLoaded', () => {
         item.remove();
     })
 
-    new MenuCard( //Добавляем новые
-        "img/tabs/vegy.jpg",
-        "vegy",
-        'Меню "Фитнес"',
-        'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
-        5, //прайс - 5$ 
-        '.menu .container'
-        // 'menu__item',// rest добавляем классы
-        //'big' 
-    ).render();
+    const getResources = async (url) => {
+        const res = await fetch(url);
 
-    new MenuCard(
-        "img/tabs/elite.jpg",
-        "elite",
-        'Меню “Премиум”',
-        'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
-        9,
-        '.menu .container'
-    ).render();
+        if (!res.ok) { // Если GET запрос не прошел, выдаем ошибку
+            throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+        }
 
-    new MenuCard(
-        "img/tabs/post.jpg",
-        "post",
-        'Меню "Постное"',
-        'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
-        7,
-        '.menu .container'
-    ).render();
+        return await res.json();
+    }
 
+    /*     getResources('http://localhost:3000/menu')
+            .then(data => {
+                data.forEach(({ img, altimg, tittle, descr, price }) => {
+                    new MenuCard(img, altimg, tittle, descr, price, '.menu .container').render();
+                });
+            }); */
+
+    // Урок 90 - Axios
+
+    axios.get('http://localhost:3000/menu')
+        .then(data => {
+            data.data.forEach(({ img, altimg, tittle, descr, price }) => {
+                new MenuCard(img, altimg, tittle, descr, price, '.menu .container').render();
+            });
+        });
+
+
+
+    // ниже еще один способ динамической верстки на странице
+
+    /*     getResources('http://localhost:3000/menu')
+    .then(data => createCard(data));
+    
+    function createCard(data) {
+        data.forEach(({img, altimg, tittle, descr, price}) => {
+            const element = document.createElement('div');
+            element.classList.add('menu__item');
+            element.innerHTML = `
+              <img src= ${img} alt=${altimg}>
+                    <h3 class="menu__item-subtitle">${tittle}</h3>
+                    <div class="menu__item-descr">${descr}</div>
+                    <div class="menu__item-divider"></div>
+                    <div class="menu__item-price">
+                        <div class="menu__item-cost">Цена:</div>
+                        <div class="menu__item-total"><span>${price*91}</span> руб/день</div> 
+                    </div>
+            `
+    
+            document.querySelector('.menu .container').append(element);
+        });
+    }  */
 
 
 
@@ -358,10 +380,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     forms.forEach(item => { // При заполнении любой формы будет происходить нижеперечисленное
-        postData(item);
+        bindPostData(item);
     });
 
-    function postData(form) {
+    const postData = async (url, data) => {   // async - говорит, что код должен будет обрабатываться не по порядку, а асинхронно, так как надо дождаться реакции сервера (при помощи await), прежде чем выполнять дальше
+        // async и await всегда идут в паре
+        const res = await fetch(url, { // await не дает создать переменную res до тех пор, пока не выполнится запрос на сервер
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: data
+        });
+        return await res.json();
+    }
+
+
+    function bindPostData(form) {
         form.addEventListener('submit', (e) => { //срабатывает когда мы пытемся оправить какую-то форму
             e.preventDefault(); // в AJAX запросах ставим вначале, чтобы отменить стандартное поведение браузера (перезагрузку при изменениях и отправке формы)
 
@@ -374,21 +409,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             form.insertAdjacentElement('afterend', statusMessage); // Для добавления после формы (снизу) в верстке, а не за ним горизонтально
             const formData = new FormData(form); // Это позволяет преобразовать данные от форм ввода в привычную форму объекта
-            const object = {}; //сюда будем помещать преобразованные данные из FormData в JSON
-            formData.forEach(function (value, key) { //наполняем объект данными из FormData
-                object[key] = value;
-            });
 
 
+            const json = JSON.stringify(Object.fromEntries(formData.entries()));
+            // Берем данные пользователя из заполненной формы
+            // formData.entries() - превращает их в массив массивов [[ключ, значение], [ключ, значение]]
+            // Object.fromEntries - превращает массив массивов в объект
+            // JSON.stringify - преобразует объект в удобный формат JSON
 
 
-            fetch('server.php', { // упрощаем события и передачу данных на сервер при помощи промисов и фетча
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(object)
-            }).then(data => data.text()) //чтобы видеть в читаемом формате текста
+            postData('http://localhost:3000/requests', json)
                 .then(data => {
                     console.log(data);
                     showThanksModal(message.success); // если все ок, то сообщение об успехе в форме
@@ -434,4 +464,159 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     };
+
+    //Урок 88 - JSON сервер
+
+
+    /* fetch('db.json') */ // изначально делали так
+    fetch('http://localhost:3000/menu')
+        .then(data => data.json())
+        .then(res => console.log(res));
+
+    //получили в консоли инфо из db.json
+    //теперь используем json-server: пишем в консоли     npx json-server db.json
+    // там видим Endpoints:
+    //http://localhost:3000/menu
+    //http://localhost:3000/requests
+    // подставляем путь в fetch
+
+
+    //Урок 89 - Получение данных с сервера Async/Await (ES8)
+
+    //Урок 91 - Слайдер (Вариант 1)
+
+    /* const slides = document.querySelectorAll('.offer__slide'),
+        prev = document.querySelector('.offer__slider-prev'),
+        next = document.querySelector('.offer__slider-next'),
+        total = document.querySelector('#total'),
+        current = document.querySelector('#current');
+
+    let slideIndex = 1;
+
+    showSlides(slideIndex);
+
+    
+        if (slides.length < 10) { //чтобы индекс прописывался с 0 в начале, например 03, 07 и тд
+            total.textContent = `0${slides.length}`;
+        } else {
+            total.textContent = slides.length;
+        }
+   
+
+    function showSlides(n) {
+
+        if (n > slides.length) { // если переключаешь вперед с последнего слайда, то попадаешь на первый
+            slideIndex = 1;
+        }
+
+        if (n < 1) { // если переключаешь назад с первого слайда, то попадаешь на последний
+            slideIndex = slides.length;
+        }
+
+        slides.forEach(item => item.style.display = 'none');  // для начала скрываем все слайды из верстки
+
+        slides[slideIndex - 1].style.display = 'block'; // показываем первый слайд
+
+        if (slides.length < 10) { //чтобы индекс прописывался с 0 в начале, например 03, 07 и тд
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
+    }
+
+    function plusSlides(n) { // функция для изменения индекса слайда
+        showSlides(slideIndex += n)
+    }
+
+    prev.addEventListener('click', () => { //нажали назад - индекс уменьшился на 1 
+        plusSlides(-1)
+    });
+
+    next.addEventListener('click', () => { //нажали вперед - индекс увеличился на 1 
+        plusSlides(1)
+    }); */
+
+
+    // Урок 92 - слайдер, второй вариант (карусель)
+
+    const slides = document.querySelectorAll('.offer__slide'),
+        prev = document.querySelector('.offer__slider-prev'),
+        next = document.querySelector('.offer__slider-next'),
+        total = document.querySelector('#total'),
+        current = document.querySelector('#current'),
+        slidesWrapper = document.querySelector('.offer__slider-wrapper'),
+        slidesField = document.querySelector('.offer__slider-inner'),
+        width = window.getComputedStyle(slidesWrapper).width;
+
+
+    let slideIndex = 1;
+    let offset = 0;
+
+
+    if (slides.length < 10) { //чтобы индекс прописывался с 0 в начале, например 03, 07 и тд
+        total.textContent = `0${slides.length}`;
+        current.textContent = `0${slideIndex}`;
+    } else {
+        total.textContent = slides.length;
+        current.textContent = slideIndex;
+    }
+
+    slidesField.style.width = 100 * slides.length + '%'; // задаем ширину всей карусели (4 слайда)
+    slidesField.style.display = 'flex'; // располагаем слайды в ряд по направлению карусели
+    slidesField.style.transition = '0.5s all';
+
+    slidesWrapper.style.overflow = 'hidden';
+
+
+    slides.forEach(slide => { //каждый слайд остается с родной шириной, не растягивается на всю карусель - 400%
+        slide.style.width = width;
+    });
+
+    next.addEventListener('click', () => {
+        if (offset == +width.slice(0, width.length - 2) * (slides.length - 1)) { //если текущее положение индекса конечное, то возвращаемся к начальному
+            // +width.slice(0,width.length - 2) - изначально строка, например "500px". Обрезаем рх, преобразуем в число
+            offset = 0;
+        } else {
+            offset += +width.slice(0, width.length - 2); // если не конечное, слайдсмещается на величину слайда 
+        }
+        slidesField.style.transform = `translateX(-${offset}px)`;
+
+        if (slideIndex == slides.length) {
+            slideIndex = 1;
+        } else {
+            slideIndex++;
+        }
+
+        if (slides.length < 10) {
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
+
+    });
+
+    prev.addEventListener('click', () => {
+        if (offset == 0) {
+            offset = +width.slice(0, width.length - 2) * (slides.length - 1);
+        } else {
+            offset -= +width.slice(0, width.length - 2);
+        }
+        slidesField.style.transform = `translateX(-${offset}px)`;
+        if (slideIndex == 1) {
+            slideIndex = slides.length;
+        } else {
+            slideIndex--;
+        }
+
+        if (slides.length < 10) {
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
+    });
+
+
+
+
 });
+

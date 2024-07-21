@@ -94,7 +94,7 @@ const user = {
     name : 'John'
 };
 
-sayName.call(user,  ' Smith');  
+sayName.call(user,  ' Smith');
 sayName.apply(user, [' Smith']); */
 // ручное присвоение контекста. Два способа делают одно и то же, но разный синтаксис
 
@@ -128,7 +128,7 @@ btn.addEventListener('click', function() { // контекст this - будет
 
 // стрелочная функция не имеет своего контекста, поэтому берет его у родителя
 
-/* 
+/*
     const double = (a) => {
         return a * 2;
     };  // обычное представление стрелочной функции   */
@@ -174,14 +174,14 @@ req.then((product) => {   // then - если все в порядке, то вы
     console.log(data);
 }).catch(() => {  // catch - если что-то пошло не так, на каком-то из then, то все последующие then пропускаются и код переходит к catch
     console.error('Произошла ошибка');
-}).finally(() => { // finally - конечное действие, независимо от того выполнились все then, или был задействован catch. Например для очистки формы после удачного или неудачной (без разницы) отправки данных на сервер 
+}).finally(() => { // finally - конечное действие, независимо от того выполнились все then, или был задействован catch. Например для очистки формы после удачного или неудачной (без разницы) отправки данных на сервер
     console.log('Финал');
 });
  */
 
 
 
-const test = time => {  // функция, котороая возвращает promise, который выполнится (resolve) через определенное время (time)
+/* const test = time => {  // функция, котороая возвращает promise, который выполнится (resolve) через определенное время (time)
     return new Promise(resolve => {
         setTimeout(() => resolve(), time);
     });
@@ -197,4 +197,59 @@ Promise.all([test(1000), test(2000)]).then(() => { // then выполнится,
 
 Promise.race([test(1000), test(2000)]).then(() => { // then выполняется сразу после выполнения первого из promise (1000)
     console.log('who first')
+}); */
+
+
+// Урок 87 - методы перебора массивов
+
+    //метод filter
+
+/* const names = ['Ivan', 'Alena', 'Vlsdimir', 'Konstantin', 'Igor']; // вычленим те имена, которые меньше 5 символов
+const shortNames = names.filter(function(name) { // возвращается новый массив
+    return name.length < 5;
 });
+console.log(shortNames); */
+
+    // метод map
+
+/* const answers = ['IvAn', 'AnnA', 'Hello']; // приведем в нормальный вид регистр
+const result = answers.map(item => item.toLocaleLowerCase()); // берем каждый элемент массива и переводим в нижний регистр. На выходе новый массив
+console.log(result); */
+
+    // методы every/some
+
+/* const someArr = [4, 'dsgfds', 'dsfsgsdgsdgds']; //проверим, есть ли среди элементов массива хотя бы одно число
+console.log(someArr.some(item => typeof(item) === 'number'));
+
+const everyArr = [4, 'dsgfds', 'dsfsgsdgsdgds']; 
+console.log(everyArr.every(item => typeof(item) === 'number')); // вернет true, если ВСЕ элементы массива - число */
+
+    // метод reduce
+
+/* const arr = [4, 5, 1, 3, 2, 6]; // сложение чисел в массиве
+const result = arr.reduce((sum, current) => sum + current);  //sum, current - эти аргументы в reduce автоматически
+//изначально sum = 0, а current = первому числу (4). выполняется сложение, получается 4
+//теперь sum = 4, а current = 5. И так далее, пока не сложится весь массив
+console.log(result);
+
+const arrString = ['apple', 'orange', 'milk']; // может складывать и строки тоже
+const resultString = arrString.reduce((sum, current) => `${sum}, ${current}`); 
+console.log(resultString); */
+
+    // пример применения на практике
+
+const obj = { // задача- вытащить людей (имена). Данные пришли с сервера и мы не знаем количество позиций, их порядок и тд. Надо сделать системно для любого возможного объекта
+    ivan: 'persone',
+    ann: 'persone',
+    dog: 'animal',
+    cat: 'animal'
+};
+
+const newArr = Object.entries(obj) //делает из объекта массив с массивами (матрица)
+.filter(item => item[1] === 'persone') // теперь проверяем в каждом массиве второй элемент, и если он равен 'persone' - оставляем
+.map(item => item[0]); // формируем новый массив, в котором останутся только имена
+console.log(newArr);
+
+
+
+
