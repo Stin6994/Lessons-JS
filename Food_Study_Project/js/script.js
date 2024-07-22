@@ -634,14 +634,19 @@ document.addEventListener('DOMContentLoaded', () => {
         dots[slideIndex-1].style.opacity = 1;
     }
  
+    function deleteNotDigits(str) {
+        return +str.replace(/\D/g, '');
+        // +str.replace(/\D/g, '') - изначально строка, например "500px". Обрезаем рх, преобразуем в число
+    }
+
 
 
     next.addEventListener('click', () => {
-        if (offset == +width.slice(0, width.length - 2) * (slides.length - 1)) { //если текущее положение индекса конечное, то возвращаемся к начальному
-            // +width.slice(0,width.length - 2) - изначально строка, например "500px". Обрезаем рх, преобразуем в число
+        if (offset == deleteNotDigits(width) * (slides.length - 1)) { //если текущее положение индекса конечное, то возвращаемся к начальному
+            // +width.replace(/\D/g, '') - изначально строка, например "500px". Обрезаем рх, преобразуем в число
             offset = 0;
         } else {
-            offset += +width.slice(0, width.length - 2); // если не конечное, слайдсмещается на величину слайда 
+            offset += deleteNotDigits(width); // если не конечное, слайдсмещается на величину слайда 
         }
         slidesField.style.transform = `translateX(-${offset}px)`;
 
@@ -657,9 +662,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     prev.addEventListener('click', () => {
         if (offset == 0) {
-            offset = +width.slice(0, width.length - 2) * (slides.length - 1);
+            offset = deleteNotDigits(width) * (slides.length - 1);
         } else {
-            offset -= +width.slice(0, width.length - 2);
+            offset -= deleteNotDigits(width);
         }
         slidesField.style.transform = `translateX(-${offset}px)`;
         if (slideIndex == 1) {
@@ -677,7 +682,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dot.addEventListener('click', (e) => {
             const slideTo = e.target.getAttribute('data-slide-to');
             slideIndex = slideTo; // приравниваем индекс к выбранному слайду, чтобы все правила завязанные на индекс переформатировались под выбранный слайд
-            offset = +width.slice(0, width.length - 2) * (slideTo - 1); //находим положение нужного слайда
+            offset = deleteNotDigits(width) * (slideTo - 1); //находим положение нужного слайда
             slidesField.style.transform = `translateX(-${offset}px)`; //перемещаем на нужный слайд
             
             slidesSetting();
