@@ -615,8 +615,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Урок 93 - навигация для слайдера
 
 
 
 });
 
+//npx json-server db.json
