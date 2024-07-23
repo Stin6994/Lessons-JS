@@ -693,9 +693,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Уроки 96-97 Калькулятор
 
     const result = document.querySelector('.calculating__result span');
-    let sex = 'female', //присваиваем сразу значение, чтобы было выбрано по умолчанию, как задумано в проекте
-    height, weight, age,
-    ratio = 1.375;
+
+    let sex, height, weight, age, ratio;
+
+    if (localStorage.getItem('sex')) { //проверяем, записан ли заранее пол. Если нет, то берем женский по умолчанию.
+        sex = localStorage.getItem('sex');
+    } else {
+        sex = 'female';
+        localStorage.setItem('sex', 'female');
+    }
+
+    if (localStorage.getItem('ratio')) {
+        ratio = localStorage.getItem('ratio');
+    } else {
+        ratio = 1.375;
+        localStorage.setItem('ratio', 1.375);
+    }
+
 
     function calcTotal() { //функция для расчета
         if (!sex || !height || !weight || !age || !ratio) { // если что-то не заполнено, то расчитывать не будем
@@ -722,8 +736,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     // такие аттрибуты заранее прописали для степеней активности, так мы отделяем
                     // было ли нажатие на элемент пола или элемент активности
                     ratio = +e.target.getAttribute('data-ratio'); // достаем значение аттрибута, преобразуем в число, присваеваем одноименной переменной
+                    localStorage.setItem('ratio',+e.target.getAttribute('data-ratio'));
                 } else { // если это не элемент активности, то элемент пола, а у них вместо data-ratio мы прописали id для их разделения
                     sex = e.target.getAttribute('id');
+                    localStorage.setItem('sex',e.target.getAttribute('id'));
                 }
     
                 elements.forEach(elem => {
