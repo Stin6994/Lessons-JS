@@ -693,7 +693,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Уроки 96-97 Калькулятор
 
     const result = document.querySelector('.calculating__result span');
-    let sex, height, weight, age, ratio;
+    let sex = 'female', //присваиваем сразу значение, чтобы было выбрано по умолчанию, как задумано в проекте
+    height, weight, age,
+    ratio = 1.375;
 
     function calcTotal() { //функция для расчета
         if (!sex || !height || !weight || !age || !ratio) { // если что-то не заполнено, то расчитывать не будем
@@ -713,25 +715,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getStaticInformation(parrentSelector, activeClass) { //функция для сбора данных, из незаполняемых (выбранных) элементов
         const elements = document.querySelectorAll(`${parrentSelector} div`); //получаем все div из элемента parrentSelector
-        document.querySelector(parrentSelector).addEventListener('click', (e) => { // при нажатии на один из елементов
-            if (e.target.getAttribute('data-ratio')) { // проверяем есть ли у него аттрибут data-ratio
-                // такие аттрибуты заранее прописали для степеней активности, так мы отделяем
-                // было ли нажатие на элемент пола или элемент активности
-                ratio = +e.target.getAttribute('data-ratio'); // достаем значение аттрибута, преобразуем в число, присваеваем одноименной переменной
-            } else { // если это не элемент активности, то элемент пола, а у них вместо data-ratio мы прописали id для их разделения
-                sex = e.target.getAttribute('id');
-            }
 
-            console.log(ratio, sex);
-
-            elements.forEach(elem => {
-                elem.classList.remove(activeClass); //для выделения только выбранного блока для начала убираем выделение со всех
+        elements.forEach(elem => {
+            elem.addEventListener('click', (e) => { // при нажатии на один из елементов
+                if (e.target.getAttribute('data-ratio')) { // проверяем есть ли у него аттрибут data-ratio
+                    // такие аттрибуты заранее прописали для степеней активности, так мы отделяем
+                    // было ли нажатие на элемент пола или элемент активности
+                    ratio = +e.target.getAttribute('data-ratio'); // достаем значение аттрибута, преобразуем в число, присваеваем одноименной переменной
+                } else { // если это не элемент активности, то элемент пола, а у них вместо data-ratio мы прописали id для их разделения
+                    sex = e.target.getAttribute('id');
+                }
+    
+                elements.forEach(elem => {
+                    elem.classList.remove(activeClass); //для выделения только выбранного блока для начала убираем выделение со всех
+                });
+    
+                e.target.classList.add(activeClass); //и выделяем только выбранный блок
+    
+                calcTotal(); // пересчитываем после любого изменения
             });
+        })
 
-            e.target.classList.add(activeClass); //и выделяем только выбранный блок
-
-            calcTotal(); // пересчитываем после любого изменения
-        });
     }
 
     // вызываем функцию 2 раза, первая на блок пола, вторая на активность. Эти блоки одинаковы по функционалу, поэтому 
