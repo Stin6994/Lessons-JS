@@ -616,7 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (i == 0) {
             dot.style.opacity = 1;
-        } 
+        }
 
         indicators.append(dot); //добавляем точку в верстку
         dots.push(dot); // добавляем точку в массив
@@ -631,9 +631,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         dots.forEach(dot => dot.style.opacity = '.5'); // для изменения активного индикатора
-        dots[slideIndex-1].style.opacity = 1;
+        dots[slideIndex - 1].style.opacity = 1;
     }
- 
+
     function deleteNotDigits(str) {
         return +str.replace(/\D/g, '');
         // +str.replace(/\D/g, '') - изначально строка, например "500px". Обрезаем рх, преобразуем в число
@@ -684,10 +684,13 @@ document.addEventListener('DOMContentLoaded', () => {
             slideIndex = slideTo; // приравниваем индекс к выбранному слайду, чтобы все правила завязанные на индекс переформатировались под выбранный слайд
             offset = deleteNotDigits(width) * (slideTo - 1); //находим положение нужного слайда
             slidesField.style.transform = `translateX(-${offset}px)`; //перемещаем на нужный слайд
-            
+
             slidesSetting();
         });
     });
+
+
+    // Уроки 96-97 Калькулятор
 
 
 });
