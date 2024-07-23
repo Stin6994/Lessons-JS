@@ -750,6 +750,12 @@ document.addEventListener('DOMContentLoaded', () => {
         input.addEventListener('input', () => {
             //надо понять в какое поле вводится инфа - при помощи id полей
             
+            if (input.value.match(/\D/g)) { //если пользователь вводит не число
+                input.style.border = '1px solid red'; //подсвечиваем рамку красным
+            } else {
+                input.style.border = 'none';
+            }
+
             switch(input.getAttribute('id')) { // когда в одно из полей будем что-то вводить, код будет понимать в какое поле вводим по id
                 case 'height':
                     height = +input.value;
