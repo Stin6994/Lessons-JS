@@ -710,6 +710,25 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('ratio', 1.375);
     }
 
+    function initLocalSettings (selector, activeClass) { // функция для того, чтобы после загрузки страницы были выделены блоки, которые записаны в хранилище
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(elem => {
+            elem.classList.remove(activeClass);
+
+            if (elem.getAttribute('id') === localStorage.getItem('sex')) { //если при переборе элементов значение id совпадет с тем, что ледит в хранилище
+                elem.classList.add(activeClass);
+            } 
+
+            if (elem.getAttribute('data-ratio') === localStorage.getItem('ratio')) {
+                elem.classList.add(activeClass);
+            }
+
+        });
+    }
+
+    initLocalSettings('#gender div', 'calculating__choose-item_active'); // ОСОБОЕ ВНИМАНИЕ НА div, мы работаем с целыми блоками 
+    initLocalSettings('.calculating__choose_big div', 'calculating__choose-item_active');
+
 
     function calcTotal() { //функция для расчета
         if (!sex || !height || !weight || !age || !ratio) { // если что-то не заполнено, то расчитывать не будем
@@ -727,8 +746,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     calcTotal();
 
-    function getStaticInformation(parrentSelector, activeClass) { //функция для сбора данных, из незаполняемых (выбранных) элементов
-        const elements = document.querySelectorAll(`${parrentSelector} div`); //получаем все div из элемента parrentSelector
+    function getStaticInformation(selector, activeClass) { //функция для сбора данных, из незаполняемых (выбранных) элементов
+        const elements = document.querySelectorAll(selector); //получаем все div из элемента parrentSelector
 
         elements.forEach(elem => {
             elem.addEventListener('click', (e) => { // при нажатии на один из елементов
@@ -756,8 +775,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // вызываем функцию 2 раза, первая на блок пола, вторая на активность. Эти блоки одинаковы по функционалу, поэтому 
     // функция одна, только идентификаторы разные
-    getStaticInformation('#gender', 'calculating__choose-item_active');
-    getStaticInformation('.calculating__choose_big', 'calculating__choose-item_active');
+    getStaticInformation('#gender div', 'calculating__choose-item_active');
+    getStaticInformation('.calculating__choose_big div', 'calculating__choose-item_active');
 
 
     function getDynamicInformation(selector) { // функция для сбора данных, из заполняемых полей
