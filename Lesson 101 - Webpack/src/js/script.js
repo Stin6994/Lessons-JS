@@ -1,4 +1,4 @@
-const myModules = require('./js/main'); //указываем откуда будем импортировать данные
+const myModules = require('./main'); //указываем откуда будем импортировать данные
 
 const myModuleInstance = new myModules(); // создали объект, содержащий данные импортированные из другого файла js
 
