@@ -53,4 +53,4 @@ const modal = function () {
     window.addEventListener('scroll', showModalByScroll);  //При прокрутке страницы до конца - открывается окно
 }
 
-module.exports = modal;
+export default modal;

@@ -123,4 +123,4 @@ const calc = function () {
 }
 
 
-module.exports = calc;
+export default calc;

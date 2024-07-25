@@ -100,4 +100,4 @@ const cards = function () {
 
 }
 
-module.exports = cards;
+export default cards;

@@ -152,4 +152,4 @@ transition: opacity .6s ease;
     });
 }
 
-module.exports = slider;
+export default slider;

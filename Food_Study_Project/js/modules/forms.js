@@ -95,4 +95,4 @@ const forms = function () {
 
 }
 
-module.exports = forms;
+export default forms;
