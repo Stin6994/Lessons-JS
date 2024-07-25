@@ -1,7 +1,7 @@
-const timer = function() {
+const timer = function(id, deadLine) {
 // Урок 69 - таймер
 
-const deadLine = '2024-08-31';
+/* const deadLine = '2024-08-31'; */
 
 function getTimeRemaining(endTime) {
 
@@ -63,7 +63,7 @@ function setClock(selector, endTime) {
     }
 }
 
-setClock('.timer', deadLine);
+setClock(id, deadLine);
 }
 
 export default timer;

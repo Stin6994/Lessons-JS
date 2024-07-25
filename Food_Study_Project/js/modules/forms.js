@@ -1,4 +1,5 @@
 import { closeModal, openModal } from "./modal";
+import { postData } from "../services/services";
 
 const forms = function (formSelector, modalTimerId) {
     const forms = document.querySelectorAll(formSelector);
@@ -13,17 +14,7 @@ const forms = function (formSelector, modalTimerId) {
         bindPostData(item);
     });
 
-    const postData = async (url, data) => {   // async - говорит, что код должен будет обрабатываться не по порядку, а асинхронно, так как надо дождаться реакции сервера (при помощи await), прежде чем выполнять дальше
-        // async и await всегда идут в паре
-        const res = await fetch(url, { // await не дает создать переменную res до тех пор, пока не выполнится запрос на сервер
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: data
-        });
-        return await res.json();
-    }
+    
 
 
     function bindPostData(form) {
