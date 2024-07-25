@@ -267,8 +267,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-const forms = function () {
-    const forms = document.querySelectorAll('form');
+/* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal */ "./js/modules/modal.js");
+
+
+const forms = function (formSelector, modalTimerId) {
+    const forms = document.querySelectorAll(formSelector);
 
     const message = { // сообщения для юзера в разных ситуациях
         loading: 'img/form/spinner.svg',
@@ -335,7 +338,7 @@ const forms = function () {
 
             const prevModalDialog = document.querySelector('.modal__dialog'); //функционируем с имеющимся модальным окном
             prevModalDialog.classList.add('hide'); //временно скрываем его, чтобы не удалять и не создавать заново при новой необходимости
-            openModal(); //создавали ранее, открывает модальное окно
+            (0,_modal__WEBPACK_IMPORTED_MODULE_0__.openModal)('.modal', modalTimerId); //создавали ранее, открывает модальное окно
 
             const thanksModal = document.createElement('div');
             thanksModal.classList.add('modal__dialog');
@@ -352,7 +355,7 @@ const forms = function () {
                 thanksModal.remove();
                 prevModalDialog.classList.add('show');
                 prevModalDialog.classList.remove('hide');
-                closeModal();
+                (0,_modal__WEBPACK_IMPORTED_MODULE_0__.closeModal)('.modal');
             }, 4000);
 
         }
@@ -376,56 +379,66 @@ const forms = function () {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   closeModal: () => (/* binding */ closeModal),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   openModal: () => (/* binding */ openModal)
 /* harmony export */ });
-const modal = function () {
-    // Урок 72 - Модальное окно
 
-    const modalTrigger = document.querySelectorAll('[data-modal]');
-    const modal = document.querySelector('.modal');
-    /* const modalCloseBtn = document.querySelector('[data-close]'); */
+function closeModal(modalSelector) {
+    const modal = document.querySelector(modalSelector);
+    modal.classList.add('hide');
+    modal.classList.remove('show');
+    document.body.style.overflow = ''; //возвращаем скролл на страницу сайта после закрытия мод. окна
+}
 
-    modalTrigger.forEach(btn => {
-        btn.addEventListener('click', openModal);
-    });
+function openModal(modalSelector, modalTimerId) {
+    /* modal.classList.toggle('show'); */  // Если класса show нет, добавляем, если есть - убираем
+    const modal = document.querySelector(modalSelector);
+    modal.classList.add('show');
+    modal.classList.remove('hide');
+    document.body.style.overflow = 'hidden';  //для того, чтобы при открытом модальном окне не прокручивался вниз и вверх сайт
 
-    function openModal() {
-        /* modal.classList.toggle('show'); */  // Если класса show нет, добавляем, если есть - убираем
-        modal.classList.add('show');
-        modal.classList.remove('hide');
-        document.body.style.overflow = 'hidden';  //для того, чтобы при открытом модальном окне не прокручивался вниз и вверх сайт
+    console.log(modalTimerId);
+    if (modalTimerId) {
         clearInterval(modalTimerId); // Если юзер сам открыл окно до его автоматического открытия - далее оно автоматически уже не будет открываться до обновления страницы.
     }
 
+}
+const modal = function (triggerSelector, modalSelector, modalTimerId) {
+    // Урок 72 - Модальное окно
 
-    function closeModal() {
-        modal.classList.add('hide');
-        modal.classList.remove('show');
-        document.body.style.overflow = ''; //возвращаем скролл на страницу сайта после закрытия мод. окна
-    }
+    const modalTrigger = document.querySelectorAll(triggerSelector);
+    const modal = document.querySelector(modalSelector);
+    /* const modalCloseBtn = document.querySelector('[data-close]'); */
+
+    modalTrigger.forEach(btn => {
+        btn.addEventListener('click', () => openModal(modalSelector, modalTimerId)); //коллбек функция прописывается, потому что это обработчик событий и иначе она работать не будет
+    });
+
+
 
     /*     modalCloseBtn.addEventListener('click', closeModal); */
 
 
     modal.addEventListener('click', (e) => {    //если кликнуть мимо модального окна, то оно тоже закроется
         if (e.target === modal || e.target.getAttribute('data-close') == '') {
-            closeModal();
+            closeModal(modalSelector);
         }
     });
 
 
     document.addEventListener('keydown', (e) => {  // Если нажали Esc, окно тоже закрывается. e.code - кодовое название клавиш, надо их гуглить
         if (e.code === 'Escape' && modal.classList.contains('show')) {  //проверка также на то, открыто ли сейчас окно, иначе Esc будет его сам открывать
-            closeModal();
+            closeModal(modalSelector);
         }
     });
 
-    const modalTimerId = setTimeout(openModal, 50000); //Когда сайт загружается - через 7 секунд выходит модальное окно.
+
 
 
     function showModalByScroll() {
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) { // проверяет докрутили ли страницу до конца
-            openModal();
+            openModal(modalSelector, modalTimerId);
             window.removeEventListener('scroll', showModalByScroll); // удаляем обработчик события после первого срабытывания, чтобы не спамить окнами при прокрутке до конца страницы
         }
     }
@@ -434,6 +447,7 @@ const modal = function () {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (modal);
+
 
 /***/ }),
 
@@ -823,14 +837,17 @@ console.log('hello111');
 
 
 
+
 document.addEventListener('DOMContentLoaded', () => {
 
+    const modalTimerId = setTimeout(() => (0,_modules_modal__WEBPACK_IMPORTED_MODULE_1__.openModal)('.modal', modalTimerId), 50000);
+
     (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_0__["default"])();
-    (0,_modules_modal__WEBPACK_IMPORTED_MODULE_1__["default"])();
+    (0,_modules_modal__WEBPACK_IMPORTED_MODULE_1__["default"])('[data-modal]', '.modal', modalTimerId );
     (0,_modules_timer__WEBPACK_IMPORTED_MODULE_2__["default"])();
     (0,_modules_cards__WEBPACK_IMPORTED_MODULE_3__["default"])();
     (0,_modules_calc__WEBPACK_IMPORTED_MODULE_4__["default"])();
-    (0,_modules_forms__WEBPACK_IMPORTED_MODULE_5__["default"])();
+    (0,_modules_forms__WEBPACK_IMPORTED_MODULE_5__["default"])('form', modalTimerId);
     (0,_modules_slider__WEBPACK_IMPORTED_MODULE_6__["default"])();
         
 });

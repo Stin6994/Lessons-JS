@@ -1,5 +1,7 @@
-const forms = function () {
-    const forms = document.querySelectorAll('form');
+import { closeModal, openModal } from "./modal";
+
+const forms = function (formSelector, modalTimerId) {
+    const forms = document.querySelectorAll(formSelector);
 
     const message = { // сообщения для юзера в разных ситуациях
         loading: 'img/form/spinner.svg',
@@ -66,7 +68,7 @@ const forms = function () {
 
             const prevModalDialog = document.querySelector('.modal__dialog'); //функционируем с имеющимся модальным окном
             prevModalDialog.classList.add('hide'); //временно скрываем его, чтобы не удалять и не создавать заново при новой необходимости
-            openModal(); //создавали ранее, открывает модальное окно
+            openModal('.modal', modalTimerId); //создавали ранее, открывает модальное окно
 
             const thanksModal = document.createElement('div');
             thanksModal.classList.add('modal__dialog');
@@ -83,7 +85,7 @@ const forms = function () {
                 thanksModal.remove();
                 prevModalDialog.classList.add('show');
                 prevModalDialog.classList.remove('hide');
-                closeModal();
+                closeModal('.modal');
             }, 4000);
 
         }
