@@ -2,6 +2,11 @@
 
 console.log('hello111');
 
+import 'es6-promise-polyfill'; 
+import 'nodelist-foreach-polyfill';
+
+
+
 import tabs from'./modules/tabs';
 import modal from'./modules/modal';
 import timer from'./modules/timer';
@@ -37,5 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-//npx json-server db.json
-//npx webpack
+// npx json-server db.json
+// npx webpack
+// npm install --save-dev @babel/core @babel/cli @babel/preset-env    - 
+// npm i --save-dev babel-loader
+// npm i --save-dev core-js
+// npm i es6-promise-polyfill
+// npm i nodelist-foreach-polyfill

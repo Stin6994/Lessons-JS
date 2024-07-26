@@ -9,7 +9,16 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@babel/cli": "^7.24.8",
+    "@babel/core": "^7.24.9",
+    "@babel/preset-env": "^7.24.8",
+    "babel-loader": "^9.1.3",
+    "core-js": "^3.37.1",
     "json-server": "^1.0.0-beta.1",
     "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "es6-promise-polyfill": "^1.2.0",
+    "nodelist-foreach-polyfill": "^1.2.0"
   }
 }
