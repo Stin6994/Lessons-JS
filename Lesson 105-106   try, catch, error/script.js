@@ -37,3 +37,29 @@ try {
 console.log('Normal');
 
 // Урок 106 - создание ошибки (Error)
+
+console.log('            Урок 106');
+
+try {
+    const a = 2, 
+    b = 3,
+    c = '';
+
+if (!c) throw new Error(`${c} не найдена или пустая`); 
+console.log (a+b+c); //до этого этапа не дойдем, так как сверху будет ошибка с пояснением
+} catch(e) {
+console.error(e.name);
+console.log(e.message);
+console.log(e.stack);
+}
+
+/* const a = 2, 
+        b = 3,
+        c = '';
+
+if (!c) throw new Error(`${c} не найдена или пустая`); */
+/* console.log (a+b+c);  *///до этого этапа не дойдем, так как сверху будет ошибка с пояснением
+
+
+/* const err = new Error('new_error');
+console.log(err.name, err.message, err.stack); */
