@@ -35,3 +35,5 @@ try {
 
 
 console.log('Normal');
+
+// Урок 106 - создание ошибки (Error)
