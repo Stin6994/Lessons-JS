@@ -10,11 +10,7 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ sayCat),
-/* harmony export */   numberThree: () => (/* binding */ numberThree),
-/* harmony export */   one: () => (/* binding */ one),
-/* harmony export */   sayHi: () => (/* binding */ sayHi),
-/* harmony export */   two: () => (/* binding */ two)
+/* harmony export */   sayHi: () => (/* binding */ sayHi)
 /* harmony export */ });
 /* function myModule() { // эту функцию будем экспортировать  в другой js файл - main.js
     this.hello = function() {
@@ -31,22 +27,22 @@ module.exports = myModule; */ // синтаксис CommonJS - эти данны
 // Урок 102 - ES6 Modules
 // Синтаксис импорта/экспорта на ES6 
 
-let one = 1; // первый способ
+/* export let one = 1; // первый способ
 
 let two = 2; // второй
-
+export {two};
 
 let numberThree = 3;
-
+export {numberThree}; */
 
 function sayHi() { //экспорт функции
-    console.log('Hi!');
+    console.log('Hi!11');
 }
 
-function sayCat() { //экспорт функции
-    console.log('Cat');
+/* export default function sayCat() { //экспорт функции
+    console.log('Cat11');
 }
-
+ */
 
 
 /***/ })
@@ -127,22 +123,23 @@ myModuleInstance.goodbye(); */
 // Урок 102 - ES6 Modules
 // Синтаксис импорта/экспорта на ES6 
 // опять же, браузер просто так не поймет, нужна сборка Webpack-ом
+/* 
+import {one, two} from './main'; //импорт
 
- //импорт
+import {numberThree as three} from './main'; // при импорте можно заменить название на более удобное
 
- // при импорте можно заменить название на более удобное
-
-console.log(`${_main__WEBPACK_IMPORTED_MODULE_0__.one} and ${_main__WEBPACK_IMPORTED_MODULE_0__.two} and ${_main__WEBPACK_IMPORTED_MODULE_0__.numberThree}`); //использование
+console.log(`${one} and ${two} and ${three}`); //использование */
 
  //импорт всего
 
-console.log(`${_main__WEBPACK_IMPORTED_MODULE_0__.numberThree} and ${_main__WEBPACK_IMPORTED_MODULE_0__.two} and ${_main__WEBPACK_IMPORTED_MODULE_0__.one}`);
+/* console.log(`${data.numberThree} and ${data.two} and ${data.one}`); */
 _main__WEBPACK_IMPORTED_MODULE_0__.sayHi();
 
 // обращение к default проще, добавляем такой статус в main.js и обращаемся к функциям следующим образом:
 
-
-(0,_main__WEBPACK_IMPORTED_MODULE_0__["default"])();
+/* import sayCat from './main';
+sayCat();
+ */
 
 
 

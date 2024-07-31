@@ -13,19 +13,19 @@ module.exports = myModule; */ // синтаксис CommonJS - эти данны
 // Урок 102 - ES6 Modules
 // Синтаксис импорта/экспорта на ES6 
 
-export let one = 1; // первый способ
+/* export let one = 1; // первый способ
 
 let two = 2; // второй
 export {two};
 
 let numberThree = 3;
-export {numberThree};
+export {numberThree}; */
 
 export function sayHi() { //экспорт функции
-    console.log('Hi!');
+    console.log('Hi!11');
 }
 
-export default function sayCat() { //экспорт функции
-    console.log('Cat');
+/* export default function sayCat() { //экспорт функции
+    console.log('Cat11');
 }
-
+ */
