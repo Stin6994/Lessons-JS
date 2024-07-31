@@ -30,4 +30,10 @@ data.sayHi();
 sayCat();
  */
 
+// Урок 109 - jQuery
+
+import 'jquery';
+
+
+
 
