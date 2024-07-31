@@ -10894,6 +10894,31 @@ sayCat();
 
 
 
+/* const btn = $('#btn'); // аналогично document.querySelector
+console.log(btn); */
+
+jquery__WEBPACK_IMPORTED_MODULE_1___default()(document).ready(function(){ //объявляем функцию, которая будет запущена когда всё DOM дерево будет прогружено
+    jquery__WEBPACK_IMPORTED_MODULE_1___default()('.list-item:first').hover(function() {    //синтаксис - :first из документации. Выбирает первый элемент с классом .list-item
+        jquery__WEBPACK_IMPORTED_MODULE_1___default()(this).toggleClass('active'); // класс добавляется, если его не было при наведении 
+    });
+
+    jquery__WEBPACK_IMPORTED_MODULE_1___default()('.list-item:eq(2)').on('click', function() { //при нажатии на 3 кнопку .list-item (индекс 2) 
+        jquery__WEBPACK_IMPORTED_MODULE_1___default()('.image:even').fadeToggle('slow'); // медленная анимация скрытия нечетной (even) картинки
+    });
+
+    jquery__WEBPACK_IMPORTED_MODULE_1___default()('.list-item:eq(4)').on('click', function() { //при нажатии на 5 кнопку .list-item (индекс 4) 
+        jquery__WEBPACK_IMPORTED_MODULE_1___default()('.image:odd').animate({ // другая анимация на протяжении 2 секунд
+            opacity: 'toggle',
+            height: 'toggle'
+        }, 2000);
+    });
+
+
+
+
+
+});
+
 
 
 

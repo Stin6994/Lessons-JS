@@ -32,7 +32,32 @@ sayCat();
 
 // Урок 109 - jQuery
 
-import 'jquery';
+import $ from 'jquery';
+
+/* const btn = $('#btn'); // аналогично document.querySelector
+console.log(btn); */
+
+$(document).ready(function(){ //объявляем функцию, которая будет запущена когда всё DOM дерево будет прогружено
+    $('.list-item:first').hover(function() {    //синтаксис - :first из документации. Выбирает первый элемент с классом .list-item
+        $(this).toggleClass('active'); // класс добавляется, если его не было при наведении 
+    });
+
+    $('.list-item:eq(2)').on('click', function() { //при нажатии на 3 кнопку .list-item (индекс 2) 
+        $('.image:even').fadeToggle('slow'); // медленная анимация скрытия нечетной (even) картинки
+    });
+
+    $('.list-item:eq(4)').on('click', function() { //при нажатии на 5 кнопку .list-item (индекс 4) 
+        $('.image:odd').animate({ // другая анимация на протяжении 2 секунд
+            opacity: 'toggle',
+            height: 'toggle'
+        }, 2000);
+    });
+
+
+
+
+
+});
 
 
 
