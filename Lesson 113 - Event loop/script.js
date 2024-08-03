@@ -12,7 +12,7 @@ setTimeout(() => {
     console.log('timeout2');
 }, 4000);
 
-console.log(2);
+console.log(21);
 
-// Очередность вывода - 1, 2, timeout, timeout2
+// Очередность вывода - 1, 21, timeout, timeout2
 
