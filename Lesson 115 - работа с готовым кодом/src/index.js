@@ -4,7 +4,7 @@
 
 //1) npm install tiny-slider
 //2)импорт модуля в наш проект:
-import { tns } from "./node_modules/tiny-slider/src/tiny-slider" //из документации
+import { tns } from "tiny-slider" //из документации
 
 //3) объявление из документации
 tns({
