@@ -1,4 +1,4 @@
-import {Component} from 'react'; //деструктуризация от React.Component
+import {Component, StrictMode} from 'react'; //деструктуризация от React.Component
 import logo from './logo.svg';
 import './App.css';
 
@@ -52,7 +52,11 @@ function BtnTwo() {
 function App() {
   return (
     <div className="App">
+      <StrictMode>
       <Header />
+      </StrictMode>
+      
+  
       <Field />
       <Btn />
       <BtnTwo />
