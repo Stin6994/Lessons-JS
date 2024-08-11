@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App'; 
+import { Header } from './App';
 
 
 // Урок 121 - работа с препроцессором JSX
@@ -49,6 +50,9 @@ root.render(
 root.render(
  
 /*   <React.StrictMode> */
-    <App />
-  {/* </React.StrictMode> */}
+    <App />,
+
+  /* </React.StrictMode> */
+  
+  
 );
