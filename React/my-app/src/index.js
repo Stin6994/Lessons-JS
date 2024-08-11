@@ -12,11 +12,11 @@ import App from './App';
 
 /* const elem = React.createElement('h2', null, 'Hello World Two!'); */ //второй способ. null - класс, вместо него можно {className = 'some class'}
 
-const text = "Some text";
+/* const text = "Some text"; */
 
 
 
-const elemTwo = ( //можно в одном элементе только один див (корневой элемент). Внутри могут быть еще, а вот следом больше нет
+/* const elemTwo = ( //можно в одном элементе только один див (корневой элемент). Внутри могут быть еще, а вот следом больше нет
   <div>
     <h2>Текст: {text}</h2> 
     <input type="text" />
@@ -24,21 +24,31 @@ const elemTwo = ( //можно в одном элементе только од�
   </div>
 
 );
+ */
 
 
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+/* const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  elemTwo
  
- /*  <React.StrictMode>
+  <React.StrictMode>
     <App />
-  </React.StrictMode> */
-);
+  </React.StrictMode>
+); */
 
 /* ReactDOM.render(
   elem,
   document.getElementById('root')
 );
  */ //это для версии реакта ниже 18
+
+
+ //Урок 123 - Элементы и компоненты React
+
+ const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+ 
+/*   <React.StrictMode> */
+    <App />
+  {/* </React.StrictMode> */}
+);
