@@ -52,10 +52,30 @@ function BtnTwo() {
 // Урок 126 - свойства компонентов
 
 const Lesson126 = () => {
-  return <h1>Урок 126 - свойства компонентов</h1>
+  return <h1>Урок 126 - свойства компонентов</h1>  
 }
 
 
+function WhoAmI (props) { //props - это объект со свойтсвами, 
+  //которые мы будем подставлять в единый конструктор для его изменения 
+  //например одинаковые карточки товаров с разным содержимым
+  return (
+    <div>
+      <h1>My name is {props.name}, surname - {props.surname}</h1>
+      <a href={props.link}>My profile</a>
+    </div>
+  )
+}
+
+function WhoAmITwo ({name, surname, link}) { // так как в аргументах будет объект - используем деструктуризацию
+  //для упрощения и большей читабельности кода. НА выходе - аналогично получится
+  return (
+    <div>
+      <h1>My name is {name}, surname - {surname}</h1>
+      <a href={link}>My profile</a>
+    </div>
+  )
+}
 
 
 
@@ -73,9 +93,11 @@ function App() {
       <BtnTwo />
       <FieldTwo/>
 
-      {/* Из урока 126 - свойства компонентов */}
-
       <Lesson126/>
+      <WhoAmI name='Igor' surname='Andreev' link='Facebook.com' />
+      {/* Из этих аргументов получается объект, и которого уже и берутся необходимые свойства */}
+      <WhoAmITwo name='Анечка' surname='Андреева' link='Facebook.com' />
+
 
     </div>
   );
