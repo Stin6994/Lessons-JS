@@ -10,9 +10,9 @@ import EmployeesAddForm from '../employees-add-form/employees-add-form';
 function App () {
 
     const data = [
-        {name: 'Андреев Игорь', salary: 115000 + ' руб.', increase: false},
-        {name: 'Низамов Расул', salary: 140000 + ' руб.', increase: true},
-        {name: 'Спицын Сергей', salary: 150000 + ' руб.', increase: false}
+        {name: 'Андреев Игорь', salary: 115000 + ' руб.', increase: false, id: 1},
+        {name: 'Низамов Расул', salary: 140000 + ' руб.', increase: true, id: 2},
+        {name: 'Спицын Сергей', salary: 150000 + ' руб.', increase: false, id: 3}
     ];
 
     return (
