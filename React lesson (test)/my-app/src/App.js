@@ -49,6 +49,18 @@ function BtnTwo() {
   return <button>{logged ? text : "Enter"}</button> //целое условие выводим в кнопку
 }
 
+// Урок 126 - свойства компонентов
+
+const Lesson126 = () => {
+  return <h1>Урок 126 - свойства компонентов</h1>
+}
+
+
+
+
+
+
+
 function App() {
   return (
     <div className="App">
@@ -56,29 +68,15 @@ function App() {
       <Header />
       </StrictMode>
       
-  
       <Field />
       <Btn />
       <BtnTwo />
       <FieldTwo/>
 
+      {/* Из урока 126 - свойства компонентов */}
 
+      <Lesson126/>
 
-
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React111
-        </a>
-      </header> */}
     </div>
   );
 }
