@@ -55,6 +55,9 @@ const Lesson126 = () => {
   return <h1>Урок 126 - свойства компонентов</h1>  
 }
 
+const Lesson129 = () => {
+  return <h1>Урок 129 - состояние компонентов</h1>  
+}
 
 function WhoAmI (props) { //props - это объект со свойтсвами, 
   //которые мы будем подставлять в единый конструктор для его изменения 
@@ -77,7 +80,25 @@ function WhoAmITwo ({name, surname, link}) { // так как в аргумен�
   )
 }
 
+//Урок 129 - состояние компонентов
 
+class WhoAmIThree extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      years: 27
+    }
+  }
+  render () {
+    const {name, surname, link} = this.props;
+    return (
+      <div>
+      <h1>My name is {name}, surname - {surname}, age - {this.state.years}</h1>
+      <a href={link}>My profile</a>
+    </div>
+    )
+  }
+}
 
 
 
@@ -98,6 +119,8 @@ function App() {
       {/* Из этих аргументов получается объект, и которого уже и берутся необходимые свойства */}
       <WhoAmITwo name='Анечка' surname='Андреева' link='Facebook.com' />
 
+      <Lesson129/>
+      <WhoAmIThree name='Анечка' surname='Андреева' link='Facebook.com'/>
 
     </div>
   );
