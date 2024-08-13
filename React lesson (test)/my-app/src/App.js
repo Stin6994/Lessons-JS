@@ -86,16 +86,17 @@ class WhoAmIThree extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      years: 27
+      years: 27, 
+      text: 'Some Text'
     }
   }
 
 
   nextYear = () => {
     console.log('test OK');
-    this.setState({
-      years: ++this.state.years
-    })
+    this.setState(state => ({ //не трогает свойство text, меняет только то, что мы заложили внутрь
+      years: ++state.years
+    }))
   }
 
 
@@ -103,7 +104,7 @@ class WhoAmIThree extends Component {
     const {name, surname, link} = this.props;
     return (
       <div>
-      <button onClick={this.nextYear}>btn</button>
+      <button onClick={this.nextYear}>{this.state.text}</button>
       <h1>My name is {name}, surname - {surname}, age - {this.state.years}</h1>
       <a href={link}>My profile</a>
     </div>
