@@ -113,6 +113,8 @@ class WhoAmIThree extends Component {
 }
 
 
+// Урок 131 - события в React
+
 
 function App() {
   return (
