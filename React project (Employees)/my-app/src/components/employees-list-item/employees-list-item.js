@@ -7,7 +7,8 @@ class EmployeesListItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            increase: false
+            increase: false,
+            like: false
         }
     }
 
@@ -15,12 +16,17 @@ class EmployeesListItem extends Component {
     render() {
 
         const {name, salary} = this.props; //эти данные идут из заданных свойств (props)
-        const {increase} = this.state; //эти из заданного стостояния (state)
+        const {increase, like} = this.state; //эти из заданного стостояния (state)
 
         let classNames = 'list-group-item d-flex justify-content-between'; // берем все классы
         if (increase) { //проверяем true или false
             classNames += ' increase'; //добавляем новый класс
         }
+
+        if (like) { //проверяем true или false
+            classNames += ' like'; //добавляем новый класс
+        }
+
 
         this.onIncrease = () => {
             // 1) сразу внутри аргументов производим деструктуризацию ({increase}) - дальше не надо будет писать state.increase
@@ -32,9 +38,21 @@ class EmployeesListItem extends Component {
             }))
         }
 
+        
+        this.onLike = () => {
+            // 1) сразу внутри аргументов производим деструктуризацию ({increase}) - дальше не надо будет писать state.increase
+            // 2) используем стрелочную коллбек функцию, так как важно, какое было состояние до этого
+            // 3) => ({ вот эта дополнительная круглая скобка заменяет слово return
+            // 4) меняем булевое состояние на противоположное при нажатии
+            this.setState(({like}) => ({  
+                like: !like
+            }))
+        }
+
+
         return (
             <li className={classNames}>
-                <span className="list-group-item-label">{name}</span>
+                <span className="list-group-item-label" onClick={this.onLike}>{name}</span>
                 <input type="text" className="list-group-item-input" defaultValue={salary} />
                 <div className='d-flex justify-content-center align-items-center'>
                     <button type="button"
