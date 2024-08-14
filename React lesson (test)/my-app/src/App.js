@@ -1,4 +1,4 @@
-import {Component, StrictMode} from 'react'; //деструктуризация от React.Component
+import { Component, StrictMode } from 'react'; //деструктуризация от React.Component
 import logo from './logo.svg';
 import './App.css';
 
@@ -28,8 +28,8 @@ class FieldTwo extends Component { //из объекта React класс буд
     };
 
     return <input placeholder={holder}
-    type="text"
-    style={styleField} />
+      type="text"
+      style={styleField} />
   }
 }
 
@@ -52,14 +52,19 @@ function BtnTwo() {
 // Урок 126 - свойства компонентов
 
 const Lesson126 = () => {
-  return <h1>Урок 126 - свойства компонентов</h1>  
+  return <h1>Урок 126 - свойства компонентов</h1>
 }
 
 const Lesson129 = () => {
-  return <h1>Урок 129 - состояние компонентов</h1>  
+  return <h1>Урок 129 - состояние компонентов</h1>
 }
 
-function WhoAmI (props) { //props - это объект со свойтсвами, 
+const Lesson131 = () => {
+  return <h1>Урок 131 - события в React </h1>
+}
+
+
+function WhoAmI(props) { //props - это объект со свойтсвами, 
   //которые мы будем подставлять в единый конструктор для его изменения 
   //например одинаковые карточки товаров с разным содержимым
   return (
@@ -70,7 +75,7 @@ function WhoAmI (props) { //props - это объект со свойтсвам�
   )
 }
 
-function WhoAmITwo ({name, surname, link}) { // так как в аргументах будет объект - используем деструктуризацию
+function WhoAmITwo({ name, surname, link }) { // так как в аргументах будет объект - используем деструктуризацию
   //для упрощения и большей читабельности кода. НА выходе - аналогично получится
   return (
     <div>
@@ -86,7 +91,7 @@ class WhoAmIThree extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      years: 27, 
+      years: 27,
       text: 'Some Text'
     }
   }
@@ -100,14 +105,14 @@ class WhoAmIThree extends Component {
   }
 
 
-  render () {
-    const {name, surname, link} = this.props;
+  render() {
+    const { name, surname, link } = this.props;
     return (
       <div>
-      <button onClick={this.nextYear}>{this.state.text}</button>
-      <h1>My name is {name}, surname - {surname}, age - {this.state.years}</h1>
-      <a href={link}>My profile</a>
-    </div>
+        <button onClick={this.nextYear}>{this.state.text}</button>
+        <h1>My name is {name}, surname - {surname}, age - {this.state.years}</h1>
+        <a href={link}>My profile</a>
+      </div>
     )
   }
 }
@@ -115,31 +120,80 @@ class WhoAmIThree extends Component {
 
 // Урок 131 - события в React
 
+// повторяю вышестоящий код и дополню
+
+class WhoAmIFour extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      years: 27,
+      text: 'Some Text',
+      position: ''
+    }
+  }
+
+
+  nextYear = () => {
+    console.log('test OK');
+    this.setState(state => ({ //не трогает свойство text, меняет только то, что мы заложили внутрь
+      years: ++state.years
+    }))
+  }
+
+  commitInputChanges = (e, color) => {
+    console.log(color)
+    console.log(e.target.value)
+    this.setState({  //не используем стрелочеую функцию, потому что в этом случае при вводе текста в поле
+      //нас не интересует, что до этого было в state (а там ничего и не было - position: '')
+        position: e.target.value
+    })
+  }
+
+  render() {
+    const { name, surname } = this.props;
+    const {position, years, text} = this.state;
+    return (
+      <div>
+        <button onClick={this.nextYear}>{text}</button>
+        <h1>My name is {name}, surname - {surname}, age - {years}, 
+        position - {position}</h1>
+        <form>
+          <span>Введите должность</span>
+          <input type="text" onChange={(e) => this.commitInputChanges(e, 'some color')} /> 
+        </form>
+      </div>
+    )
+  }
+}
+
 
 function App() {
   return (
     <div className="App">
       <StrictMode>
-      <Header />
+        <Header />
       </StrictMode>
-      
+
       <Field />
       <Btn />
       <BtnTwo />
-      <FieldTwo/>
+      <FieldTwo />
 
-      <Lesson126/>
+      <Lesson126 />
       <WhoAmI name='Igor' surname='Andreev' link='Facebook.com' />
       {/* Из этих аргументов получается объект, и которого уже и берутся необходимые свойства */}
       <WhoAmITwo name='Анечка' surname='Андреева' link='Facebook.com' />
 
-      <Lesson129/>
-      <WhoAmIThree name='Анечка' surname='Андреева' link='Facebook.com'/>
+      <Lesson129 />
+      <WhoAmIThree name='Анечка' surname='Андреева' link='Facebook.com' />
+
+      <Lesson131 />
+      <WhoAmIFour name='Анечка' surname='Андреева' />
 
     </div>
   );
 }
 
 
-export {Header}
+export { Header }
 export default App;
