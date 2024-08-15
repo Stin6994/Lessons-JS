@@ -3,7 +3,7 @@ import EmployeesListItem from '../employees-list-item/employees-list-item';
 import './employees-list.css';
 
 
-const EmployeesList = ({data}) => { //Это data из App.js
+const EmployeesList = ({data, onDelete}) => { //Это data из App.js
 
     const elements = data.map(item => {
         const {id, ...itemProps} = item; //деструктуризация - отдельно айди и все остальные свойства
@@ -11,7 +11,7 @@ const EmployeesList = ({data}) => { //Это data из App.js
             <EmployeesListItem 
             key={id} 
             {...itemProps}
-            onDelete={() => console.log()}/> //мы делаем карточки, перебирая массив data
+            onDelete={() => onDelete(id)}/> //мы делаем карточки, перебирая массив data
             //таким образом, будут автоматически созданы карточки из базы данных, а не объявлены каждая вручную.
          )
          //отдельно определяем свойство key, для того, чтобы реакт при изменении в каком-то элементе списка
