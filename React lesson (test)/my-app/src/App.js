@@ -156,7 +156,8 @@ class WhoAmIFour extends Component {
     const { name, surname } = this.props;
     const {position, years, text} = this.state;
     return (
-      <div>
+      //если оборачивать в простой div без классов, то в структуре появлется лишняя оболочка div
+      <Fragment> 
         <button onClick={this.nextYear}>{text}</button>
         <h1>My name is {name}, surname - {surname}, age - {years}, 
         position - {position}</h1>
@@ -164,7 +165,7 @@ class WhoAmIFour extends Component {
           <span>Введите должность</span>
           <input type="text" onChange={(e) => this.commitInputChanges(e, 'some color')} /> 
         </form>
-      </div>
+      </Fragment>
     )
   }
 }
