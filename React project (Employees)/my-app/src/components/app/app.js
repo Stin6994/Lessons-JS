@@ -15,10 +15,11 @@ class App extends Component {
         this.state = {
             data: [
                 { name: 'Андреев Игорь', salary: 115000 + ' руб.', increase: false, rise: true, id: 1 },
-                { name: 'Низамов Расул', salary: 140000 + ' руб.', increase: true, rise: false, id: 2 },
+                { name: 'Низамов Расул', salary: 140000 + ' руб.', increase: true, rise: true, id: 2 },
                 { name: 'Спицын Сергей', salary: 150000 + ' руб.', increase: false, rise: false, id: 3 }
             ],
-            term: ''  //то, что пользователь записывает в строку поиска. Изначально пустая
+            term: '',  //то, что пользователь записывает в строку поиска. Изначально пустая
+            filter: 'rise' //выбранный фильтр
         }
         this.maxId = 4;
     }
@@ -107,15 +108,25 @@ class App extends Component {
         this.setState({term: term});
     }
 
+    filterPost = (items, filter) => {
+        switch (filter) {
+            case 'rise':  //если выбран фильтр "на повышение"
+                return items.filter(item => item.rise); //аозвращает те, у которых rise = true
+            case 'moreThen 120000': 
+                return items.filter(item => item.salary > 120000); 
+            default:
+                return items; //если не выбран фильтр (первый по умолчанию), просто возвращаем все items
+        }
+    }
 
     render() {
 
-        const { data, term } = this.state;
+        const { data, term, filter} = this.state;
         const employees = this.state.data.length; //общее число работников
         const increased = this.state.data.filter(item => item.increase).length; //сколько сотрудников получат премию
         //фильтруем массив data, получаем новый, останутся только те, у которых increase = true.
         //получаем его длину, понимаем количество работников, идущих на повышение
-        const visibleData = this.searchEmp(data, term); //это те пользователи, которые удовлетворяют поиску. В том числе и пустому
+        const visibleData = this.filterPost(this.searchEmp(data, term), filter); // data, обаботанная по условиям поиска и фильтов одновременно
 
         return (
             <div className="app">
