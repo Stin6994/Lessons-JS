@@ -19,7 +19,7 @@ class App extends Component {
                 { name: 'Спицын Сергей', salary: 150000 + ' руб.', increase: false, rise: false, id: 3 }
             ],
             term: '',  //то, что пользователь записывает в строку поиска. Изначально пустая
-            filter: 'rise' //выбранный фильтр
+            filter: 'moreThen 120000' //выбранный фильтр
         }
         this.maxId = 4;
     }
@@ -113,7 +113,7 @@ class App extends Component {
             case 'rise':  //если выбран фильтр "на повышение"
                 return items.filter(item => item.rise); //аозвращает те, у которых rise = true
             case 'moreThen 120000': 
-                return items.filter(item => item.salary > 120000); 
+                return items.filter(item => item.salary > (120000 + ' руб.')); 
             default:
                 return items; //если не выбран фильтр (первый по умолчанию), просто возвращаем все items
         }
@@ -133,14 +133,17 @@ class App extends Component {
                 <AppInfo
                     employees={employees}
                     increased={increased} />
+
                 <div className="search-panel">
                     <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
-                    <AppFilter />
+                    <AppFilter filter={filter}/>
                 </div>
+
                 <EmployeesList
                     data={visibleData}
                     onDelete={this.deleteItem}
                     onToggleProp={this.onToggleProp} />
+
                 <EmployeesAddForm onAdd={this.addItem} />
             </div>
         );
