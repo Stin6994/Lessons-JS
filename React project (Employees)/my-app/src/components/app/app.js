@@ -53,6 +53,13 @@ class App extends Component {
         });
     }
    
+onToggleIncrease = (id) => {
+    console.log(`Increase this ${id}`); //методы, которые будем передавать вниз по иерархии
+}
+
+onToggleRise = (id) => {
+    console.log(`Rise this ${id}`); //методы, которые будем передавать вниз по иерархии
+}
 
     render() {
         return (
@@ -64,7 +71,9 @@ class App extends Component {
                     </div>
                 <EmployeesList 
                 data={this.state.data} 
-                onDelete={this.deleteItem}/>
+                onDelete={this.deleteItem}
+                onToggleIncrease={this.onToggleIncrease}
+                onToggleRise={this.onToggleRise}/>
                 <EmployeesAddForm onAdd={this.addItem}/>
             </div>
         );
