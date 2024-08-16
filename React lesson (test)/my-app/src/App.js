@@ -63,6 +63,9 @@ const Lesson131 = () => {
   return <h1>Урок 131 - события в React </h1>
 }
 
+const Lesson136 = () => {
+  return <h1>Урок 136 - React-фрагменты </h1>
+}
 
 function WhoAmI(props) { //props - это объект со свойтсвами, 
   //которые мы будем подставлять в единый конструктор для его изменения 
@@ -189,6 +192,8 @@ function App() {
 
       <Lesson131 />
       <WhoAmIFour name='Анечка' surname='Андреева' />
+
+      <Lesson136/>
 
     </div>
   );
