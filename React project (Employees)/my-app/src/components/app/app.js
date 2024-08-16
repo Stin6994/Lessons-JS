@@ -17,7 +17,8 @@ class App extends Component {
                 {name: 'Андреев Игорь', salary: 115000 + ' руб.', increase: false, rise: true, id: 1},
                 {name: 'Низамов Расул', salary: 140000 + ' руб.', increase: true, rise: false, id: 2},
                 {name: 'Спицын Сергей', salary: 150000 + ' руб.', increase: false, rise: false, id: 3}
-            ]
+            ],
+            term: ''  //поиск
         }
         this.maxId = 4;
     }
