@@ -1,4 +1,4 @@
-import { Component, StrictMode } from 'react'; //деструктуризация от React.Component
+import { Component, StrictMode, Fragment } from 'react'; //деструктуризация от React.Component
 import logo from './logo.svg';
 import './App.css';
 
