@@ -90,12 +90,28 @@ onToggleIncrease = (id) => {
 
 onToggleRise = (id) => {
     /* console.log(`Rise this ${id}`); */ //методы, которые будем передавать вниз по иерархии
+    this.setState(({data}) => ({
+        data: data.map(item => {
+            if (item.id === id) {
+                return {...item, rise: !item.rise}
+            }
+            return item;
+        })
+    }))
 }
 
     render() {
+        const employees = this.state.data.length; //общее число работников
+        const increased = this.state.data.filter(item => item.increase).length; //сколько сотрудников получат премию
+        //фильтруем массив data, получаем новый, останутся только те, у которых increase = true.
+        //получаем его длину, понимаем количество работников, идущих на повышение
+
+
         return (
             <div className="app">
-                <AppInfo/>
+                <AppInfo
+                employees={employees}
+                increased={increased}/>
                     <div className="search-panel">
                         <SearchPanel/>
                         <AppFilter/>
