@@ -3,7 +3,7 @@ import EmployeesListItem from '../employees-list-item/employees-list-item';
 import './employees-list.css';
 
 
-const EmployeesList = ({data, onDelete, onToggleIncrease, onToggleRise}) => { //Это data из App.js
+const EmployeesList = ({data, onDelete, onToggleProp}) => { //Это data из App.js
 
     const elements = data.map(item => {
         const {id, ...itemProps} = item; //деструктуризация - отдельно айди и все остальные свойства
@@ -12,8 +12,7 @@ const EmployeesList = ({data, onDelete, onToggleIncrease, onToggleRise}) => { //
             key={id} 
             {...itemProps}
             onDelete={() => onDelete(id)}
-            onToggleIncrease={() => onToggleIncrease(id)}
-            onToggleRise={() => onToggleRise(id)}/> //мы делаем карточки, перебирая массив data
+            onToggleProp={(e) => onToggleProp(id, e.currentTarget.getAttribute('data-toggle'))}/> //мы делаем карточки, перебирая массив data
             //таким образом, будут автоматически созданы карточки из базы данных, а не объявлены каждая вручную.
          )
          //отдельно определяем свойство key, для того, чтобы реакт при изменении в каком-то элементе списка

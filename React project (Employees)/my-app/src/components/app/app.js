@@ -54,7 +54,7 @@ class App extends Component {
         });
     }
    
-onToggleIncrease = (id) => {
+onToggleProp = (id, prop) => {
     /* console.log(`Increase this ${id}`); */ //методы, которые будем передавать вниз по иерархии
     /* this.setState(({data}) => { */
             //первый способ
@@ -81,24 +81,14 @@ onToggleIncrease = (id) => {
         this.setState(({data}) => ({
             data: data.map(item => {
                 if (item.id === id) {
-                    return {...item, increase: !item.increase}
+                    return {...item, [prop]: !item[prop]}
                 }
                 return item;
             })
         }))
 }
 
-onToggleRise = (id) => {
-    /* console.log(`Rise this ${id}`); */ //методы, которые будем передавать вниз по иерархии
-    this.setState(({data}) => ({
-        data: data.map(item => {
-            if (item.id === id) {
-                return {...item, rise: !item.rise}
-            }
-            return item;
-        })
-    }))
-}
+
 
     render() {
         const employees = this.state.data.length; //общее число работников
@@ -119,8 +109,7 @@ onToggleRise = (id) => {
                 <EmployeesList 
                 data={this.state.data} 
                 onDelete={this.deleteItem}
-                onToggleIncrease={this.onToggleIncrease}
-                onToggleRise={this.onToggleRise}/>
+                onToggleProp={this.onToggleProp}/>
                 <EmployeesAddForm onAdd={this.addItem}/>
             </div>
         );
