@@ -14,20 +14,20 @@ class App extends Component {
         super(props);
         this.state = {
             data: [
-                {name: 'Андреев Игорь', salary: 115000 + ' руб.', increase: false, rise: true, id: 1},
-                {name: 'Низамов Расул', salary: 140000 + ' руб.', increase: true, rise: false, id: 2},
-                {name: 'Спицын Сергей', salary: 150000 + ' руб.', increase: false, rise: false, id: 3}
+                { name: 'Андреев Игорь', salary: 115000 + ' руб.', increase: false, rise: true, id: 1 },
+                { name: 'Низамов Расул', salary: 140000 + ' руб.', increase: true, rise: false, id: 2 },
+                { name: 'Спицын Сергей', salary: 150000 + ' руб.', increase: false, rise: false, id: 3 }
             ],
-            term: ''  //поиск
+            term: ''  //то, что пользователь записывает в строку поиска. Изначально пустая
         }
         this.maxId = 4;
     }
 
     deleteItem = (id) => {
-        this.setState(({data}) =>{ //чтобы удалить нужную строку, надо понять на строку с каким индексом мы нажали
+        this.setState(({ data }) => { //чтобы удалить нужную строку, надо понять на строку с каким индексом мы нажали
             /* const index = data.findIndex(elem => elem.id === id); *///при нажатии будет перезаписывать 
             //id строки из заданной в свойствах на порядковый номер в массиве (0,1,2...)
-            
+
             //сейчас делаем удаление на основе принципов иммутабельности (нельзя изменять объект с данными в состоянии)
             //это приведет к багам. Нужно клонировать и отрисовывать модифицированный
 
@@ -41,24 +41,24 @@ class App extends Component {
 
     addItem = (name, salary) => {
         const newItem = {
-            name, 
+            name,
             salary,
             increase: false,
             rise: false,
             id: this.maxId++
         }
-        this.setState(({data}) => {
+        this.setState(({ data }) => {
             const newArr = [...data, newItem];
             return {
                 data: newArr
             }
         });
     }
-   
-onToggleProp = (id, prop) => {
-    /* console.log(`Increase this ${id}`); */ //методы, которые будем передавать вниз по иерархии
-    /* this.setState(({data}) => { */
-            //первый способ
+
+    onToggleProp = (id, prop) => {
+        /* console.log(`Increase this ${id}`); */ //методы, которые будем передавать вниз по иерархии
+        /* this.setState(({data}) => { */
+        //первый способ
         /* const index = data.findIndex(elem => elem.id === id); //получаем индекс элемента, с которым будем работать
         const old = data[index]; //получили объект из data по индексу
         const newItem = {...old, increase: !old.increase};
@@ -72,46 +72,65 @@ onToggleProp = (id, prop) => {
         return {
             data: newArr
         } */
-            //второй способ
+        //второй способ
 
-            //что происходит:
-            //1) так как data - массив, можем исподьзовать map - вернет новый переработанный массив (иммутабельность)
-            //2) мы перебираем все объекты внутри (item), пока не наткнемся на элемент с таким же id, на который кликнули
-            //3) метод map переработает только этот объект, благодаря условию if (все свойства останутся, inrease поменяется)
-            //4) По итогу map вернет новый массив в состояние, в нем поменяется только increase у того компонента, на который кликнули
-        this.setState(({data}) => ({
+        //что происходит:
+        //1) так как data - массив, можем исподьзовать map - вернет новый переработанный массив (иммутабельность)
+        //2) мы перебираем все объекты внутри (item), пока не наткнемся на элемент с таким же id, на который кликнули
+        //3) метод map переработает только этот объект, благодаря условию if (все свойства останутся, inrease поменяется)
+        //4) По итогу map вернет новый массив в состояние, в нем поменяется только increase у того компонента, на который кликнули
+        this.setState(({ data }) => ({
             data: data.map(item => {
                 if (item.id === id) {
-                    return {...item, [prop]: !item[prop]}
+                    return { ...item, [prop]: !item[prop] }
                 }
                 return item;
             })
         }))
-}
+    }
 
+    searchEmp = (items, term) => {
+        if (term.length === 0) { //если ничего не введено, возвращается тот массив с сотрудниками, который и был
+            return items;
+        }
+
+        //теперь пропишем что будет возвращаться при вводе в поиск чего-то
+        return items.filter(item => {
+            return item.name.toLowerCase().indexOf(term.toLowerCase()) > -1   //indexOf возвращает -1, если не было найдено совпадения
+            //мы проверяем все объекты с сотрудниками, берем из них имя, проверяем есть ли полное совпадение
+            //с написанным в поиске, получаем новый массив с отфильтрованными объектами
+        })
+
+    }
+
+    onUpdateSearch = (term) => {    //для того, чтобы передавать term из файла search-panel
+        this.setState({term: term});
+    }
 
 
     render() {
+
+        const { data, term } = this.state;
         const employees = this.state.data.length; //общее число работников
         const increased = this.state.data.filter(item => item.increase).length; //сколько сотрудников получат премию
         //фильтруем массив data, получаем новый, останутся только те, у которых increase = true.
         //получаем его длину, понимаем количество работников, идущих на повышение
-
+        const visibleData = this.searchEmp(data, term); //это те пользователи, которые удовлетворяют поиску. В том числе и пустому
 
         return (
             <div className="app">
                 <AppInfo
-                employees={employees}
-                increased={increased}/>
-                    <div className="search-panel">
-                        <SearchPanel/>
-                        <AppFilter/>
-                    </div>
-                <EmployeesList 
-                data={this.state.data} 
-                onDelete={this.deleteItem}
-                onToggleProp={this.onToggleProp}/>
-                <EmployeesAddForm onAdd={this.addItem}/>
+                    employees={employees}
+                    increased={increased} />
+                <div className="search-panel">
+                    <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
+                    <AppFilter />
+                </div>
+                <EmployeesList
+                    data={visibleData}
+                    onDelete={this.deleteItem}
+                    onToggleProp={this.onToggleProp} />
+                <EmployeesAddForm onAdd={this.addItem} />
             </div>
         );
     }
