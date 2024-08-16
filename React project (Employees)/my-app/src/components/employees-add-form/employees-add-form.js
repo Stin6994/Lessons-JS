@@ -1,6 +1,5 @@
 import { Component } from 'react';
 
-import EmployeesListItem from '../employees-list-item/employees-list-item';
 
 import './employees-add-form.css';
 
@@ -9,7 +8,9 @@ class EmployeesAddForm extends Component {
         super(props);
         this.state = {
             name: '',
-            salary: ''
+            salary: '',
+            placeholderName:  "Как его зовут?",
+            placeholderSalary: "З/П в руб.?"
         }
     }
 
@@ -23,27 +24,48 @@ class EmployeesAddForm extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        this.props.onAdd(this.state.name, this.state.salary);
-        this.setState({
-            name: '',
-            salary: ''
-        })
+        if (this.state.name.length >= 2 && this.state.salary.length >= 2) {
+            this.props.onAdd(this.state.name, this.state.salary);
+            this.setState({
+                name: '',
+                salary: '',
+                placeholderName:  "Как его зовут?",
+                placeholderSalary: "З/П в руб.?"
+            })
+        } else {
+            this.setState({
+                name: '',
+                salary: '',
+                placeholderName: 'Минимальное количество символов - 2',
+                placeholderSalary: 'Минимальное количество символов - 2'
+            }) 
+            setTimeout (() => {
+                this.setState({
+                    name: '',
+                    salary: '',
+                    placeholderName:  "Как его зовут?",
+                    placeholderSalary: "З/П в руб.?"
+                })
+            }, 3000)
+             
+            
+        }
     }
 
     render() {
 
-        const {name, salary} = this.state;
-
+        const { name, salary, placeholderName, placeholderSalary } = this.state;
+       /*  const placeholderName = "Как его зовут?" */
 
         return (
             <div className="app-add-form">
                 <h3>Добавьте нового сотрудника</h3>
                 <form
                     className="add-form d-flex"
-                    onSubmit = {this.onSubmit}>
+                    onSubmit={this.onSubmit}>
                     <input type="text"
                         className="form-control new-post-label"
-                        placeholder="Как его зовут?"
+                        placeholder={placeholderName}
                         name="name"
                         value={name} // value делает компонент управляемым, подчиняет его реакту и 
                         //позволяет мгновенно при рендеринге видеть текущее состояние и вносить изменения
@@ -55,11 +77,11 @@ class EmployeesAddForm extends Component {
                         //добавили обработчик события и атрибут name, 
                         //совпадающий именем с состояниями, чтобы поптом отличить два инпута и изменять состояние
                         // в зависимости от того к кокому name происходит обращение
-                        onChange={this.onValueChange} /> 
-                        
+                        onChange={this.onValueChange} />
+
                     <input type="number"
                         className="form-control new-post-label"
-                        placeholder="З/П в руб.?"
+                        placeholder={placeholderSalary}
                         name="salary"
                         value={salary}  // value делает компонент управляемым, подчиняет его реакту и 
                         //позволяет мгновенно при рендеринге видеть текущее состояние и вносить изменения
@@ -70,7 +92,7 @@ class EmployeesAddForm extends Component {
                         //добавили обработчик события и атрибут name, 
                         //совпадающий именем с состояниями, чтобы поптом отличить два инпута и изменять состояние
                         // в зависимости от того к кокому name происходит обращение 
-                        onChange={this.onValueChange}/>  
+                        onChange={this.onValueChange} />
 
                     <button type="submit"
                         className="btn btn-outline-light">Добавить</button>
