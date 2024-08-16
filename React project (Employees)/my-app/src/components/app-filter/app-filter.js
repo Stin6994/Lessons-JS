@@ -15,7 +15,8 @@ const AppFilter = (props) => {
             <button 
                 className={`btn ${clazz}`} // в зависимости от выбранного фильтра будет либо активной либо нет
                 type="button"
-                key={name}>
+                key={name}
+                onClick={() => props.onFilterSelect(name)}> 
                 {label}
             </button>
         )

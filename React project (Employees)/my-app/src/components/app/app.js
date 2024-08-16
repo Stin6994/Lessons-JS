@@ -19,7 +19,7 @@ class App extends Component {
                 { name: 'Спицын Сергей', salary: 150000 + ' руб.', increase: false, rise: false, id: 3 }
             ],
             term: '',  //то, что пользователь записывает в строку поиска. Изначально пустая
-            filter: 'moreThen 120000' //выбранный фильтр
+            filter: '' //выбранный фильтр
         }
         this.maxId = 4;
     }
@@ -119,6 +119,10 @@ class App extends Component {
         }
     }
 
+    onFilterSelect = (filter) => {  //для выбора фильтров кнопками. Надо передать вниз по иерархии этот метод
+        this.setState ({filter});
+    }
+
     render() {
 
         const { data, term, filter} = this.state;
@@ -136,7 +140,9 @@ class App extends Component {
 
                 <div className="search-panel">
                     <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
-                    <AppFilter filter={filter}/>
+                    <AppFilter 
+                    filter={filter}
+                    onFilterSelect={this.onFilterSelect}/>
                 </div>
 
                 <EmployeesList

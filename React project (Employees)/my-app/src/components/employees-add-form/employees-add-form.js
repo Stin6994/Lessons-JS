@@ -25,7 +25,7 @@ class EmployeesAddForm extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         if (this.state.name.length >= 2 && this.state.salary.length >= 2) {
-            this.props.onAdd(this.state.name, this.state.salary);
+            this.props.onAdd(this.state.name, this.state.salary  + ' руб.');
             this.setState({
                 name: '',
                 salary: '',
