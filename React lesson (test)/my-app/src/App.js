@@ -67,6 +67,10 @@ const Lesson136 = () => {
   return <h1>Урок 136 - React-фрагменты </h1>
 }
 
+const Lesson142 = () => {
+  return <h1>Урок 142 - Styled Components </h1>
+}
+
 function WhoAmI(props) { //props - это объект со свойтсвами, 
   //которые мы будем подставлять в единый конструктор для его изменения 
   //например одинаковые карточки товаров с разным содержимым
@@ -195,6 +199,8 @@ function App() {
       <WhoAmIFour name='Анечка' surname='Андреева' />
 
       <Lesson136/>
+
+      <Lesson142/>
 
     </div>
   );
