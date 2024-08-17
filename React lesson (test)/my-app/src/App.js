@@ -163,7 +163,7 @@ class WhoAmIFour extends Component {
     const {position, years, text} = this.state;
     return (
       //если оборачивать в простой div без классов, то в структуре появлется лишняя оболочка div
-      <EmpItem active> 
+      <EmpItem active="true"> 
         <Button onClick={this.nextYear}>{text}</Button>
         <HeaderNew>My name is {name}, surname - {surname}, age - {years}, 
         position - {position}</HeaderNew>
@@ -192,7 +192,7 @@ const EmpItem = styled.div`
   a {
     display: block;
     margin: 10px 0 10px 0;
-    color: ${props => props.active ? 'orange' : 'black'};
+    color: ${props => props.active == "true" ? 'orange' : 'black'};
   }
   input {
     display: block;
