@@ -4,9 +4,12 @@ import './index.css';
 import App from './App'; 
 
 import styled from 'styled-components';
+import BootstrapTest from './BootstrapTest';
 
 import { Header } from './App';
 import { Button } from './App';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Урок 121 - работа с препроцессором JSX
 
@@ -62,6 +65,7 @@ root.render(
   <StrictMode> 
     <App />
     <BigButton as="a"> Some Button </BigButton> 
+    <BootstrapTest/>
  </StrictMode> 
   
   
