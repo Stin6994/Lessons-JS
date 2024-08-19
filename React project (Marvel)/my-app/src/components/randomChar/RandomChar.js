@@ -29,16 +29,10 @@ class RandomChar extends Component {
         this.marvelService
             .getCharacter(id)
             .then(res => {
-                this.setState({
-                    name: res.data.results[0].name, //так как функция getCharacter возвращает одного персонажа, 
-                    //но все равно в массиве, то мы обращаемся к единственному персонажу из массива с индексом [0]
-                    description: res.data.results[0].description,
-                    thumbnail: res.data.results[0].thumbnail.path + '.' + res.data.results[0].thumbnail.extension,
-                    //так как картинка в базе данных тоже объект из 2 свойств - путь и расширение, получаем их черех точку.  
-                    homepage: res.data.results[0].urls[0].url, 
-                    wiki: res.data.results[0].urls[1].url 
-                })
+                this.setState(res)
             })
+            // запрашиваем данные по персонажу, когда получаем - преобразуем в объект с нужными данными, 
+            // записываем эти данные в состояние
     }
 
     render () {
