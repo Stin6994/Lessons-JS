@@ -24,7 +24,8 @@ class RandomChar extends Component {
     marvelService = new MarvelService();
 
     updateChar = () => {
-        const id = 1011793;
+        const id = Math.floor(Math.random()*(1011400 - 1011000) + 1011000);
+        //случайный персонаж из ПРИМЕРНО всех. Слишком сложная и непонятная логика id для точного захвата всех
         this.marvelService
             .getCharacter(id)
             .then(res => {
