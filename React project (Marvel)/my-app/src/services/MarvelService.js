@@ -18,8 +18,9 @@ class MarvelService {
         return await res.json();
     }
 
-    getAllCharacters = () => { //получаем 9 персонажей, начиная с 356 позиции
-        return this.getResource(`${this._apiBase}characters?limit=9&offset=356&${this._apiKey}`);
+    getAllCharacters = async () => { //получаем 9 персонажей, начиная с 356 позиции
+        const res = await this.getResource(`${this._apiBase}characters?limit=9&offset=356&${this._apiKey}`);
+        return res.data.results.map(this._transformCharacter)
     }
 
     getCharacter = async (id) => { //получаем персонажа по id
@@ -34,7 +35,7 @@ class MarvelService {
         return {
             name: char.name, //так как функция getCharacter возвращает одного персонажа, 
             //но все равно в массиве, то мы обращаемся к единственному персонажу из массива с индексом [0]
-            description: char.description,
+            description: char.description ? `${char.description.slice(0, 210)}...` : 'There is no description for this character',
             thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
             //так как картинка в базе данных тоже объект из 2 свойств - путь и расширение, получаем их черех точку.  
             homepage: char.urls[0].url,

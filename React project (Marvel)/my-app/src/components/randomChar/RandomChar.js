@@ -14,29 +14,35 @@ class RandomChar extends Component {
     }
 
     state = { // все остояния будут получены через API. Изначально их нет, поэтому null
-        name: null,
+       /*  name: null,
         description: null, //описание
         thumbnail: null, //лого
         homepage: null, //инфа по кнопке
-        wiki: null //инфа по кнопке
+        wiki: null */ //инфа по кнопке
+
+        //аналогично
+
+        char: {}
     }
 
     marvelService = new MarvelService();
+
+    onCharLoaded = (char) => { //если запрос прогрузился и получили персонажа, то записываем в состояние объект с данными
+        this.setState({char}) //аналогично char: char
+    }
 
     updateChar = () => {
         const id = Math.floor(Math.random()*(1011400 - 1011000) + 1011000);
         //случайный персонаж из ПРИМЕРНО всех. Слишком сложная и непонятная логика id для точного захвата всех
         this.marvelService
             .getCharacter(id)
-            .then(res => {
-                this.setState(res)
-            })
+            .then(this.onCharLoaded)
             // запрашиваем данные по персонажу, когда получаем - преобразуем в объект с нужными данными, 
             // записываем эти данные в состояние
     }
 
     render () {
-        const {name, description, thumbnail, homepage, wiki} = this.state;
+        const {char: {name, description, thumbnail, homepage, wiki}} = this.state; //деструктуризация объекта изнутри объекта
 
         return (
             <div className="randomchar">
