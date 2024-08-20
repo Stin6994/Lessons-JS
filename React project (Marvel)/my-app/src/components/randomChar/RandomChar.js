@@ -10,10 +10,7 @@ import './randomChar.scss';
 
 class RandomChar extends Component {
 
-    constructor(props) {
-        super(props);
-        this.updateChar();
-    }
+
 
     state = { // все остояния будут получены через API. Изначально их нет, поэтому null
         /*  name: null,
@@ -31,7 +28,18 @@ class RandomChar extends Component {
 
     marvelService = new MarvelService();
 
+    componentDidMount() {
+        this.updateChar();
+        console.log('mount');
+    }
+/* 
+    componentWillUnmount() {
+        console.log('unmount');
+    } */
+
+
     onCharLoaded = (char) => { //если запрос прогрузился и получили персонажа, то записываем в состояние объект с данными
+        console.log ('update');
         this.setState({
             char,  //аналогично char: char
             loading: false
@@ -58,7 +66,7 @@ class RandomChar extends Component {
     }
 
     render() {
-
+        console.log('render');
         const { char, loading, error} = this.state; //деструктуризация объекта изнутри объекта
         const errorMessage = error ? <ErrorMassage/> : null; //если ошибка - отрабатываем
         const spinner = loading ? <Spinner/> : null; // если загрузка - отрабатываем (спиннер)

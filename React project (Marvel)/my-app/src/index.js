@@ -15,8 +15,8 @@ marvelService.getAllCharacters().then(res => res.data.results.forEach(item => co
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+ 
     <App/>
-  </React.StrictMode>
+
 );
 
