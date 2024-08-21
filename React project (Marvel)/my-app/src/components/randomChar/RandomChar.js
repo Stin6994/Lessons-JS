@@ -45,15 +45,23 @@ class RandomChar extends Component {
             loading: false
         })  //как только загрузка закончилась и в состояние передан объект с данными - 
         //значение загрузки становится false и спиннер заменяется данными
+        console.log (char)
     }
 
+//'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'
+
     updateChar = () => {
+     
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
         //случайный персонаж из ПРИМЕРНО всех. Слишком сложная и непонятная логика id для точного захвата всех
         this.marvelService
             .getCharacter(id)
             .then(this.onCharLoaded)
             .catch(this.onError)
+            
+            this.setState({
+                loading: true
+            })
         // запрашиваем данные по персонажу, когда получаем - преобразуем в объект с нужными данными, 
         // записываем эти данные в состояние
     }
@@ -65,12 +73,18 @@ class RandomChar extends Component {
         })
     }
 
+  
+
     render() {
         console.log('render');
         const { char, loading, error} = this.state; //деструктуризация объекта изнутри объекта
         const errorMessage = error ? <ErrorMassage/> : null; //если ошибка - отрабатываем
         const spinner = loading ? <Spinner/> : null; // если загрузка - отрабатываем (спиннер)
         const content = !(loading || error) ? <View char={char}/> : null; // если не то и не то - рисуем данные
+
+       /*  onRefreshChar = () => {
+            
+        } */
 
         return (
             <div className="randomchar">
@@ -87,7 +101,8 @@ class RandomChar extends Component {
                         Or choose another one
                     </p>
                     <button className="button button__main">
-                        <div className="inner">try it</div>
+                        <div className="inner"
+                        onClick={this.updateChar}>try it</div>
                     </button>
                     <img src={mjolnir} alt="mjolnir" className="randomchar__decoration" />
                 </div>
@@ -118,6 +133,7 @@ const View = ({ char }) => {
         </div>
     )
 }
+
 
 
 export default RandomChar;
