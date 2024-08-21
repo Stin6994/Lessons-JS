@@ -30,7 +30,7 @@ class RandomChar extends Component {
 
     componentDidMount() {
         this.updateChar();
-        console.log('mount');
+        /* console.log('mount'); */
     }
     /* 
         componentWillUnmount() {
@@ -39,14 +39,14 @@ class RandomChar extends Component {
 
 
     onCharLoaded = (char) => { //если запрос прогрузился и получили персонажа, то записываем в состояние объект с данными
-        console.log('update');
+       /*  console.log('update'); */
         this.setState({
             char,  //аналогично char: char
             loading: false
         })  //как только загрузка закончилась и в состояние передан объект с данными - 
         //значение загрузки становится false и спиннер заменяется данными
 
-        console.log(char)
+        /* console.log(char) */
     }
 
 
@@ -77,7 +77,7 @@ class RandomChar extends Component {
 
 
     render() {
-        console.log('render');
+       /*  console.log('render'); */
         const { char, loading, error } = this.state; //деструктуризация объекта изнутри объекта
         const errorMessage = error ? <ErrorMassage /> : null; //если ошибка - отрабатываем
         const spinner = loading ? <Spinner /> : null; // если загрузка - отрабатываем (спиннер)
