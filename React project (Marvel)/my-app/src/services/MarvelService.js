@@ -32,11 +32,12 @@ class MarvelService {
     }
 
     _transformCharacter = (char) => {
+        const thumbnailPath = char.thumbnail.path + '.' + char.thumbnail.extension;
         return {
             name: char.name, //так как функция getCharacter возвращает одного персонажа, 
             //но все равно в массиве, то мы обращаемся к единственному персонажу из массива с индексом [0]
             description: char.description ? `${char.description.slice(0, 210)}...` : 'There is no description for this character',
-            thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
+            thumbnail:  thumbnailPath,
             //так как картинка в базе данных тоже объект из 2 свойств - путь и расширение, получаем их черех точку.  
             homepage: char.urls[0].url,
             wiki: char.urls[1].url
@@ -45,3 +46,5 @@ class MarvelService {
 }
 
 export default MarvelService;
+
+//'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'
