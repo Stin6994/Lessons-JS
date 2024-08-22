@@ -117,7 +117,6 @@ const View = ({ char }) => {
     return (
         <div className="randomchar__block">
             <img src={thumbnail} alt="Random character" className="randomchar__img" 
-             /* verticalAlign={verticalAlign} horizontalAlign={horizontalAlign} */
              style={thumbnail === imgNotFound ? {objectFit: 'contain'} : null}/>
             <div className="randomchar__info">
                 <p className="randomchar__name">{name}</p>
