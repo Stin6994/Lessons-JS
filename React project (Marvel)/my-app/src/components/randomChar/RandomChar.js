@@ -83,9 +83,7 @@ class RandomChar extends Component {
         const spinner = loading ? <Spinner /> : null; // если загрузка - отрабатываем (спиннер)
         const content = !(loading || error) ? <View char={char} /> : null; // если не то и не то - рисуем данные
 
-        /*  onRefreshChar = () => {
-             
-         } */
+    
 
         return (
             <div className="randomchar">

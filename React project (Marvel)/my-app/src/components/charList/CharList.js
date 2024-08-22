@@ -8,97 +8,99 @@ import MarvelService from '../../services/MarvelService';
 import './charList.scss';
 
 class CharList extends Component {
-    state = { 
+    state = {
         char: {},
-        /* loading: true,
-        error: false */
+        loading: true,
+        /* error: false */
     }
 
-marvelServiceOne = new MarvelService();
+    marvelServiceOne = new MarvelService();
 
-componentDidMount() {
-    /* console.log(this.state.char); */
-    this.updateCharList();
-    /* console.log('mount'); */
-    console.log (this.state);
-    
-}
+    componentDidMount() {
+        /* console.log(this.state.char); */
+        this.updateCharList();
+        /* console.log('mount'); */
+        console.log(this.state);
 
-updateCharList = () => {
+    }
 
-    this.marvelServiceOne
-        .getAllCharacters()
-        .then(this.onCharListLoaded)
-       /*  .catch(this.onError) */
+    updateCharList = () => {
+
+        this.marvelServiceOne
+            .getAllCharacters()
+            .then(this.onCharListLoaded)
+        /*  .catch(this.onError) */
         /* console.log(this.char); */
 
-  /*   this.setState({
-        loading: true
-    }) */
+        /*   this.setState({
+              loading: true
+          }) */
 
-}
+    }
 
-/* onError = () => {
-    this.setState({
-        loading: false,
-        error: true
-    })
-} */
+    /* onError = () => {
+        this.setState({
+            loading: false,
+            error: true
+        })
+    } */
 
-onCharListLoaded = (char) => { 
-    console.log('update');
-    this.setState({
-        char 
-        /* loading: false */
-        
-    }) 
-    console.log(this.state)
-}
+    onCharListLoaded = (char) => {
+        console.log('update');
+        this.setState({
+            char,
+            loading: false
 
-    render () {
+        })
+        console.log('LOAD')
+    }
+
+    render() {
 
         //view, переработать в цикл список, исмользовать массив
-        const {char} = this.state
+        const { char, loading } = this.state
+        /* const { name } = this.char[0] */
         /* const {thumbnail} = char */
-        console.log (this.state);
+    /*     !loading ? console.log(char[0]) : null; 
+        !loading ? console.log(char[0].name) : null;  */
+        /* const arr = !loading ? Object.entries(char[0]) : null; */
+      /*   console.log(arr[2][1]) */
+        const content = !loading ? <View char={char[0]} /> : null;
 
         return (
             <div className="char__list">
                 <ul className="char__grid">
-                    <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
-                        <div className="char__name">Abyss</div>
-                    </li>
+                    {content}
                     <li className="char__item char__item_selected">
-                        <img src={abyss} alt="abyss"/>
+                        <img src={abyss} alt="abyss" />
                         <div className="char__name">Abyss</div>
                     </li>
                     <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
+                        <img src={abyss} alt="abyss" />
                         <div className="char__name">Abyss</div>
                     </li>
                     <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
+                        <img src={abyss} alt="abyss" />
                         <div className="char__name">Abyss</div>
                     </li>
                     <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
+                        <img src={abyss} alt="abyss" />
                         <div className="char__name">Abyss</div>
                     </li>
                     <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
+                        <img src={abyss} alt="abyss" />
                         <div className="char__name">Abyss</div>
                     </li>
                     <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
+                        <img src={abyss} alt="abyss" />
                         <div className="char__name">Abyss</div>
                     </li>
                     <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
+                        <img src={abyss} alt="abyss" />
                         <div className="char__name">Abyss</div>
                     </li>
                     <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
+                        <img src={abyss} alt="abyss" />
                         <div className="char__name">Abyss</div>
                     </li>
                 </ul>
@@ -108,6 +110,18 @@ onCharListLoaded = (char) => {
             </div>
         )
     }
+
+}
+
+const View = ({char}) => {
+    const { name, description, thumbnail, homepage, wiki } = char
+    console.log(name);
+    return (
+        <li className="char__item">
+            <img src={thumbnail} alt="abyss" />
+            <div className="char__name">{name}</div>
+        </li>
+    )
     
 }
 
