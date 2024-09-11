@@ -3,7 +3,8 @@
 class MarvelService {
 
     _apiBase = 'https://gateway.marvel.com:443/v1/public/'; //начальное название нашего API, чтобы бесконечно не дублировать в запросах
-    _apiKey = 'apikey=bb41b2432751ccf0a28161b075eaffe3'; //публичный ключ из моего аккаунта на ресурсе
+    /* _apiKey = 'apikey=bb41b2432751ccf0a28161b075eaffe3'; //публичный ключ из моего аккаунта на ресурсе */
+    _apiKey = 'apikey=395dd436654e4c4d21785ca076d9874c'; //запасной ключ
 
     // знак лодаш _  - означает, что эти данные менять нельзя, негласное правило общения между программистами
 
@@ -19,7 +20,7 @@ class MarvelService {
     }
 
     getAllCharacters = async () => { //получаем 9 персонажей, начиная с 356 позиции
-        const res = await this.getResource(`${this._apiBase}characters?limit=9&offset=356&${this._apiKey}`);
+        const res = await this.getResource(`${this._apiBase}characters?limit=9&offset=758&${this._apiKey}`);
         return res.data.results.map(this._transformCharacter)
     }
 
@@ -34,6 +35,7 @@ class MarvelService {
     _transformCharacter = (char) => {
         const thumbnailPath = char.thumbnail.path + '.' + char.thumbnail.extension;
         return {
+            id: 0, //мой придуманный id 
             name: char.name, //так как функция getCharacter возвращает одного персонажа, 
             //но все равно в массиве, то мы обращаемся к единственному персонажу из массива с индексом [0]
             description: char.description ? `${char.description.slice(0, 210)}...` : 'There is no description for this character',
