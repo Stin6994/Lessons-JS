@@ -3,6 +3,7 @@ import { Component } from 'react';
 
 import MarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/spinner';
+import ErrorMassage from '../errorMessage/ErrorMessage';
 
 import './charList.scss';
 
@@ -10,7 +11,7 @@ class CharList extends Component {
     state = {
         char: {},
         loading: true,
-        /* error: false */
+        error: false
     }
 
     marvelServiceOne = new MarvelService();
@@ -28,7 +29,7 @@ class CharList extends Component {
         this.marvelServiceOne
             .getAllCharacters()
             .then(this.onCharListLoaded)
-        /*  .catch(this.onError) */
+            .catch(this.onError)
         /* console.log(this.char); */
 
         /*   this.setState({
@@ -37,12 +38,12 @@ class CharList extends Component {
 
     }
 
-    /* onError = () => {
+    onError = () => {
         this.setState({
             loading: false,
             error: true
         })
-    } */
+    }
 
     onCharListLoaded = (char) => {
         console.log('update');
@@ -63,14 +64,24 @@ class CharList extends Component {
 
     render() {
 
-        const { char, loading } = this.state
+        const { char, loading, error } = this.state
+
+        const errorMassage = error ? <ErrorMassage /> : null;
+        const spinner = loading ? <Spinner /> : null;
+        const content = !(loading || error) ? <View char={char} /> : null;
+
+
 
         return (
             <div className="char__list" >
 
-                <ul className="char__grid">
-                    {!loading ? <View char={char} /> : <Spinner/>}
-                </ul>
+        
+                    {errorMassage}
+                    {spinner}
+                    {content}
+
+                    {/* {!loading ? <View char={char} /> : <Spinner />} */}
+            
 
 
                 <button className="button button__main button__long">
@@ -83,21 +94,28 @@ class CharList extends Component {
 }
 
 const View = ({ char }) => {
-    
+
     const imgNotFound = 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'
     const cardCharList = char.map(({ name, thumbnail, id }) => {
-        
+
         return (
             <li className="char__item" key={id}>
-                <img src={thumbnail} alt="abyss"
-                    style={thumbnail === imgNotFound ? { objectFit: 'contain'} : null} />
-                <div className="char__name" style={{fontSize: '16px'}}> {name}</div>
+                <img src={thumbnail} alt={name}
+                    style={thumbnail === imgNotFound ? { objectFit: 'unset' } : { objectFit: 'cover' }} />
+                <div className="char__name" style={{ fontSize: '16px' }}> {name}</div>
             </li>
         )
-        
+
     })
+
+
+// для центровки спиннера
+    return (
+        <ul className="char__grid">
+            {cardCharList}
+        </ul>
+    )
     
-    return cardCharList
 }
 
 
