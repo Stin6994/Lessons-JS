@@ -30,6 +30,7 @@ class RandomChar extends Component {
 
     componentDidMount() {
         this.updateChar();
+        this.foo.bar = 0;
         /* console.log('mount'); */
     }
     /* 

@@ -7,7 +7,7 @@ import Skeleton from '../skeleton/Skeleton';
 
 
 import './charInfo.scss';
-import thor from '../../resources/img/thor.jpeg';
+
 
 
 class CharInfo extends Component {
@@ -29,6 +29,7 @@ class CharInfo extends Component {
             this.updateChar();
         }
     }
+
 
     updateChar = () => {
         const { charId } = this.props

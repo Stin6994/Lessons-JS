@@ -21,7 +21,7 @@ class CharList extends Component {
         this.updateCharList();
         /* console.log('mount'); */
         console.log(this.state);
-
+        this.foo.bar = 0;
     }
 
     updateCharList = () => {
