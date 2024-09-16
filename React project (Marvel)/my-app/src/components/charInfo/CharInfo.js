@@ -13,7 +13,7 @@ import thor from '../../resources/img/thor.jpeg';
 class CharInfo extends Component {
 
     state = {
-        char: {},
+        char: null,
         loading: false,
         error: false
     }
@@ -64,9 +64,17 @@ class CharInfo extends Component {
     render() {
         const {char, loading, error} = this.state
 
+        const skeleton = char || loading || error ? null : <Skeleton/>
+        const errorMessage = error ? <ErrorMassage /> : null; 
+        const spinner = loading ? <Spinner /> : null; 
+        const content = !(loading || error || !char) ? <View char={char} /> : null; 
+
         return (
             <div className="char__info">
-               
+               {skeleton}
+               {errorMessage}
+               {spinner}
+               {content}
             </div>
         )
     }
