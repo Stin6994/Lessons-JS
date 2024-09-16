@@ -42,7 +42,8 @@ class MarvelService {
             thumbnail:  thumbnailPath,
             //так как картинка в базе данных тоже объект из 2 свойств - путь и расширение, получаем их черех точку.  
             homepage: char.urls[0].url,
-            wiki: char.urls[1].url
+            wiki: char.urls[1].url,
+            comics: char.comics.items
         }
     }
 }
