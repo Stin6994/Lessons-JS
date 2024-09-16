@@ -20,7 +20,7 @@ class MarvelService {
     }
 
     getAllCharacters = async () => { //получаем 9 персонажей, начиная с 356 позиции
-        const res = await this.getResource(`${this._apiBase}characters?limit=9&offset=758&${this._apiKey}`);
+        const res = await this.getResource(`${this._apiBase}characters?limit=11&offset=1023&${this._apiKey}`);
         return res.data.results.map(this._transformCharacter)
     }
 
@@ -35,7 +35,7 @@ class MarvelService {
     _transformCharacter = (char) => {
         const thumbnailPath = char.thumbnail.path + '.' + char.thumbnail.extension;
         return {
-            id: 0, //мой придуманный id 
+            id: char.id, 
             name: char.name, //так как функция getCharacter возвращает одного персонажа, 
             //но все равно в массиве, то мы обращаемся к единственному персонажу из массива с индексом [0]
             description: char.description ? `${char.description.slice(0, 210)}...` : 'There is no description for this character',
