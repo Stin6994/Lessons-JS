@@ -1,4 +1,4 @@
-import React,{ Component, StrictMode, Fragment } from 'react'; //деструктуризация от React.Component
+import React, { Component, StrictMode, Fragment } from 'react'; //деструктуризация от React.Component
 import styled from 'styled-components';
 
 import logo from './logo.svg';
@@ -234,6 +234,25 @@ const DynamicGreating = (props) => {
   )
 }
 
+
+//Урок 156 - Специализация и наследование
+
+const Lesson156 = () => {
+  return <h1>Урок 156 - Специализация и наследование</h1>
+}
+
+
+const HelloGreating = () => {
+  return (
+    <div style={{'width': '600px', 'margin': '0 auto'}}>
+      <DynamicGreating color={'primary'}>
+        <h2>Hello world!</h2>
+      </DynamicGreating>
+    </div>
+  )
+}
+
+
 function App() {
   return (
     <Wrapper>
@@ -262,7 +281,7 @@ function App() {
       <Lesson142 />
       <WhoAmIFour name='Анечка' surname='Андреева' link='My profile.com' />
 
-      <Lesson142 />
+      <Lesson155 />
       <BootstrapTest
         left={
           <DynamicGreating color={'primary'}>
@@ -276,6 +295,11 @@ function App() {
           </DynamicGreating>
         }
       />
+
+
+      <Lesson156 />
+        <HelloGreating/>
+
     </Wrapper>
   );
 }
