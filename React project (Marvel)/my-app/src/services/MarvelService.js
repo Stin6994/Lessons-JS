@@ -5,7 +5,7 @@ class MarvelService {
     _apiBase = 'https://gateway.marvel.com:443/v1/public/'; //начальное название нашего API, чтобы бесконечно не дублировать в запросах
     /* _apiKey = 'apikey=bb41b2432751ccf0a28161b075eaffe3'; //публичный ключ из моего аккаунта на ресурсе */
     _apiKey = 'apikey=395dd436654e4c4d21785ca076d9874c'; //запасной ключ
-
+    _baseOffset = 1023; //стартовая позиция для списка персонажей
     // знак лодаш _  - означает, что эти данные менять нельзя, негласное правило общения между программистами
 
 
@@ -19,8 +19,8 @@ class MarvelService {
         return await res.json();
     }
 
-    getAllCharacters = async () => { //получаем 9 персонажей, начиная с 356 позиции
-        const res = await this.getResource(`${this._apiBase}characters?limit=11&offset=1023&${this._apiKey}`);
+    getAllCharacters = async (offset = this._baseOffset) => { //получаем 9 персонажей, начиная с 356 позиции
+        const res = await this.getResource(`${this._apiBase}characters?limit=11&offset=${offset}&${this._apiKey}`);
         return res.data.results.map(this._transformCharacter)
     }
 
