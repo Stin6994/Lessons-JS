@@ -1,5 +1,7 @@
 import { Component } from 'react';
 
+import PropTypes from 'prop-types';
+
 import MarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/spinner';
 import ErrorMassage from '../errorMessage/ErrorMessage';
@@ -134,6 +136,10 @@ const View = ({ char }) => {
             </ul>
         </>
     )
+}
+
+CharInfo.propTypes = {   //проверяем является ли пропс charId числом. Если нет - будет ошибка в консоли.
+    charId: PropTypes.number
 }
 
 export default CharInfo;
