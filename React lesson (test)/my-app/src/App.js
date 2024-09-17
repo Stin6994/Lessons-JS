@@ -1,8 +1,10 @@
-import { Component, StrictMode, Fragment } from 'react'; //деструктуризация от React.Component
+import React,{ Component, StrictMode, Fragment } from 'react'; //деструктуризация от React.Component
 import styled from 'styled-components';
 
 import logo from './logo.svg';
 import './App.css';
+
+import BootstrapTest from './BootstrapTest';
 
 const Header = () => {// с большой буквы,потому что это не переменная, а реакт компонент
   return <h2>Простейший реакт компонент</h2>
@@ -154,23 +156,23 @@ class WhoAmIFour extends Component {
     console.log(e.target.value)
     this.setState({  //не используем стрелочеую функцию, потому что в этом случае при вводе текста в поле
       //нас не интересует, что до этого было в state (а там ничего и не было - position: '')
-        position: e.target.value
+      position: e.target.value
     })
   }
 
   render() {
     const { name, surname, link } = this.props;
-    const {position, years, text} = this.state;
+    const { position, years, text } = this.state;
     return (
       //если оборачивать в простой div без классов, то в структуре появлется лишняя оболочка div
-      <EmpItem active="true"> 
+      <EmpItem active="true">
         <Button onClick={this.nextYear}>{text}</Button>
-        <HeaderNew>My name is {name}, surname - {surname}, age - {years}, 
-        position - {position}</HeaderNew>
+        <HeaderNew>My name is {name}, surname - {surname}, age - {years},
+          position - {position}</HeaderNew>
         <a href={link}>My profile</a>
         <form>
           <span>Введите должность</span>
-          <input type="text" onChange={(e) => this.commitInputChanges(e, 'some color')} /> 
+          <input type="text" onChange={(e) => this.commitInputChanges(e, 'some color')} />
         </form>
       </EmpItem>
     )
@@ -212,6 +214,26 @@ export const Button = styled.button`
   box-shadow: 5px 5px 10px rgba(0,0,0, .2);
 `;
 
+
+//Урок 155 - Вставка элементов через props.children
+
+const Lesson155 = () => {
+  return <h1>Урок 155 - Вставка элементов через props.children </h1>
+}
+
+
+const DynamicGreating = (props) => {
+  return (
+    <div className={'mb-3 p-3 border border-' + props.color}>
+      {
+        React.Children.map(props.children, child => {
+          return React.cloneElement(child, { className: 'shadow p-3 m-3 border rounded' })
+        })
+      }
+    </div>
+  )
+}
+
 function App() {
   return (
     <Wrapper>
@@ -235,11 +257,25 @@ function App() {
       <Lesson131 />
       <WhoAmIFour name='Анечка' surname='Андреева' />
 
-      <Lesson136/>
+      <Lesson136 />
 
-      <Lesson142/>
-      <WhoAmIFour name='Анечка' surname='Андреева' link='My profile.com'/>
+      <Lesson142 />
+      <WhoAmIFour name='Анечка' surname='Андреева' link='My profile.com' />
 
+      <Lesson142 />
+      <BootstrapTest
+        left={
+          <DynamicGreating color={'primary'}>
+            <h2>This weel was hard</h2>
+            <h2>Hello world!</h2>
+          </DynamicGreating>
+        }
+        right={
+          <DynamicGreating color={'primary'}>
+            <h2>RIGHT!</h2>
+          </DynamicGreating>
+        }
+      />
     </Wrapper>
   );
 }

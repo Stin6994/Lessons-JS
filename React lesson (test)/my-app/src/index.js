@@ -4,7 +4,6 @@ import './index.css';
 import App from './App'; 
 
 import styled from 'styled-components';
-import BootstrapTest from './BootstrapTest';
 
 import { Header } from './App';
 import { Button } from './App';
@@ -65,7 +64,6 @@ root.render(
   <StrictMode> 
     <App />
     <BigButton as="a"> Some Button </BigButton> 
-    <BootstrapTest/>
  </StrictMode> 
   
   
