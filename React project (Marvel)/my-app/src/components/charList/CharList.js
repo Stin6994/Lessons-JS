@@ -13,7 +13,8 @@ class CharList extends Component {
         loading: true,
         error: false,
         newItemLoading: false,
-        offset: 210
+        offset: 1552,
+        charEnded: false
     }
 
     marvelService = new MarvelService();
@@ -32,18 +33,24 @@ class CharList extends Component {
 
     onCharListLoading = () => {
         this.setState({
-            newItemloading: true
+            newItemLoading: true
         })
     }
 
 
     onCharListLoaded = (newCharList) => {
         console.log('update');
+        let ended = false;
+        if (newCharList.length < 9) {
+            ended = true;
+        }
+
         this.setState(({offset, charList}) =>({ // offset, charList - те свойства, которые зависят от предыдущих состояний, поэтому деструктурируем тут
             charList: [...charList, ...newCharList],  // при первом запуске отрисовки будет только 9 элементов, при втором старые элементы + еще 9 (по кнопке)
             loading: false,
             newItemLoading: false,
-            offset: offset + 9
+            offset: offset + 9,
+            charEnded: ended
         }))
         console.log('LOAD')
         /* console.log(charList) */
@@ -84,7 +91,7 @@ class CharList extends Component {
 
     render() {
 
-        const { charList, loading, error, newItemLoading, offset } = this.state
+        const { charList, loading, error, newItemLoading, offset, charEnded } = this.state
         const items = this.view(charList)
 
         const errorMassage = error ? <ErrorMassage /> : null;
@@ -103,7 +110,8 @@ class CharList extends Component {
 
                 <button className="button button__main button__long"
                     disabled={newItemLoading}
-                    onClick={() => this.onRequest(offset)}>
+                    onClick={() => this.onRequest(offset)}
+                    style={{'display' : charEnded ? 'none' : 'block'}}>
                     <div className="inner">load more</div>
                 </button>
             </div>
