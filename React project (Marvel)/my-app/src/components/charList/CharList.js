@@ -11,30 +11,42 @@ class CharList extends Component {
     state = {
         charList: [],
         loading: true,
-        error: false
+        error: false,
+        newItemLoading: false,
+        offset: 210
     }
 
     marvelService = new MarvelService();
 
     componentDidMount() {
-        /* console.log(this.state.char); */
-        this.updateCharList();
-        /* console.log('mount'); */
-        console.log(this.state);
+        this.onCharListLoading();
+        this.onRequest();
     }
 
-    updateCharList = () => {
-
+    onRequest = (offset) => {
         this.marvelService
-            .getAllCharacters()
+            .getAllCharacters(offset)
             .then(this.onCharListLoaded)
             .catch(this.onError)
-        /* console.log(this.char); */
+    }
 
-        /*   this.setState({
-              loading: true
-          }) */
+    onCharListLoading = () => {
+        this.setState({
+            newItemloading: true
+        })
+    }
 
+
+    onCharListLoaded = (newCharList) => {
+        console.log('update');
+        this.setState(({offset, charList}) =>({ // offset, charList - те свойства, которые зависят от предыдущих состояний, поэтому деструктурируем тут
+            charList: [...charList, ...newCharList],  // при первом запуске отрисовки будет только 9 элементов, при втором старые элементы + еще 9 (по кнопке)
+            loading: false,
+            newItemLoading: false,
+            offset: offset + 9
+        }))
+        console.log('LOAD')
+        /* console.log(charList) */
     }
 
     onError = () => {
@@ -42,21 +54,6 @@ class CharList extends Component {
             loading: false,
             error: true
         })
-    }
-
-    onCharListLoaded = (charList) => {
-        console.log('update');
-
-    
-
-        this.setState({
-            charList,
-            loading: false
-
-        })
-
-        console.log('LOAD')
-        console.log(charList)
     }
 
     view = (arr) => {
@@ -87,7 +84,7 @@ class CharList extends Component {
 
     render() {
 
-        const { charList, loading, error } = this.state
+        const { charList, loading, error, newItemLoading, offset } = this.state
         const items = this.view(charList)
 
         const errorMassage = error ? <ErrorMassage /> : null;
@@ -104,11 +101,9 @@ class CharList extends Component {
                 {spinner}
                 {content}
 
-                {/* {!loading ? <View charList={charList} /> : <Spinner />} */}
-
-
-
-                <button className="button button__main button__long">
+                <button className="button button__main button__long"
+                    disabled={newItemLoading}
+                    onClick={() => this.onRequest(offset)}>
                     <div className="inner">load more</div>
                 </button>
             </div>
