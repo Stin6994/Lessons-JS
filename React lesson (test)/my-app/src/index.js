@@ -63,7 +63,7 @@ root.render(
  
   <StrictMode> 
     <App />
-    <BigButton as="a"> Some Button </BigButton> 
+    {/* <BigButton as="a"> Some Button </BigButton>  */}
  </StrictMode> 
   
   

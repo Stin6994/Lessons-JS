@@ -1,9 +1,9 @@
 import React, { Component, StrictMode, Fragment } from 'react'; //деструктуризация от React.Component
 import styled from 'styled-components';
 
-import logo from './logo.svg';
-import './App.css';
 
+import './App.css';
+import { Container } from 'react-bootstrap';
 import BootstrapTest from './BootstrapTest';
 
 const Header = () => {// с большой буквы,потому что это не переменная, а реакт компонент
@@ -278,14 +278,56 @@ class Counter extends Component {
 
   render() {
     return (
-    <>
-      <button
-        ClassName={'btn btn-primary'}
-        onClick={this.changeCounter}>
-        Click me
-      </button>
-      {this.props.render(this.state.counter)}
-    </>
+      <>
+        <button
+          ClassName={'btn btn-primary'}
+          onClick={this.changeCounter}>
+          Click me
+        </button>
+        {this.props.render(this.state.counter)}
+      </>
+    )
+  }
+}
+
+
+//Урок 158 - Что такое ref и зачем он нужен
+
+const Lesson158 = () => {
+  return <h4>Урок 158 - Что такое ref и зачем он нужен</h4>
+}
+
+
+class Form extends Component {
+  myRef = React.createRef()
+
+
+ /*  componentDidMount() {
+    this.myRef.current.focus();
+    //Установили фокус в первое поле при загрузке страницы/модального окна
+  } */
+
+
+
+  focusFirstInput = () => {
+    this.myRef.current.focus();
+    //при нажатии на второе поле - фокус уходит на первое
+  }
+
+  render() {
+    return (
+      <Container>
+        <form className="w-50 border mt-5 p-3 m-auto">
+          <div className="mb-3">
+            <label htmlFor="exampleFormControlInput1" className="form-label">Email address</label>
+            <input ref={this.myRef} type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="exampleFormControlTextarea1" className="form-label">Example textarea</label>
+            <textarea onClick={this.focusFirstInput} className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+        </form>
+      </Container>
     )
   }
 }
@@ -295,25 +337,28 @@ class Counter extends Component {
 
 
 
-
 function App() {
   return (
     <Wrapper>
-      <StrictMode>
-        <Header />
-      </StrictMode>
 
+      <Lesson158 />
+      <Form />
+
+      {/*      <StrictMode>
+        <Header />
+      </StrictMode> */}
+      {/* 
       <Field />
       <Btn />
       <BtnTwo />
       <FieldTwo />
 
       <Lesson126 />
-      <WhoAmI name='Igor' surname='Andreev' link='Facebook.com' />
-      {/* Из этих аргументов получается объект, и которого уже и берутся необходимые свойства */}
-      <WhoAmITwo name='Анечка' surname='Андреева' link='Facebook.com' />
+      <WhoAmI name='Igor' surname='Andreev' link='Facebook.com' /> */}
+      {/* Из этих аргументов получается объект, и которого уже и берутся необходимые свойства  */}
+      {/*    <WhoAmITwo name='Анечка' surname='Андреева' link='Facebook.com' /> */}
 
-      <Lesson129 />
+      {/* <Lesson129 />
       <WhoAmIThree name='Анечка' surname='Андреева' link='Facebook.com' />
 
       <Lesson131 />
@@ -346,7 +391,7 @@ function App() {
       <Lesson157 />
       <Counter render={counter => (
         <Message counter={counter} />
-      )} />
+      )} /> */}
 
 
     </Wrapper>
