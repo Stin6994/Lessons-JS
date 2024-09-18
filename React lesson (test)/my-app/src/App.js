@@ -56,23 +56,23 @@ function BtnTwo() {
 // Урок 126 - свойства компонентов
 
 const Lesson126 = () => {
-  return <h1>Урок 126 - свойства компонентов</h1>
+  return <h4>Урок 126 - свойства компонентов</h4>
 }
 
 const Lesson129 = () => {
-  return <h1>Урок 129 - состояние компонентов</h1>
+  return <h4>Урок 129 - состояние компонентов</h4>
 }
 
 const Lesson131 = () => {
-  return <h1>Урок 131 - события в React </h1>
+  return <h4>Урок 131 - события в React </h4>
 }
 
 const Lesson136 = () => {
-  return <h1>Урок 136 - React-фрагменты </h1>
+  return <h4>Урок 136 - React-фрагменты </h4>
 }
 
 const Lesson142 = () => {
-  return <h1>Урок 142 - Styled Components </h1>
+  return <h4>Урок 142 - Styled Components </h4>
 }
 
 function WhoAmI(props) { //props - это объект со свойтсвами, 
@@ -80,7 +80,7 @@ function WhoAmI(props) { //props - это объект со свойтсвами
   //например одинаковые карточки товаров с разным содержимым
   return (
     <div>
-      <h1>My name is {props.name}, surname - {props.surname}</h1>
+      <h4>My name is {props.name}, surname - {props.surname}</h4>
       <a href={props.link}>My profile</a>
     </div>
   )
@@ -90,7 +90,7 @@ function WhoAmITwo({ name, surname, link }) { // так как в аргумен
   //для упрощения и большей читабельности кода. НА выходе - аналогично получится
   return (
     <div>
-      <h1>My name is {name}, surname - {surname}</h1>
+      <h4>My name is {name}, surname - {surname}</h4>
       <a href={link}>My profile</a>
     </div>
   )
@@ -121,7 +121,7 @@ class WhoAmIThree extends Component {
     return (
       <div>
         <button onClick={this.nextYear}>{this.state.text}</button>
-        <h1>My name is {name}, surname - {surname}, age - {this.state.years}</h1>
+        <h4>My name is {name}, surname - {surname}, age - {this.state.years}</h4>
         <a href={link}>My profile</a>
       </div>
     )
@@ -218,7 +218,7 @@ export const Button = styled.button`
 //Урок 155 - Вставка элементов через props.children
 
 const Lesson155 = () => {
-  return <h1>Урок 155 - Вставка элементов через props.children </h1>
+  return <h4>Урок 155 - Вставка элементов через props.children </h4>
 }
 
 
@@ -238,19 +238,62 @@ const DynamicGreating = (props) => {
 //Урок 156 - Специализация и наследование
 
 const Lesson156 = () => {
-  return <h1>Урок 156 - Специализация и наследование</h1>
+  return <h4>Урок 156 - Специализация и наследование</h4>
 }
 
 
 const HelloGreating = () => {
   return (
-    <div style={{'width': '600px', 'margin': '0 auto'}}>
+    <div style={{ 'width': '600px', 'margin': '0 auto' }}>
       <DynamicGreating color={'primary'}>
-        <h2>Hello world!</h2>
+        <h5>Hello world!</h5>
       </DynamicGreating>
     </div>
   )
 }
+
+
+//Урок 157 - Render-props паттерн
+
+const Lesson157 = () => {
+  return <h4>Урок 157 - Render-props паттерн</h4>
+}
+
+const Message = (props) => {
+  return (
+    <h3>The counter is {props.counter}</h3>
+  )
+}
+
+class Counter extends Component {
+  state = {
+    counter: 0
+  }
+
+  changeCounter = () => {
+    this.setState(({ counter }) => ({
+      counter: counter + 1
+    }))
+  }
+
+  render() {
+    return (
+    <>
+      <button
+        ClassName={'btn btn-primary'}
+        onClick={this.changeCounter}>
+        Click me
+      </button>
+      {this.props.render(this.state.counter)}
+    </>
+    )
+  }
+}
+
+
+
+
+
 
 
 function App() {
@@ -285,20 +328,26 @@ function App() {
       <BootstrapTest
         left={
           <DynamicGreating color={'primary'}>
-            <h2>This weel was hard</h2>
-            <h2>Hello world!</h2>
+            <h5>This weel was hard</h5>
+            <h5>Hello world!</h5>
           </DynamicGreating>
         }
         right={
           <DynamicGreating color={'primary'}>
-            <h2>RIGHT!</h2>
+            <h5>RIGHT!</h5>
           </DynamicGreating>
         }
       />
 
 
       <Lesson156 />
-        <HelloGreating/>
+      <HelloGreating />
+
+      <Lesson157 />
+      <Counter render={counter => (
+        <Message counter={counter} />
+      )} />
+
 
     </Wrapper>
   );
