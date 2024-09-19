@@ -61,10 +61,11 @@ const BigButton = styled(Button)`
  const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
  
-  <StrictMode> 
+ /*  <StrictMode>  */
     <App />
-    {/* <BigButton as="a"> Some Button </BigButton>  */}
- </StrictMode> 
+
+    /* {/* <BigButton as="a"> Some Button </BigButton>  */
+/*  </StrictMode> */ 
   
   
 );
