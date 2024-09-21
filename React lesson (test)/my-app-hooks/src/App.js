@@ -104,9 +104,49 @@ const Slider = (props) => {
 }
 
 
+
+const AppTwo = (props) => {
+
+    const [number, setNumber] = useState(27);
+    
+      function inc() {
+      setNumber(number => number + 1);
+    } 
+    
+       function dec() {
+      setNumber(number => number - 1);
+    } 
+    
+       function reset() {
+      setNumber(number => number = 0);
+    } 
+    
+       function random() {
+      setNumber(number => number = Math.floor(Math.random() * 51));
+    } 
+    
+    return (
+      <>
+        <div className="app">
+          <div className="counter">{number}</div>
+          <div className="controls">
+           <button onClick = {inc}>INC</button>
+            <button onClick = {dec}>DEC</button>
+            <button onClick = {random}>RND</button>
+            <button onClick = {reset}>RESET</button>
+          </div>
+        </div>
+        </>
+      )
+    
+    }
+
 function App() {
     return (
+        <>
         <Slider />
+        <AppTwo />
+        </>
     );
 }
 
