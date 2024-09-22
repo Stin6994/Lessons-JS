@@ -2,7 +2,7 @@ import { Component, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import './App.css';
 
-/* class Slider extends Component {
+class Slider extends Component {
 
     constructor(props) {
         super(props);
@@ -45,31 +45,31 @@ import './App.css';
             </Container>
         )
     }
-} */
+}
 
-const calcValue = () => {
+/* const calcValue = () => {
     console.log('random');
 
     return Math.random()* (50-1) + 1;
-}
+} */
 
 
-const Slider = (props) => {
+/* const Slider = (props) => { */
 
     /*  const slideStateArray = useState(); //возвращается массив из 2 элементов - 1)текущее состояние  2)функция - действие с состоянием
      console.log(slideStateArray); */
-    const [slide, setSlide] = useState(() =>calcValue()); // 0 - начальное значение состояния
+/*     const [slide, setSlide] = useState(() =>calcValue());  */// 0 - начальное значение состояния
     // таких состояний можно создать сколько
-    const [autoplay, setAutoplay] = useState(false);
+/*     const [autoplay, setAutoplay] = useState(false); */
 
-    function changeSlide(i) {
+/*     function changeSlide(i) {
         setSlide(slide => slide + i);
         setSlide(slide => slide + i);
-    }
+    } */
 
-    function toggleAutoplay() {
+/*     function toggleAutoplay() {
         setAutoplay(!autoplay)
-    }
+    } */
 
 /*         const [state, setState] = useState({slide: 0, autoplay: false});
 
@@ -81,7 +81,7 @@ const Slider = (props) => {
             setState(state => ({...state, autoplay: !state.autoplay}));
         } */
 
-    return (
+/*     return (
         <Container>
             <div className="slider w-50 m-auto">
                 <img className="d-block w-100" src="https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg" alt="slide" />
@@ -102,10 +102,10 @@ const Slider = (props) => {
         </Container>
     )
 }
+ */
 
 
-
-const AppTwo = (props) => {
+/* const AppTwo = (props) => {
 
     const [number, setNumber] = useState(27);
     
@@ -139,15 +139,15 @@ const AppTwo = (props) => {
         </>
       )
     
-    }
+    } */
 
 function App() {
     return (
-        <>
+        
         <Slider />
-        <AppTwo />
-        </>
-    );
+        
+        
+    )
 }
 
 export default App;
