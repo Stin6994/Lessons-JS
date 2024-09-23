@@ -1,4 +1,4 @@
-import React, { Component, StrictMode, Fragment, useState, useEffect, useCallback } from 'react'; //деструктуризация от React.Component
+import React, { Component, StrictMode, Fragment, useState, useEffect, useCallback, useMemo } from 'react'; //деструктуризация от React.Component
 import ReactDOM from 'react-dom'
 import styled from 'styled-components';
 
@@ -414,10 +414,10 @@ const Msg = () => {
 }
 
 
-//Урок 162 - useState, 163 - useEffect, 164 - useCallback
+//Урок 162 - useState, 163 - useEffect, 164 - useCallback, 165 - useMemo
 
 const LessonHooks = () => {
-  return <h4>Урок 162, 163, 164 - хуки </h4>
+  return <h4>Урок 162, 163, 164, 165 - хуки </h4>
 }
 
 
@@ -476,21 +476,23 @@ class Slider extends Component {
 }
 
 
-const calcValue = () => {
+/* const calcValue = () => {
   console.log('random');
 
   return Math.random() * (50 - 1) + 1;
-}
+} */
+
 
 
 
 const SliderTwo = (props) => {
 
-  const [slide, setSlide] = useState(() => calcValue());
+  /* const [slide, setSlide] = useState(() => calcValue()); */
+  const [slide, setSlide] = useState(0)
   const [autoplay, setAutoplay] = useState(false);
 
   function logging() {
-    console.log('log!');
+    /* console.log('log!'); */
   }
 
   const getSomeImages = useCallback(() => {
@@ -502,7 +504,7 @@ const SliderTwo = (props) => {
   }, []); //если поставить зависимость от slide, каждый раз при изменения состояния будет идти новый запрос на сервер. Если этого не нужно, зависимость не ставим
 
   useEffect(() => {
-    console.log('effect')
+    /* console.log('effect') */
     document.title = `Slide: ${slide}`;
     window.addEventListener('click', logging); //назначили обработчик события
 
@@ -513,7 +515,7 @@ const SliderTwo = (props) => {
   }, [slide]) //функция будет работать только тогда, когда изменились состояния элементов массива [slide]
 
   useEffect(() => {
-    console.log('autoplay')
+    /* console.log('autoplay') */
   }, [autoplay])
 
 
@@ -526,28 +528,39 @@ const SliderTwo = (props) => {
     setAutoplay(!autoplay)
   }
 
+  const countTotal = (num) => {
+    console.log('counting');
+    return num + 10;
+  }
+  
+  const total = useMemo(() => {
+    return countTotal(slide)
+  }, [slide]);
+
+  const style = useMemo(() => ({
+    color: slide > 4 ? 'red' : 'black'
+  }), [slide])
+
+  useEffect(() => {
+    console.log ('styled')
+  }, [style]) //когда произошло изменение стиля - применился эффект, появился console.log
+
   return (
     <Container>
       <div className="slider w-50 m-auto">
 
         <Slide getSomeImages={getSomeImages}/>
 
-        {/* {getSomeImages().map((url, i) => {
-          return (
-            <img key={i} className="d-block w-100" src={url} alt="slide" />
-          )
-
-        })
-        } */}
-
         <div className="text-center mt-5">Active slide {slide} <br /> {autoplay ? 'auto' : null} </div>
+        <div style={style} className="text-center mt-5">Total sledes {total} </div>
+
         <div className="buttons mt-3">
           <button
             className="btn btn-primary me-2"
-            onClick={() => changeSlide(-102)}>-1</button>
+            onClick={() => changeSlide(-1)}>-1</button>
           <button
             className="btn btn-primary me-2"
-            onClick={() => changeSlide(102)}>+1</button>
+            onClick={() => changeSlide(1)}>+1</button>
           <button
             className="btn btn-primary me-2"
             onClick={toggleAutoplay}>toggle autoplay</button>
