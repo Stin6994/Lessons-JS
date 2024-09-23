@@ -1,4 +1,4 @@
-import React, { Component, StrictMode, Fragment, useState, useEffect, useCallback, useMemo } from 'react'; //деструктуризация от React.Component
+import React, { Component, StrictMode, Fragment, useState, useEffect, useCallback, useMemo, useRef } from 'react'; //деструктуризация от React.Component
 import ReactDOM from 'react-dom'
 import styled from 'styled-components';
 
@@ -497,10 +497,10 @@ const SliderTwo = (props) => {
 
   const getSomeImages = useCallback(() => {
     console.log('fetching');
-  return [
-    "https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg",
-    "https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg"
-  ]
+    return [
+      "https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg",
+      "https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg"
+    ]
   }, []); //если поставить зависимость от slide, каждый раз при изменения состояния будет идти новый запрос на сервер. Если этого не нужно, зависимость не ставим
 
   useEffect(() => {
@@ -532,7 +532,7 @@ const SliderTwo = (props) => {
     console.log('counting');
     return num + 10;
   }
-  
+
   const total = useMemo(() => {
     return countTotal(slide)
   }, [slide]);
@@ -542,14 +542,14 @@ const SliderTwo = (props) => {
   }), [slide])
 
   useEffect(() => {
-    console.log ('styled')
+    console.log('styled')
   }, [style]) //когда произошло изменение стиля - применился эффект, появился console.log
 
   return (
     <Container>
       <div className="slider w-50 m-auto">
 
-        <Slide getSomeImages={getSomeImages}/>
+        <Slide getSomeImages={getSomeImages} />
 
         <div className="text-center mt-5">Active slide {slide} <br /> {autoplay ? 'auto' : null} </div>
         <div style={style} className="text-center mt-5">Total sledes {total} </div>
@@ -570,7 +570,7 @@ const SliderTwo = (props) => {
   )
 }
 
-const Slide = ({getSomeImages}) => {
+const Slide = ({ getSomeImages }) => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
@@ -579,10 +579,48 @@ const Slide = ({getSomeImages}) => {
 
   return (
     <>
-      {images.map((url,i) => <img key={i} className="d-block w-100" src={url} alt="slide" /> )}
+      {images.map((url, i) => <img key={i} className="d-block w-100" src={url} alt="slide" />)}
     </>
   )
 
+}
+
+
+//Урок 166 - useRef
+
+const Lesson166 = () => {
+  return <h4>166 - useRef </h4>
+}
+
+
+const FormRef = () => {
+
+  const [text, setText] = useState('');
+
+  const myRef = useRef(1); //изначально тут ничего, а потом при рендеринге уже появится ссылка ref
+
+  useEffect(() => {
+    myRef.current = text;
+  })
+
+/*   const focusFirstInput = () => {
+    myRef.current.focus();
+  } */
+
+  return (
+    <Container>
+      <form className="w-50 border mt-5 p-3 m-auto">
+        <div className="mb-3">
+          <label htmlFor="exampleFormControlInput1" className="form-label">Email address</label>
+          <input onChange={(e) => setText(e.target.value)} type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">Example textarea</label>
+          <textarea value={myRef.current} className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+      </form>
+    </Container>
+  )
 }
 
 
@@ -603,6 +641,9 @@ function App() {
       <Slider />
       <button onClick={() => setSlide(false)}>Click</button>
       {slide ? <SliderTwo /> : null}
+
+      <Lesson166 />
+      <FormRef />
 
       {/*      <StrictMode>
         <Header />
