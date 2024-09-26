@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import Spinner from '../spinner/spinner';
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import mjolnir from '../../resources/img/mjolnir.png';
 import ErrorMassage from '../errorMessage/ErrorMessage';
 
@@ -12,10 +12,8 @@ const RandomChar = () => {
 
 
     const [char, setChar] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
 
-    const marvelService = new MarvelService();
+    const {loading, error, getCharacter, clearError} = useMarvelService();
 
     useEffect(() => {
         updateChar();
@@ -28,33 +26,20 @@ const RandomChar = () => {
 
 
     const onCharLoaded = (char) => {
-        setLoading(false);
         setChar(char);
     }
 
-    const onCharLoading = () => {
-        setLoading(true);
-    }
 
     const updateChar = () => {
-
+        clearError(); //если при предыдущем запросе была ошибка рандомного перса, то при выгрузке нового ошибка сбросится. Иначе вообще не даст выгружать
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
-        onCharLoading();
-        marvelService
-            .getCharacter(id)
+        getCharacter(id)
             .then(onCharLoaded)
-            .catch(onError)
     }
-
-    const onError = () => {
-        setError(true);
-        setLoading(false);
-    }
-
 
     const errorMessage = error ? <ErrorMassage /> : null; //если ошибка - отрабатываем
     const spinner = loading ? <Spinner /> : null; // если загрузка - отрабатываем (спиннер)
-    const content = !(loading || error) ? <View char={char} /> : null; // если не то и не то - рисуем данные
+    const content = !(loading || error || !char) ? <View char={char} /> : null; // если не то и не то - рисуем данные
 
 
     return (
@@ -79,7 +64,6 @@ const RandomChar = () => {
             </div>
         </div>
     )
-
 }
 
 const View = ({ char }) => {

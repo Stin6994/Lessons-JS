@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/spinner';
 import ErrorMassage from '../errorMessage/ErrorMessage';
 
@@ -10,50 +10,35 @@ import './charList.scss';
 const CharList = (props) => {
 
     const [charList, setCharList] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
     const [newItemLoading, setNewItemLoading] = useState(false);
     const [offset, setOffset] = useState(1549);
     const [charEnded, setCharEnded] = useState(false);
 
-    const marvelService = new MarvelService();
+    const {loading, error, getAllCharacters} = useMarvelService();
 
     useEffect(() => {
-        onRequest();
+        onRequest(offset, true);
     }, []) //пустой массив - функция аналагичная componentDidMount запустится 1 раз в начале после рендеринга
 
 
-    const onRequest = (offset) => {
-        onCharListLoading();
-        marvelService
-            .getAllCharacters(offset)
+    const onRequest = (offset, initial) => { // initial - для того, чтобы при дозагрузке персонажей появлялись новые, а не перерисовывались старые вместе с новыми
+        initial ? setNewItemLoading(false) : setNewItemLoading(true); //
+        getAllCharacters(offset)
             .then(onCharListLoaded)
-            .catch(onError)
-    }
 
-    const onCharListLoading = () => {
-        setNewItemLoading(true);
     }
-
 
     const onCharListLoaded = (newCharList) => {
-        console.log('update');
         let ended = false;
         if (newCharList.length < 6) {
             ended = true;
         }
 
         setCharList(charList => [...charList, ...newCharList]);
-        setLoading(false); // нам неважно какой раньше был loading, мы в любом случае ставим его в false на этом этапе, поэтому можеи передать только аргумент false
         setNewItemLoading(newItemLoading => false);
         setOffset(offset => offset + 6);
         setCharEnded(charEnded => ended);
 
-    }
-
-    const onError = () => {
-        setLoading(false);
-        setError(true);
     }
 
     const itemRefs = useRef([]);
@@ -106,8 +91,7 @@ const CharList = (props) => {
     const items = view(charList);
 
     const errorMassage = error ? <ErrorMassage /> : null;
-    const spinner = loading ? <Spinner /> : null;
-    const content = !(loading || error) ? items : null;
+    const spinner = loading && !newItemLoading ? <Spinner /> : null; //когда загрузка, но первичная, а не новых компонентов
 
 
     return (
@@ -116,7 +100,7 @@ const CharList = (props) => {
 
             {errorMassage}
             {spinner}
-            {content}
+            {items}
 
             <button className="button button__main button__long"
                 disabled={newItemLoading}

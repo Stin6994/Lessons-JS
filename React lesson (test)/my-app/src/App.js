@@ -603,9 +603,9 @@ const FormRef = () => {
     myRef.current = text;
   })
 
-/*   const focusFirstInput = () => {
-    myRef.current.focus();
-  } */
+  /*   const focusFirstInput = () => {
+      myRef.current.focus();
+    } */
 
   return (
     <Container>
@@ -623,13 +623,78 @@ const FormRef = () => {
   )
 }
 
+//Урок 168 - создание собственных хуков
+
+const Lesson168 = () => {
+  return <h4>Урок 168 - создание собственных хуков </h4>
+}
+
+function useInputWithValidate(initialValue) {
+  const [value, setValue] = useState(initialValue);
+
+  const onChange = event => {
+    setValue(event.target.value);
+  }
+
+  const validateInput = () => {
+    return value.search(/\d/) >= 0 // возвращается условие. Возвращается по мере выполнения true/false
+  }
+
+  return {value, onChange, validateInput}  // равнозначно {value: value, onChange: onChange}
+}
+
+const FormMyHooks = () => {
+
+  const [text, setText] = useState('');
+  const [textArea, setTextArea] = useState('');
+
+  const input = useInputWithValidate('');
+  const area = useInputWithValidate('');
+
+  const color = input.validateInput() ? 'text-danger' : null;
+
+  return (
+    <Container>
+      <form className="w-50 border mt-5 p-3 m-auto">
+        <div className="mb-3">
+          <input value={`${input.value} / ${area.value}`} type="text" className="form-control" readOnly />
+          <label htmlFor="exampleFormControlInput1" className="form-label mt-3">Email address</label>
+          <input
+            onChange={input.onChange}
+            type="email"
+            value={input.value}
+            className={`form-control ${color}`}
+            id="exampleFormControlInput1"
+            placeholder="name@example.com" />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">Example textarea</label>
+          <textarea
+            onChange={area.onChange}
+            value={area.value}
+            className="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"></textarea>
+        </div>
+      </form>
+    </Container>
+  )
+}
+
+
+
+
 
 
 
 function App() {
-  const [slide, setSlide] = useState(true);
+  /* const [slide, setSlide] = useState(true); */
   return (
     <Wrapper>
+
+      <Lesson168 />
+      <FormMyHooks />
+
       {/* 
       <Lesson158 />
       <Form />
@@ -637,13 +702,13 @@ function App() {
       <Lesson159 />
       <FormTwo /> */}
 
-      <LessonHooks />
+      {/* <LessonHooks />
       <Slider />
       <button onClick={() => setSlide(false)}>Click</button>
-      {slide ? <SliderTwo /> : null}
+      {slide ? <SliderTwo /> : null} */}
 
-      <Lesson166 />
-      <FormRef />
+      {/*  <Lesson166 />
+      <FormRef /> */}
 
       {/*      <StrictMode>
         <Header />
