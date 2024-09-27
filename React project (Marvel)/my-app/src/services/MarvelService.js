@@ -9,11 +9,11 @@ const useMarvelService = () => {
     const _apiKey = 'apikey=395dd436654e4c4d21785ca076d9874c'; //запасной ключ
     const _baseOffset = 1023; //стартовая позиция для списка персонажей
     // знак лодаш _  - означает, что эти данные менять нельзя, негласное правило общения между программистами
+    const baseLimit = 6;
 
 
-
-    const getAllCharacters = async (offset = _baseOffset) => { //получаем 9 персонажей, начиная с 356 позиции
-        const res = await request(`${_apiBase}characters?limit=6&offset=${offset}&${_apiKey}`);
+    const getAllCharacters = async (offset = _baseOffset, limit = baseLimit) => { //получаем 9 персонажей, начиная с 356 позиции
+        const res = await request(`${_apiBase}characters?limit=${limit}&offset=${offset}&${_apiKey}`);
         return res.data.results.map(_transformCharacter)
     }
 

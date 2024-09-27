@@ -5,13 +5,14 @@ import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/spinner';
 import ErrorMassage from '../errorMessage/ErrorMessage';
 
-import './charList.scss';
+import './charListSecond.scss';
 
-const CharList = (props) => {
+
+const CharListSecond = (props) => {
 
     const [charList, setCharList] = useState([]);
     const [newItemLoading, setNewItemLoading] = useState(false);
-    const [offset, setOffset] = useState(1549);
+    const [offset, setOffset] = useState(1529);
     const [charEnded, setCharEnded] = useState(false);
 
     const {loading, error, getAllCharacters} = useMarvelService();
@@ -23,20 +24,20 @@ const CharList = (props) => {
 
     const onRequest = (offset, initial) => { // initial - для того, чтобы при дозагрузке персонажей появлялись новые, а не перерисовывались старые вместе с новыми
         initial ? setNewItemLoading(false) : setNewItemLoading(true); //
-        getAllCharacters(offset, 6)
+        getAllCharacters(offset, 8)
             .then(onCharListLoaded)
 
     }
 
     const onCharListLoaded = (newCharList) => {
         let ended = false;
-        if (newCharList.length < 6) {
+        if (newCharList.length < 8) {
             ended = true;
         }
 
         setCharList(charList => [...charList, ...newCharList]);
         setNewItemLoading(newItemLoading => false);
-        setOffset(offset => offset + 6);
+        setOffset(offset => offset + 8);
         setCharEnded(charEnded => ended);
 
     }
@@ -115,14 +116,11 @@ const CharList = (props) => {
 }
 
 
-CharList.propTypes = {
+CharListSecond.propTypes = {
     onCharSelected: PropTypes.func.isRequired
 }
 
 
 
 
-export default CharList;
-
-
-//npm install --save prop-types
+export default CharListSecond;
