@@ -45,8 +45,8 @@ const CharListSecond = (props) => {
     const itemRefs = useRef([]);
 
     const focusOnItem = (id) => {
-        itemRefs.current.forEach(item => item.classList.remove('char__item_selected'));
-        itemRefs.current[id].classList.add('char__item_selected');
+        itemRefs.current.forEach(item => item.classList.remove('char__itemSecond_selected'));
+        itemRefs.current[id].classList.add('char__itemSecond_selected');
         itemRefs.current[id].focus();
     }
 
@@ -56,24 +56,22 @@ const CharListSecond = (props) => {
         const cardCharList = arr.map((item, i) => {
 
             return (
-                <li className="char__item"
+                <li className="char__itemSecond"
                     tabIndex={0}
                     key={item.id}
                     ref={el => itemRefs.current[i] = el}
                     onClick={() => {
-                        props.onCharSelected(item.id);
                         focusOnItem(i)
                     }}
                     onKeyPress={(e) => {
                         e.preventDefault()
                         if (e.key === ' ' || e.key === "Enter") {
-                            props.onCharSelected(item.id);
                             focusOnItem(i);
                         }
                     }}>
                     <img src={item.thumbnail} alt={item.name}
                         style={item.thumbnail === imgNotFound ? { objectFit: 'unset' } : { objectFit: 'cover' }} />
-                    <div className="char__name" style={{ fontSize: '16px' }}> {item.name}</div>
+                    <div className="char__nameSecond" style={{ fontSize: '16px' }}> {item.name}</div>
                 </li>
             )
 
@@ -82,7 +80,7 @@ const CharListSecond = (props) => {
 
         // для центровки спиннера
         return (
-            <ul className="char__grid">
+            <ul className="char__gridSecond">
                 {cardCharList}
             </ul>
         )
@@ -96,7 +94,7 @@ const CharListSecond = (props) => {
 
 
     return (
-        <div className="char__list" >
+        <div className="char__listSecond" >
 
 
             {errorMassage}

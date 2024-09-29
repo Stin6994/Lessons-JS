@@ -8,7 +8,7 @@
         column-gap: 25px;
         align-items: start;
     }
-    &__grid {
+    &__gridSecond {
         margin-top: 30px;
         display: grid;
         grid-template-columns: repeat(4, 200px);
@@ -16,7 +16,7 @@
         row-gap: 30px;
         justify-content: center;
     }
-    &__item {
+    &__itemSecond {
         width: 200px;
         height: 318px;
         background-color: $dark;
@@ -35,7 +35,7 @@
             transform: translateY(-8px);
         }
     }
-    &__name {
+    &__nameSecond {
         font-weight: bold;
         font-size: 22px;
         line-height: 29px;
