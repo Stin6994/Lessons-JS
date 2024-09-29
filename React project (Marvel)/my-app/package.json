@@ -9,7 +9,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-object-fit-container": "^1.0.8",
-    "react-router-dom": "^5.3.0",
+    "react-router-dom": "^6.26.2",
     "react-scripts": "^5.0.1",
     "web-vitals": "^4.0.0"
   },
