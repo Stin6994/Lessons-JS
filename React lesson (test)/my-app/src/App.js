@@ -1,11 +1,14 @@
 import React, { Component, StrictMode, Fragment, useState, useEffect, useCallback, useMemo, useRef } from 'react'; //деструктуризация от React.Component
-import ReactDOM from 'react-dom'
+import { Transition } from 'react-transition-group';
+import ReactDOM from 'react-dom/client'
 import styled from 'styled-components';
 
 
 import './App.css';
+import './modal.css';
 import { Container } from 'react-bootstrap';
 import BootstrapTest from './BootstrapTest';
+
 
 const Header = () => {// с большой буквы,потому что это не переменная, а реакт компонент
   return <h2>Простейший реакт компонент</h2>
@@ -640,7 +643,7 @@ function useInputWithValidate(initialValue) {
     return value.search(/\d/) >= 0 // возвращается условие. Возвращается по мере выполнения true/false
   }
 
-  return {value, onChange, validateInput}  // равнозначно {value: value, onChange: onChange}
+  return { value, onChange, validateInput }  // равнозначно {value: value, onChange: onChange}
 }
 
 const FormMyHooks = () => {
@@ -682,6 +685,74 @@ const FormMyHooks = () => {
 }
 
 
+//Урок 181 - Transition group
+
+const Lesson181 = () => {
+  return <h4>Урок 181 - Transition group </h4>
+}
+
+const Modal = (props) => {
+
+  const duration = 300;
+
+  const defaultStyle = {
+    transition: `all ${duration}ms ease-in-out`,
+    opacity: 0,
+    visibility: "hidden"
+  }
+
+  const transitionStyles = {
+    entering: { opacity: 1, visibility: "visible" },
+    entered: { opacity: 1, visibility: "visible" },
+    exiting: { opacity: 0, visibility: "hidden" },
+    exited: { opacity: 0, visibility: "hidden" },
+  };
+
+
+  return (
+    <Transition in={props.show} timeout={duration} >
+      {state => (
+        <div className="modal mt-5 d-block" 
+        style={{
+          ...defaultStyle,
+          ...transitionStyles[state]
+        }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Typical modal window</h5>
+                <button onClick={() => props.onClose(false)} type="button" className="btn-close" aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+                <p>Modal body content</p>
+              </div>
+              <div className="modal-footer">
+                <button onClick={() => props.onClose(false)} type="button" className="btn btn-secondary">Close</button>
+                <button onClick={() => props.onClose(false)} type="button" className="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </Transition>
+
+  )
+}
+
+function MyModal() {
+  const [showModal, setShowModal] = useState(false);
+
+  return (
+    <Container>
+      <Modal show={showModal} onClose={setShowModal} />
+      <button
+        type="button"
+        className="btn btn-warning mt-5"
+        onClick={() => setShowModal(true)}>Open Modal</button>
+    </Container>
+  );
+}
+
 
 
 
@@ -692,8 +763,12 @@ function App() {
   return (
     <Wrapper>
 
-      <Lesson168 />
-      <FormMyHooks />
+      <Lesson181 />
+      <MyModal />
+
+
+      {/*     <Lesson168 />
+      <FormMyHooks /> */}
 
       {/* 
       <Lesson158 />
