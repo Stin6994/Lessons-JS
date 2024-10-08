@@ -1,5 +1,5 @@
 import React, { Component, StrictMode, Fragment, useState, useEffect, useCallback, useMemo, useRef } from 'react'; //деструктуризация от React.Component
-import { Transition } from 'react-transition-group';
+import { Transition, CSSTransition } from 'react-transition-group';
 import ReactDOM from 'react-dom/client'
 import styled from 'styled-components';
 
@@ -691,7 +691,7 @@ const Lesson181 = () => {
   return <h4>Урок 181 - Transition group </h4>
 }
 
-const Modal = (props) => {
+/* const Modal = (props) => {
 
   const duration = 300;
 
@@ -761,8 +761,62 @@ function MyModal() {
 
     </Container>
   );
-}
+} */
 
+  const ModalCSS = (props) => {
+
+    const duration = 500;
+  
+    return (
+      <CSSTransition
+      in={props.show} 
+      timeout={duration}
+      onEnter={() => props.setShowTrigger(false)}
+      onExited={() => props.setShowTrigger(true)}
+      classNames="modal"
+      mountOnEnter
+      unmountOnExit>
+          <div className="modal mt-5 d-block">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Typical modal window</h5>
+                  <button onClick={() => props.onClose(false)} type="button" className="btn-close" aria-label="Close"></button>
+                </div>
+                <div className="modal-body">
+                  <p>Modal body content</p>
+                </div>
+                <div className="modal-footer">
+                  <button onClick={() => props.onClose(false)} type="button" className="btn btn-secondary">Close</button>
+                  <button onClick={() => props.onClose(false)} type="button" className="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </CSSTransition>
+  
+    )
+  }
+  
+  function MyModalCSS() {
+    const [showModal, setShowModal] = useState(false);
+    const [showTrigger, setShowTrigger] = useState(true);
+  
+    return (
+      <Container>
+        <ModalCSS show={showModal} onClose={setShowModal} setShowTrigger={setShowTrigger}/>
+        {showTrigger ? 
+        
+        <button
+          type="button"
+          className="btn btn-warning mt-5"
+          onClick={() => setShowModal(true)}>Open Modal</button> :
+  
+          null}
+  
+      </Container>
+    );
+  }
 
 
 
@@ -774,7 +828,7 @@ function App() {
     <Wrapper>
 
       <Lesson181 />
-      <MyModal />
+      <MyModalCSS />
 
 
       {/*     <Lesson168 />
