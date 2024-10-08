@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
 
 import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/spinner';
@@ -14,7 +16,7 @@ const CharList = (props) => {
     const [offset, setOffset] = useState(1549);
     const [charEnded, setCharEnded] = useState(false);
 
-    const {loading, error, getAllCharacters} = useMarvelService();
+    const { loading, error, getAllCharacters } = useMarvelService();
 
     useEffect(() => {
         onRequest(offset, true);
@@ -55,25 +57,27 @@ const CharList = (props) => {
         const cardCharList = arr.map((item, i) => {
 
             return (
-                <li className="char__item"
-                    tabIndex={0}
-                    key={item.id}
-                    ref={el => itemRefs.current[i] = el}
-                    onClick={() => {
-                        props.onCharSelected(item.id);
-                        focusOnItem(i)
-                    }}
-                    onKeyPress={(e) => {
-                        e.preventDefault()
-                        if (e.key === ' ' || e.key === "Enter") {
+                <CSSTransition key={item.id} timeout={500} classNames="char__item">
+                    <li className="char__item"
+                        tabIndex={0}
+                        ref={el => itemRefs.current[i] = el}
+                        onClick={() => {
                             props.onCharSelected(item.id);
-                            focusOnItem(i);
-                        }
-                    }}>
-                    <img src={item.thumbnail} alt={item.name}
-                        style={item.thumbnail === imgNotFound ? { objectFit: 'unset' } : { objectFit: 'cover' }} />
-                    <div className="char__name" style={{ fontSize: '16px' }}> {item.name}</div>
-                </li>
+                            focusOnItem(i)
+                        }}
+                        onKeyPress={(e) => {
+                            e.preventDefault()
+                            if (e.key === ' ' || e.key === "Enter") {
+                                props.onCharSelected(item.id);
+                                focusOnItem(i);
+                            }
+                        }}>
+                        <img src={item.thumbnail} alt={item.name}
+                            style={item.thumbnail === imgNotFound ? { objectFit: 'unset' } : { objectFit: 'cover' }} />
+                        <div className="char__name" style={{ fontSize: '16px' }}> {item.name}</div>
+                    </li>
+                </CSSTransition>
+
             )
 
         })
@@ -82,7 +86,9 @@ const CharList = (props) => {
         // для центровки спиннера
         return (
             <ul className="char__grid">
-                {cardCharList}
+                <TransitionGroup component={null}>
+                    {cardCharList}
+                </TransitionGroup>
             </ul>
         )
     }
