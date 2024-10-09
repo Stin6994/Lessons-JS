@@ -1,11 +1,13 @@
 import React, { Component, StrictMode, Fragment, useState, useEffect, useCallback, useMemo, useRef } from 'react'; //деструктуризация от React.Component
 import { Transition, CSSTransition } from 'react-transition-group';
+import {Formik} from 'formik';
 import ReactDOM from 'react-dom/client'
 import styled from 'styled-components';
 
 
-import './App.css';
-import './modal.css';
+/* import './App.css'; */
+/* import './modal.css'; */
+import './form.scss';
 import { Container } from 'react-bootstrap';
 import BootstrapTest from './BootstrapTest';
 
@@ -302,7 +304,7 @@ const Lesson158 = () => {
 }
 
 
-class Form extends Component {
+class FormOne extends Component {
   myRef = React.createRef()
 
 
@@ -763,61 +765,112 @@ function MyModal() {
   );
 } */
 
-  const ModalCSS = (props) => {
+const ModalCSS = (props) => {
 
-    const duration = 500;
-  
-    return (
-      <CSSTransition
-      in={props.show} 
+  const duration = 500;
+
+  return (
+    <CSSTransition
+      in={props.show}
       timeout={duration}
       onEnter={() => props.setShowTrigger(false)}
       onExited={() => props.setShowTrigger(true)}
       classNames="modal"
       mountOnEnter
       unmountOnExit>
-          <div className="modal mt-5 d-block">
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Typical modal window</h5>
-                  <button onClick={() => props.onClose(false)} type="button" className="btn-close" aria-label="Close"></button>
-                </div>
-                <div className="modal-body">
-                  <p>Modal body content</p>
-                </div>
-                <div className="modal-footer">
-                  <button onClick={() => props.onClose(false)} type="button" className="btn btn-secondary">Close</button>
-                  <button onClick={() => props.onClose(false)} type="button" className="btn btn-primary">Save changes</button>
-                </div>
-              </div>
+      <div className="modal mt-5 d-block">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Typical modal window</h5>
+              <button onClick={() => props.onClose(false)} type="button" className="btn-close" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <p>Modal body content</p>
+            </div>
+            <div className="modal-footer">
+              <button onClick={() => props.onClose(false)} type="button" className="btn btn-secondary">Close</button>
+              <button onClick={() => props.onClose(false)} type="button" className="btn btn-primary">Save changes</button>
             </div>
           </div>
-      </CSSTransition>
-  
-    )
-  }
-  
-  function MyModalCSS() {
-    const [showModal, setShowModal] = useState(false);
-    const [showTrigger, setShowTrigger] = useState(true);
-  
-    return (
-      <Container>
-        <ModalCSS show={showModal} onClose={setShowModal} setShowTrigger={setShowTrigger}/>
-        {showTrigger ? 
-        
+        </div>
+      </div>
+    </CSSTransition>
+
+  )
+}
+
+function MyModalCSS() {
+  const [showModal, setShowModal] = useState(false);
+  const [showTrigger, setShowTrigger] = useState(true);
+
+  return (
+    <Container>
+      <ModalCSS show={showModal} onClose={setShowModal} setShowTrigger={setShowTrigger} />
+      {showTrigger ?
+
         <button
           type="button"
           className="btn btn-warning mt-5"
           onClick={() => setShowModal(true)}>Open Modal</button> :
-  
-          null}
-  
-      </Container>
-    );
-  }
 
+        null}
+
+    </Container>
+  );
+}
+
+
+//Урок 182 - Formik, Yup - формы
+
+const Lesson182 = () => {
+  return <h4>Урок 182 - Formik, Yup - формы</h4>
+}
+
+const Form = () => {
+  return (
+      <form className="form">
+          <h2>Отправить пожертвование</h2>
+          <label htmlFor="name">Ваше имя</label>
+          <input
+              id="name"
+              name="name"
+              type="text"
+          />
+          <label htmlFor="email">Ваша почта</label>
+          <input
+              id="email"
+              name="email"
+              type="email"
+          />
+          <label htmlFor="amount">Количество</label>
+          <input
+              id="amount"
+              name="amount"
+              type="number"
+          />
+          <label htmlFor="currency">Валюта</label>
+          <select
+              id="currency"
+              name="currency">
+                  <option value="">Выберите валюту</option>
+                  <option value="USD">USD</option>
+                  <option value="UAH">UAH</option>
+                  <option value="RUB">RUB</option>
+          </select>
+          <label htmlFor="text">Ваше сообщение</label>
+          <textarea 
+              id="text"
+              name="text"
+          />
+          <label className="checkbox">
+              <input name="terms" type="checkbox" />
+              Соглашаетесь с политикой конфиденциальности?
+          </label>
+          <button type="submit">Отправить</button>
+      </form>
+  )
+}
 
 
 
@@ -827,8 +880,13 @@ function App() {
   return (
     <Wrapper>
 
-      <Lesson181 />
-      <MyModalCSS />
+      <Lesson182 />
+      <div className="myApp">
+        <Form />
+      </div>
+
+      {/*     <Lesson181 />
+      <MyModalCSS /> */}
 
 
       {/*     <Lesson168 />
@@ -836,7 +894,7 @@ function App() {
 
       {/* 
       <Lesson158 />
-      <Form />
+      <FormOne />
 
       <Lesson159 />
       <FormTwo /> */}
