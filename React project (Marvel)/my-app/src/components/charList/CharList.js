@@ -7,6 +7,8 @@ import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/spinner';
 import ErrorMassage from '../errorMessage/ErrorMessage';
 
+
+
 import './charList.scss';
 
 const CharList = (props) => {
@@ -16,7 +18,7 @@ const CharList = (props) => {
     const [offset, setOffset] = useState(1549);
     const [charEnded, setCharEnded] = useState(false);
 
-    const { loading, error, getAllCharacters } = useMarvelService();
+    const { loading, error, getAllCharacters, process, setProcess } = useMarvelService();
 
     useEffect(() => {
         onRequest(offset, true);
