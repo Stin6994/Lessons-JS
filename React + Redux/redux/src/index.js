@@ -1,9 +1,11 @@
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { createStore, bindActionCreators} from 'redux'
+import { createStore, bindActionCreators } from 'redux'
 import reducer from './reducer';
-import * as actions from './action';
 
+import App from './components/App';
+
+import { Provider } from 'react-redux';
 
 
 console.log('Hello!');
@@ -11,22 +13,20 @@ console.log('Hello!');
 
 const store = createStore(reducer);
 
-const {dispatch, subscribe, getState} = store;
 
-const update = () => {
-    document.getElementById('counter').textContent = getState().value;
-}
+/* const update = () => {
 
-subscribe(update)//подписка, срабатывает при каждом изменении state через dispatch
+} */
 
-const {inc, dec, rnd} = bindActionCreators(actions, dispatch)
+/* subscribe(update) *///подписка, срабатывает при каждом изменении state через dispatch
 
-document.getElementById('inc').addEventListener('click', inc);
+
+/* document.getElementById('inc').addEventListener('click', inc);
 document.getElementById('dec').addEventListener('click', dec);
 document.getElementById('rnd').addEventListener('click', () => {
     const value = Math.floor(Math.random()*10);
     rnd(value)//изменение state
-})
+}) */
 
 
 
@@ -37,9 +37,17 @@ document.getElementById('rnd').addEventListener('click', () => {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <StrictMode>
-        <>
-
-        </>
+        {/*    <Counter
+        counter={getState().value}
+        inc={inc}
+        dec={dec}
+        rnd={() => {
+            const value = Math.floor(Math.random()*10);
+            rnd(value); 
+        }}/> */}
+        <Provider store={store}>
+            <App />
+        </Provider>
     </StrictMode>
 
 );

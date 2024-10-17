@@ -1,4 +1,4 @@
-const initialState = {value: 0};
+const initialState = {value: 2, foo: 'bar'};
 
 const reducer = (state = initialState, action) => { //не должно быть случайных чисел, работы с DOM, console.log, запросов на сервер
     // ничего такого, что может изменить четкую логику работы reducer.
