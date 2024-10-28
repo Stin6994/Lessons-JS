@@ -7,18 +7,6 @@
       "element": "fire"
     },
     {
-      "id": "cab4aad0-9c4f-450c-b996-28b53fe3d74d",
-      "name": "Анечка",
-      "description": "Я умею ВСЕ!!!!!!!\nЯ лучшая!!!!",
-      "element": "wind"
-    },
-    {
-      "id": "687284b2-a338-476e-b409-663dc5bb3edf",
-      "name": "3344",
-      "description": "  mjj",
-      "element": "water"
-    },
-    {
       "id": "d664e5b5-e7c7-4d71-84fb-11b3e881cb11",
       "name": "retret",
       "description": "retert",
@@ -31,34 +19,45 @@
       "element": "fire"
     },
     {
-      "id": "8fc7b8f8-5012-49b9-9e64-437265888da8",
-      "name": "cvxc",
-      "description": "cxvx",
-      "element": "water"
+      "id": "8cc77be6-6260-433c-b13b-fc439c896f2c",
+      "name": "xx11",
+      "description": "2222",
+      "element": "wind"
+    },
+    {
+      "id": "45d9015e-1854-425c-b0de-26cd84455406",
+      "name": "222",
+      "description": "333",
+      "element": "earth"
     }
   ],
   "filters": [
     {
+      "id": "all",
       "name": "all",
       "label": "Все",
       "className": "btn-outline-dark"
     },
     {
+      "id": "fire",
       "name": "fire",
       "label": "Огонь",
       "className": "btn-danger"
     },
     {
+      "id": "water",
       "name": "water",
       "label": "Вода",
       "className": "btn-primary"
     },
     {
+      "id": "wind",
       "name": "wind",
       "label": "Ветер",
       "className": "btn-success"
     },
     {
+      "id": "earth",
       "name": "earth",
       "label": "Земля",
       "className": "btn-secondary"
