@@ -1,9 +1,10 @@
 const modals = () => {
-    function bindModal(triggerSelector, modalSelector, closeSelector) { //общая функция для работы с модальными окнами (открытие по клику на триггер, закрытие по клику на крестик или подложку)
+    function bindModal(triggerSelector, modalSelector, closeSelector, closeClickOverlay = true) { //общая функция для работы с модальными окнами (открытие по клику на триггер, закрытие по клику на крестик или подложку)
         
         const trigger = document.querySelectorAll(triggerSelector);
         const modal = document.querySelector(modalSelector);
         const close = document.querySelector(closeSelector);
+        const windows = document.querySelectorAll("[data-modal]");
         
         trigger.forEach(item => {
             item.addEventListener('click', (e) => {
@@ -11,6 +12,10 @@ const modals = () => {
                     // чтобы этого избежать отменяем стандартное поведение браузера
                     e.preventDefault();
                 }
+
+                windows.forEach(item => { //когда закрывается модальное окно - закрываются все сразу, если их несколько открыто
+                    item.style.display = 'none'; 
+                });
     
                 modal.style.display = 'block';
                 document.body.style.overflow = 'hidden'; //пропадает скролл
@@ -19,13 +24,23 @@ const modals = () => {
         });
 
         close.addEventListener('click', () => {
+
+         /*    windows.forEach(item => {
+                item.style.display = 'none';
+            }); */
+
             modal.style.display = 'none';
             document.body.style.overflow = '';
             /* document.body.classList.remove('modal-open'); */
         });
 
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) { // кликаем мимо окна - закрывается. ===modal - странно, как будто нажимаем на окно, но это особенность конкретной верстки
+
+          /*   windows.forEach(item => {
+                item.style.display = 'none'; 
+            }); */
+
+            if (e.target === modal && closeClickOverlay) { // кликаем мимо окна - закрывается. ===modal - странно, как будто нажимаем на окно, но это особенность конкретной верстки
                 modal.style.display = 'none';
                 document.body.style.overflow = '';
                 /* document.body.classList.remove('modal-open'); */
@@ -49,6 +64,11 @@ const modals = () => {
     bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
     bindModal('.phone_link', '.popup', '.popup .popup_close');
 /*     showModalByTime('.popup', 60000); */
+    bindModal('.popup_calc_btn', '.popup_calc', '.popup_calc_close');
+
+    bindModal('.popup_calc_button', '.popup_calc_profile', '.popup_calc_profile_close', false);
+    bindModal('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', false);
+
 };
 
 export default modals;
