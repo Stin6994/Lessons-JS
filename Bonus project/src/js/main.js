@@ -23,3 +23,7 @@ window.addEventListener('DOMContentLoaded', () => {
     images();
 
 });
+
+
+// остановить gulp
+//npx gulp build-prod-js

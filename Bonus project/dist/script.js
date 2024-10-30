@@ -222,7 +222,8 @@ const modals = () => {
     const trigger = document.querySelectorAll(triggerSelector);
     const modal = document.querySelector(modalSelector);
     const close = document.querySelector(closeSelector);
-    const windows = document.querySelectorAll("[data-modal]");
+    const windows = document.querySelectorAll("[data-modal]"),
+      scroll = calcScroll();
     trigger.forEach(item => {
       item.addEventListener('click', e => {
         if (e.target) {
@@ -237,6 +238,7 @@ const modals = () => {
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden'; //пропадает скролл
         /* document.body.classList.add('modal-open'); */
+        document.body.style.marginRight = `${scroll}px`;
       });
     });
     close.addEventListener('click', () => {
@@ -246,6 +248,7 @@ const modals = () => {
 
       modal.style.display = 'none';
       document.body.style.overflow = '';
+      document.body.style.marginRight = `0px`;
       /* document.body.classList.remove('modal-open'); */
     });
     modal.addEventListener('click', e => {
@@ -257,6 +260,7 @@ const modals = () => {
         // кликаем мимо окна - закрывается. ===modal - странно, как будто нажимаем на окно, но это особенность конкретной верстки
         modal.style.display = 'none';
         document.body.style.overflow = '';
+        document.body.style.marginRight = `0px`;
         /* document.body.classList.remove('modal-open'); */
       }
     });
@@ -272,6 +276,18 @@ const modals = () => {
       const modalEngineer = document.querySelector('.popup_engineer'); // это модальное окно
       const modalEngineerClose = document.querySelector('.popup_engineer .popup_close'); // это крестик */
 
+  function calcScroll() {
+    //при появлении модального окна картинка прыгает на ширину скролла. Эта функция для вычисления ширины скролла (для дальнейшей нейтрализации скачка)
+    let div = document.createElement('div');
+    div.style.width = '50px';
+    div.style.height = '50px';
+    div.style.overflowY = 'scroll';
+    div.style.visibility = 'hidden';
+    document.body.appendChild(div);
+    let scrollWidth = div.offsetWidth - div.clientWidth;
+    div.remove();
+    return scrollWidth;
+  }
   bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
   bindModal('.phone_link', '.popup', '.popup .popup_close');
   /*     showModalByTime('.popup', 60000); */
@@ -14333,6 +14349,9 @@ window.addEventListener('DOMContentLoaded', () => {
   (0,_modules_timer__WEBPACK_IMPORTED_MODULE_5__["default"])('.container1', deadline);
   (0,_modules_images__WEBPACK_IMPORTED_MODULE_6__["default"])();
 });
+
+// остановить gulp
+//npx gulp build-prod-js
 })();
 
 /******/ })()
