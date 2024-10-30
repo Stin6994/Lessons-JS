@@ -1,6 +1,105 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/js/modules/changeModalState.js":
+/*!********************************************!*\
+  !*** ./src/js/modules/changeModalState.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _checkNumberInput__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./checkNumberInput */ "./src/js/modules/checkNumberInput.js");
+
+const changeModalState = state => {
+  //изначально state пустой, пока пользователь не начал заполнять расчетную форму. По мере заполнения будут добавляться свойства в объект
+  const windowForm = document.querySelectorAll('.balcon_icons_img'),
+    windowWidth = document.querySelectorAll('#width'),
+    windowHeight = document.querySelectorAll('#height'),
+    windowType = document.querySelectorAll('#view_type'),
+    windowProfile = document.querySelectorAll('.checkbox');
+  (0,_checkNumberInput__WEBPACK_IMPORTED_MODULE_0__["default"])('#width');
+  (0,_checkNumberInput__WEBPACK_IMPORTED_MODULE_0__["default"])('#height');
+  function bindActionsToElems(event, elem, prop) {
+    elem.forEach((item, i) => {
+      item.addEventListener(event, () => {
+        /*    if (elem.length > 1) { //мы получили из DOM дерева через querySelectorAll массив. Если в нем больше одного элемента
+               state[prop] = i; // добавили первое свойство - выбранную форму окна. При клике на одну из форм в объекте будет прописываться ее индекс по порядку в свойстве form
+               // то есть это актуально при выборе формы окна. Она всегда только одна и мы запишем ее индекс 
+           } else {
+               state[prop] = item.value;
+               // Это актуально для длины и ширины. При вводе данных в объект будут прописываться эти данные в соответствующие поля
+           } */
+
+        // через switch/case вычислим в какой элемент DOM дерева кликает пользователь и выполним определенные действия в зависимости от этого
+        switch (item.nodeName) {
+          case 'SPAN':
+            state[prop] = i; // добавили первое свойство - выбранную форму окна. При клике на одну из форм в объекте будет прописываться ее индекс по порядку в свойстве form
+            // то есть это актуально при выборе формы окна. Она всегда только одна и мы запишем ее индекс
+            break;
+          case 'INPUT':
+            if (item.getAttribute('type') === 'checkbox') {
+              //так как чекбокса 2, применим условие для записи нужного в state
+              i === 0 ? state[prop] = 'Холодное' : state[prop] = 'Теплое';
+              //теперь уберем галочки со всех чекбоксов кроме выбранного, чтобы нельзя было ставить несколько галочек сразу
+              elem.forEach((box, j) => {
+                box.checked = false; // со всех снимаем галки
+                if (i == j) {
+                  //оставляем в том, который совпал с тем, который выбрал пользователь 
+                  box.checked = true;
+                }
+              });
+            } else {
+              state[prop] = item.value;
+              // Это актуально для длины и ширины. При вводе данных в объект будут прописываться эти данные в соответствующие поля
+            }
+            break;
+          case 'SELECT':
+            // Также актуально для типа остекления, у него есть значение value в DOM-е. Например "Деревянное остекление"
+
+            state[prop] = item.value;
+            break;
+        }
+        console.log(state);
+      });
+    });
+  }
+  bindActionsToElems('click', windowForm, 'form');
+  bindActionsToElems('input', windowHeight, 'height');
+  bindActionsToElems('input', windowWidth, 'width');
+  bindActionsToElems('change', windowType, 'type');
+  bindActionsToElems('change', windowProfile, 'profile');
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (changeModalState);
+
+/***/ }),
+
+/***/ "./src/js/modules/checkNumberInput.js":
+/*!********************************************!*\
+  !*** ./src/js/modules/checkNumberInput.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const checkNumberInputs = selector => {
+  const numInputs = document.querySelectorAll(selector);
+  numInputs.forEach(item => {
+    item.addEventListener('input', () => {
+      item.value = item.value.replace(/\D/, '');
+    });
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (checkNumberInputs);
+
+/***/ }),
+
 /***/ "./src/js/modules/forms.js":
 /*!*********************************!*\
   !*** ./src/js/modules/forms.js ***!
@@ -12,15 +111,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-const forms = () => {
+/* harmony import */ var _checkNumberInput__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./checkNumberInput */ "./src/js/modules/checkNumberInput.js");
+
+const forms = state => {
   const form = document.querySelectorAll('form');
   const inputs = document.querySelectorAll('input');
-  const phoneInputs = document.querySelectorAll('input[name="user_phone"]');
-  phoneInputs.forEach(item => {
-    item.addEventListener('input', () => {
-      item.value = item.value.replace(/\D/, '');
-    });
-  });
+  (0,_checkNumberInput__WEBPACK_IMPORTED_MODULE_0__["default"])('input[name="user_phone"]');
   const message = {
     loading: 'Загрузка...',
     success: 'Спасибо! Скоро мы с вами свяжемся',
@@ -46,6 +142,12 @@ const forms = () => {
       statusMessage.classList.add('status');
       item.appendChild(statusMessage);
       const formData = new FormData(item);
+      if (item.getAttribute('data-calc') === 'end') {
+        //условие касается только формы в конце расчета стоимости
+        for (let key in state) {
+          formData.append(key, state[key]); //на сервер придут не только имя и телефон, но и данные полученные из модалки с расчетом стоимости
+        }
+      }
       postData('assets/server.php', formData).then(res => {
         console.log(res);
         statusMessage.textContent = message.success;
@@ -14105,17 +14207,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_modals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/modals */ "./src/js/modules/modals.js");
 /* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/tabs */ "./src/js/modules/tabs.js");
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
+/* harmony import */ var _modules_changeModalState__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/changeModalState */ "./src/js/modules/changeModalState.js");
+
 
 
 
 
 window.addEventListener('DOMContentLoaded', () => {
   console.log('hello1');
+  let modalState = {};
+  (0,_modules_changeModalState__WEBPACK_IMPORTED_MODULE_4__["default"])(modalState);
   (0,_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])();
   (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.glazing_slider', '.glazing_block', '.glazing_content', 'active');
   (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.decoration_slider', '.no_click', '.decoration_content > div > div', 'after_click');
   (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'inline-block');
-  (0,_modules_forms__WEBPACK_IMPORTED_MODULE_3__["default"])();
+  (0,_modules_forms__WEBPACK_IMPORTED_MODULE_3__["default"])(modalState);
 });
 })();
 

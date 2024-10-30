@@ -1,18 +1,13 @@
-const forms = () => {
+import checkNumberInputs from './checkNumberInput';
+
+const forms = (state) => {
 
     const form = document.querySelectorAll('form');
     const inputs = document.querySelectorAll('input');
-    const phoneInputs = document.querySelectorAll('input[name="user_phone"]');
 
 
-    phoneInputs.forEach(item => {
-        item.addEventListener('input', () => {
-            item.value = item.value.replace(/\D/, '');
-        });
-    });
-
-
-
+    checkNumberInputs('input[name="user_phone"]');
+  
     const message = {
         loading: 'Загрузка...',
         success: 'Спасибо! Скоро мы с вами свяжемся',
@@ -44,6 +39,11 @@ const forms = () => {
             item.appendChild(statusMessage);
 
             const formData = new FormData(item);
+            if (item.getAttribute('data-calc') === 'end') { //условие касается только формы в конце расчета стоимости
+                for (let key in state) {
+                    formData.append(key, state[key]); //на сервер придут не только имя и телефон, но и данные полученные из модалки с расчетом стоимости
+                }
+            }
             
             postData('assets/server.php', formData)
                 .then(res => {
